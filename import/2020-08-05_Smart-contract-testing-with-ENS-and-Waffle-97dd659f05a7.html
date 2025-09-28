@@ -1,0 +1,72 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Smart contract testing with ENS and Waffle</title><style>
+      * {
+        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+      }
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        font-size: 50px;
+        margin-bottom: 17px;
+        color: #333;
+      }
+      h2 {
+        font-size: 24px;
+        line-height: 1.6;
+        margin: 30px 0 0 0;
+        margin-bottom: 18px;
+        margin-top: 33px;
+        color: #333;
+      }
+      h3 {
+        font-size: 30px;
+        margin: 10px 0 20px 0;
+        color: #333;
+      }
+      header {
+        width: 640px;
+        margin: auto;
+      }
+      section {
+        width: 640px;
+        margin: auto;
+      }
+      section p {
+        margin-bottom: 27px;
+        font-size: 20px;
+        line-height: 1.6;
+        color: #333;
+      }
+      section img {
+        max-width: 640px;
+      }
+      footer {
+        padding: 0 20px;
+        margin: 50px 0;
+        text-align: center;
+        font-size: 12px;
+      }
+      .aspectRatioPlaceholder {
+        max-width: auto !important;
+        max-height: auto !important;
+      }
+      .aspectRatioPlaceholder-fill {
+        padding-bottom: 0 !important;
+      }
+      header,
+      section[data-field=subtitle],
+      section[data-field=description] {
+        display: none;
+      }
+      </style></head><body><article class="h-entry">
+<header>
+<h1 class="p-name">Smart contract testing with ENS and Waffle</h1>
+</header>
+<section data-field="subtitle" class="p-summary">
+With hundreds of applications using ENS, Ethereum-based decentralised naming system, we can all agree that it has become a widely…
+</section>
+<section data-field="body" class="e-content">
+<section name="8b3a" class="section section--body section--first"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><figure name="740f" id="740f" class="graf graf--figure graf--leading"><img class="graf-image" data-image-id="1*PtLY0_AI0WnAjMXPXKYDew.png" data-width="1000" data-height="550" data-is-featured="true" src="https://cdn-images-1.medium.com/max/800/1*PtLY0_AI0WnAjMXPXKYDew.png"></figure><h3 name="d766" id="d766" class="graf graf--h3 graf-after--figure graf--title">Smart contract testing with ENS and Waffle</h3><p name="507b" id="507b" class="graf graf--p graf-after--h3">With hundreds of applications using ENS, an Ethereum-based decentralised naming system, we can all agree that it has become a widely recognised standard in the blockchain space.</p><p name="f057" id="f057" class="graf graf--p graf-after--p">Yet, when it comes to testing smart contracts, it’s difficult to test code that interacts with ENS. And for this exact reason, we’ve introduced an ENS module in Waffle.</p><p name="55be" id="55be" class="graf graf--p graf-after--p">The two most <strong class="markup--strong markup--p-strong">common scenarios</strong> involve:</p><ul class="postList"><li name="f1ef" id="f1ef" class="graf graf--li graf-after--p"><strong class="markup--strong markup--li-strong"><em class="markup--em markup--li-em">testing smart contracts</em></strong> interaction with ENS,</li><li name="443c" id="443c" class="graf graf--li graf-after--li"><strong class="markup--strong markup--li-strong">integration</strong> or <strong class="markup--strong markup--li-strong">end-to-end testing</strong> of<em class="markup--em markup--li-em"> </em>smart contracts together with a higher-level API/GUI.</li></ul><p name="46a0" id="46a0" class="graf graf--p graf-after--li">We’ve already experienced this need on several occasions. In such situations, it’s useful to have ENS deployed in your test/development node. It’s somewhat complex to deploy a copy of ENS on your own, so we’ve added such an option to Waffle a while ago.</p><p name="7c1a" id="7c1a" class="graf graf--p graf-after--p">How does it work? It’s very simple.</p><h3 name="9673" id="9673" class="graf graf--h3 graf-after--p">ENS attached to MockProvider</h3><p name="2994" id="2994" class="graf graf--p graf-after--h3">The most straightforward way to start using ENS is to use the built-in <code class="markup--code markup--p-code">MockProvider</code> singleton.</p><pre name="96ed" id="96ed" class="graf graf--pre graf-after--p"><strong class="markup--strong markup--pre-strong">import</strong> {MockProvider} from &#39;@ethereum-waffle/provider&#39;;<br><br><strong class="markup--strong markup--pre-strong">const</strong> provider = <strong class="markup--strong markup--pre-strong">new</strong> MockProvider();<br>await provider.setupENS();<br>const {ens} = provider;</pre><h3 name="2377" id="2377" class="graf graf--h3 graf-after--pre">Creating domains</h3><p name="50b7" id="50b7" class="graf graf--p graf-after--h3">To create a top-level domain, use<code class="markup--code markup--p-code">createTopLevelDomain</code>function:</p><pre name="6c50" id="6c50" class="graf graf--pre graf-after--p">await ens.createTopLevelDomain(&#39;test&#39;);</pre><p name="5d63" id="5d63" class="graf graf--p graf-after--pre">To create a subdomain, use <code class="markup--code markup--p-code">createSubDomain</code> function:</p><pre name="1ccd" id="1ccd" class="graf graf--pre graf-after--p">await ens.createSubDomain(&#39;ethworks.test&#39;);</pre><p name="c1eb" id="c1eb" class="graf graf--p graf-after--pre">If you want to create a multi-level domain with a single call, use recursive option for <code class="markup--code markup--p-code">createSubDomain</code>:</p><pre name="c39b" id="c39b" class="graf graf--pre graf-after--p">await ens.createSubDomain(&#39;waffle.ethworks.tld&#39;, {recursive: true});</pre><h3 name="6468" id="6468" class="graf graf--h3 graf-after--pre">Setting address</h3><p name="1b02" id="1b02" class="graf graf--p graf-after--h3">To set an address for a given domain, use <code class="markup--code markup--p-code">setAddress</code> function:</p><pre name="bab6" id="bab6" class="graf graf--pre graf-after--p">await ens.setAddress(&#39;vlad.ethworks.test&#39;, &#39;0x001...03&#39;);</pre><p name="74d1" id="74d1" class="graf graf--p graf-after--pre">Option <code class="markup--code markup--p-code">{recursive: true}</code> is also available for setAddress.</p><p name="6177" id="6177" class="graf graf--p graf-after--p">And if you want to set address with reverse mapping, you can use:</p><pre name="3c99" id="3c99" class="graf graf--pre graf-after--p">await ens.setAddressWithReverse(&#39;vlad.ethworks.tld&#39;, wallet);</pre><p name="d2f9" id="d2f9" class="graf graf--p graf-after--pre">Again, <code class="markup--code markup--p-code">reverse</code> option is available.</p><h3 name="0c57" id="0c57" class="graf graf--h3 graf-after--p">Deploying ENS copy</h3><p name="8266" id="8266" class="graf graf--p graf-after--h3">If for some reason you need a stand-alone copy of ENS or you want to hook it up to another provider or deploy to another node/network, you can use <code class="markup--code markup--p-code">deployENS</code> function that will deploy a ready-to-work ENS copy (with top-level registrar and a resolver):</p><pre name="6e5a" id="6e5a" class="graf graf--pre graf-after--p graf--trailing"><strong class="markup--strong markup--pre-strong">const</strong> ens: ENS = await deployENS(wallet);</pre></div></div></section><section name="384f" class="section section--body"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="b173" id="b173" class="graf graf--p graf--leading graf--trailing">It’s a great pleasure to see ENS becoming a first-class citizen on Ethereum, and now that it’s so easy to test with it, we hope the adoption will accelerate even further.</p></div></div></section><section name="1b89" class="section section--body section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="82cf" id="82cf" class="graf graf--p graf--leading">We are <a href="https://ethworks.io/" data-href="https://ethworks.io/" class="markup--anchor markup--p-anchor" rel="noopener nofollow noopener noopener" target="_blank"><strong class="markup--strong markup--p-strong">Ethworks</strong></a>. A truly remarkable team for your blockchain project.</p><p name="3384" id="3384" class="graf graf--p graf-after--p graf--trailing">Find us on <a href="https://twitter.com/ethworks" data-href="https://twitter.com/ethworks" class="markup--anchor markup--p-anchor" rel="noopener nofollow noopener" target="_blank">Twitter</a>, <a href="https://github.com/ethworks" data-href="https://github.com/ethworks" class="markup--anchor markup--p-anchor" rel="noopener nofollow noopener" target="_blank">GitHub</a> and <a href="https://dribbble.com/ethworks" data-href="https://dribbble.com/ethworks" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Dribbble</a>.</p></div></div></section>
+</section>
+<footer><p>By <a href="https://medium.com/@marekkirejczyk" class="p-author h-card">Marek Kirejczyk</a> on <a href="https://medium.com/p/97dd659f05a7"><time class="dt-published" datetime="2020-08-05T14:26:33.503Z">August 5, 2020</time></a>.</p><p><a href="https://medium.com/@marekkirejczyk/smart-contract-testing-with-ens-and-waffle-97dd659f05a7" class="p-canonical">Canonical link</a></p><p>Exported from <a href="https://medium.com">Medium</a> on September 22, 2025.</p></footer></article></body></html>

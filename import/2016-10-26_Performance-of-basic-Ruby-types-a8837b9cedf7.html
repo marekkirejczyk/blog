@@ -1,0 +1,72 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Performance of basic Ruby types</title><style>
+      * {
+        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+      }
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        font-size: 50px;
+        margin-bottom: 17px;
+        color: #333;
+      }
+      h2 {
+        font-size: 24px;
+        line-height: 1.6;
+        margin: 30px 0 0 0;
+        margin-bottom: 18px;
+        margin-top: 33px;
+        color: #333;
+      }
+      h3 {
+        font-size: 30px;
+        margin: 10px 0 20px 0;
+        color: #333;
+      }
+      header {
+        width: 640px;
+        margin: auto;
+      }
+      section {
+        width: 640px;
+        margin: auto;
+      }
+      section p {
+        margin-bottom: 27px;
+        font-size: 20px;
+        line-height: 1.6;
+        color: #333;
+      }
+      section img {
+        max-width: 640px;
+      }
+      footer {
+        padding: 0 20px;
+        margin: 50px 0;
+        text-align: center;
+        font-size: 12px;
+      }
+      .aspectRatioPlaceholder {
+        max-width: auto !important;
+        max-height: auto !important;
+      }
+      .aspectRatioPlaceholder-fill {
+        padding-bottom: 0 !important;
+      }
+      header,
+      section[data-field=subtitle],
+      section[data-field=description] {
+        display: none;
+      }
+      </style></head><body><article class="h-entry">
+<header>
+<h1 class="p-name">Performance of basic Ruby types</h1>
+</header>
+<section data-field="subtitle" class="p-summary">
+Modern computers are extremely fast machines, what leaves us — software engineers — with no excuses to write slow programs. One of the…
+</section>
+<section data-field="body" class="e-content">
+<section name="205f" class="section section--body section--first section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><figure name="41b8" id="41b8" class="graf graf--figure graf--leading"><img class="graf-image" data-image-id="1*f8cX7cIsdaJssbUPv8Wlng.jpeg" data-width="2000" data-height="1333" src="https://cdn-images-1.medium.com/max/800/1*f8cX7cIsdaJssbUPv8Wlng.jpeg"></figure><h3 name="ef28" id="ef28" class="graf graf--h3 graf-after--figure graf--title"><strong class="markup--strong markup--h3-strong">Performance of basic Ruby types</strong></h3><p name="1217" id="1217" class="graf graf--p graf--hasDropCapModel graf--hasDropCap graf-after--h3"><span class="graf-dropCap">M</span>odern computers are extremely fast machines, what leaves us — software engineers — with no excuses to write slow programs. One of the essentials for writing performant software is being conscious about performance of the basic operations. Let’s take a closer look at the performance characteristics of basic Ruby types: Integer, Array, Hash and String.</p><h4 name="b503" id="b503" class="graf graf--h4 graf-after--p"><strong class="markup--strong markup--h4-strong">Numbers and basic arithmetic operations</strong></h4><p name="f1a6" id="f1a6" class="graf graf--p graf-after--h4">Let’s start by looking at the performance of basic arithmetic operation. Below is a result from a simple Ruby benchmark performing 10M operations in the loop:</p><figure name="da8b" id="da8b" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="0*jLGTc6vp29nJEtYJ." data-width="1400" data-height="232" src="https://cdn-images-1.medium.com/max/800/0*jLGTc6vp29nJEtYJ."></figure><p name="0188" id="0188" class="graf graf--p graf-after--figure">This benchmark was done on MacBook with 1.1GHz dual-core and 8GB of RAM (1866MHz LPDDR3).</p><p name="ea6b" id="ea6b" class="graf graf--p graf-after--p">The interpretation could go more or less like this: working on 10M additions takes under a second, while more composited arithmetic operations including 2 addition and 2 multiplications might be around 50% slower (not 400% as one might expects). There is no linear relationship between number of arithmetic operations and the time it takes. All in all, we’re talking about order of magnitude of 10M basic arithmetic operations per second on a modern laptop.</p><h4 name="994e" id="994e" class="graf graf--h4 graf-after--p"><strong class="markup--strong markup--h4-strong">Array</strong></h4><p name="879c" id="879c" class="graf graf--p graf-after--h4">Let’s take a look at expected asymptotic complexity of Array operations:</p><figure name="884d" id="884d" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*ud9WNWXs_8CFgJpECr0TdQ.png" data-width="957" data-height="167" src="https://cdn-images-1.medium.com/max/800/1*ud9WNWXs_8CFgJpECr0TdQ.png"></figure><p name="2d6b" id="2d6b" class="graf graf--p graf-after--figure">And here’s the benchmark for it:</p><figure name="ca07" id="ca07" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="0*Sgx_KcAV2s9gW0Vl." data-width="1400" data-height="178" src="https://cdn-images-1.medium.com/max/800/0*Sgx_KcAV2s9gW0Vl."></figure><p name="aaa5" id="aaa5" class="graf graf--p graf-after--figure">Can you spot something odd here? It seems like the insert operation is almost as performant as random access, even thought we would expect it is much slower. How is it possible? Well, the answer is hidden behind “Dynamic Array” which is an Array with following characteristics:</p><figure name="8fd6" id="8fd6" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*EjFbG5J9dopBnzGQQO7D9Q.png" data-width="947" data-height="168" src="https://cdn-images-1.medium.com/max/800/1*EjFbG5J9dopBnzGQQO7D9Q.png"></figure><p name="9165" id="9165" class="graf graf--p graf-after--figure">Dynamic Array will double its capacity every time it lacks space to add an element. How many operations will it perform then? Take a look at the picture below:</p><figure name="5804" id="5804" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*KWj4t0LkwCbzGzn1vYj90Q.png" data-width="369" data-height="424" src="https://cdn-images-1.medium.com/max/800/1*KWj4t0LkwCbzGzn1vYj90Q.png"></figure><p name="7368" id="7368" class="graf graf--p graf-after--figure">Every time we double the size of an Array, we have to rewrite the whole Array, which means k operations for an Array of size k. Total number of assignment operations will be:</p><p name="cffb" id="cffb" class="graf graf--p graf-after--p">1 + 2 + 4 + 8 + 16 + … + n = 2n — 1 .</p><p name="f9ec" id="f9ec" class="graf graf--p graf-after--p">So for n insert operations Ruby Array is doing only ~2*n assignments.</p><p name="9cf7" id="9cf7" class="graf graf--p graf-after--p">In practice rewriting Array is done by C memcpy operation, which calls low level memory controller operation. Therefore we can cheat on asymptotic complexity and get even more performance out of it.</p><h4 name="b02e" id="b02e" class="graf graf--h4 graf-after--p"><strong class="markup--strong markup--h4-strong">Hash</strong></h4><p name="395d" id="395d" class="graf graf--p graf-after--h4">Let’s take a look at the structure behind Hash in Ruby. Hash in Ruby is … hash algorithmic structure with following algorithmic time complexity characteristics:</p><figure name="95c3" id="95c3" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*4TZmvU4LJ5mWTomAcMdVEg.png" data-width="957" data-height="117" src="https://cdn-images-1.medium.com/max/800/1*4TZmvU4LJ5mWTomAcMdVEg.png"></figure><p name="ad4d" id="ad4d" class="graf graf--p graf-after--figure">No surprises here. Check out the benchmark for Hash. This time it’s only 1M operations (not 10M like in case of Array benchmark):</p><figure name="e7f6" id="e7f6" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="0*Jf_KfJGD4KWesq0r." data-width="1400" data-height="145" src="https://cdn-images-1.medium.com/max/800/0*Jf_KfJGD4KWesq0r."></figure><p name="88c9" id="88c9" class="graf graf--p graf-after--figure">As you can see although Hash is much slower than Array, it is still a pretty fast beast.</p><p name="3987" id="3987" class="graf graf--p graf-after--p">One interesting thing about Hash in Ruby is that it preserves the order of elements put into it. It doesn’t change complexity of operations, but uses a little bit of extra memory.</p><h4 name="8d5b" id="8d5b" class="graf graf--h4 graf-after--p"><strong class="markup--strong markup--h4-strong">String</strong></h4><p name="9c9c" id="9c9c" class="graf graf--p graf-after--h4">Let’s take a look at the String performance. Once again we will start with the benchmark:</p><figure name="d5db" id="d5db" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="0*308mEEajYBnOKq1r." data-width="1400" data-height="328" src="https://cdn-images-1.medium.com/max/800/0*308mEEajYBnOKq1r."></figure><p name="afc1" id="afc1" class="graf graf--p graf-after--figure">As you can see the N is much lower than for Array (100x) and Hash (10x). I put arithmetic and Array operation on top for comparison. Strings are surprisingly slow. As they are Array of chars one could argue that their performance should be similar to Array, but it’s not.</p><p name="5564" id="5564" class="graf graf--p graf-after--p"><strong class="markup--strong markup--p-strong">There are many learnings here:</strong></p><ul class="postList"><li name="1df9" id="1df9" class="graf graf--li graf-after--p">Strings unlike Arrays don’t utilise Dynamic Array strategy when it comes to + operator. Concatenation operator allocates new String and copies the whole Array, which is very slow operation.</li><li name="3e71" id="3e71" class="graf graf--li graf-after--li">UTF-8 chars have various length in bytes, which makes basic operations like retrieving n-th element non-trivial.</li><li name="4501" id="4501" class="graf graf--li graf-after--li">Ruby String eval (i.e. “#{ }”) have even lower performance than + operator, probably due to parsing overhead.</li><li name="1f42" id="1f42" class="graf graf--li graf-after--li">Finally &lt;&lt; operator is almost 200x faster for given case then + operator.</li><li name="13d3" id="13d3" class="graf graf--li graf-after--li">Note that String concatenation in other languages is much faster. For example JavaScript performance is better because JavaScript JIT uses Dynamic Array strategy for String operations optimisation. Ruby behavior is uncommon among programming languages.</li></ul><figure name="7766" id="7766" class="graf graf--figure graf-after--li"><img class="graf-image" data-image-id="1*kGlu-JZv7SFA_iRjtkzCLA.png" data-width="375" data-height="183" src="https://cdn-images-1.medium.com/max/800/1*kGlu-JZv7SFA_iRjtkzCLA.png"><figcaption class="imageCaption">Benchmark of concatenation in JavaScript</figcaption></figure><p name="08a6" id="08a6" class="graf graf--p graf-after--figure">Those points have tremendous impact on how we should code parsers and renderers.</p><h4 name="2acd" id="2acd" class="graf graf--h4 graf-after--p"><strong class="markup--strong markup--h4-strong">TL; DR:</strong></h4><h4 name="374c" id="374c" class="graf graf--h4 graf-after--h4"><strong class="markup--strong markup--h4-strong">Takeaways</strong></h4><ul class="postList"><li name="4198" id="4198" class="graf graf--li graf-after--h4">There is no clear linear relationship between number of arithmetic operations (in general assembly instructions) and the time it takes to execute them.</li><li name="8a5c" id="8a5c" class="graf graf--li graf-after--li">Ruby Arrays inserts are surprisingly fast as Ruby Arrays are Dynamic Arrays</li><li name="c532" id="c532" class="graf graf--li graf-after--li">Hashes are what one could expect them to be</li><li name="2c16" id="2c16" class="graf graf--li graf-after--li">Hashes are one order of magnitude slower than Arrays</li><li name="4091" id="4091" class="graf graf--li graf-after--li">Hashes are ordered by chronological order of inserts</li><li name="9b84" id="9b84" class="graf graf--li graf-after--li">Strings concatenation is very slow (unlike in other languages e.g. JavaScript)</li><li name="a4db" id="a4db" class="graf graf--li graf-after--li">It is much faster to use &lt;&lt; operator instead of + or String evaluation syntax “#{}”</li></ul><figure name="4e2c" id="4e2c" class="graf graf--figure graf-after--li"><img class="graf-image" data-image-id="1*KtnDoZhaAkXhmLy0-y_JoA.png" data-width="700" data-height="35" src="https://cdn-images-1.medium.com/max/800/1*KtnDoZhaAkXhmLy0-y_JoA.png"></figure><p name="a5e1" id="a5e1" class="graf graf--p graf-after--figure graf--trailing">If you enjoyed this article, please don’t forget to tap ❤. You can also follow us on <a href="https://www.facebook.com/Daftcode/" data-href="https://www.facebook.com/Daftcode/" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Facebook</a> and <a href="https://twitter.com/Daftcode_pl" data-href="https://twitter.com/Daftcode_pl" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Twitter</a>.</p></div></div></section>
+</section>
+<footer><p>By <a href="https://medium.com/@marekkirejczyk" class="p-author h-card">Marek Kirejczyk</a> on <a href="https://medium.com/p/a8837b9cedf7"><time class="dt-published" datetime="2016-10-26T16:22:29.867Z">October 26, 2016</time></a>.</p><p><a href="https://medium.com/@marekkirejczyk/performance-of-basic-ruby-types-a8837b9cedf7" class="p-canonical">Canonical link</a></p><p>Exported from <a href="https://medium.com">Medium</a> on September 22, 2025.</p></footer></article></body></html>

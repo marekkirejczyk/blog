@@ -1,0 +1,72 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Formal Verification for n00bs: Part 1</title><style>
+      * {
+        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+      }
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        font-size: 50px;
+        margin-bottom: 17px;
+        color: #333;
+      }
+      h2 {
+        font-size: 24px;
+        line-height: 1.6;
+        margin: 30px 0 0 0;
+        margin-bottom: 18px;
+        margin-top: 33px;
+        color: #333;
+      }
+      h3 {
+        font-size: 30px;
+        margin: 10px 0 20px 0;
+        color: #333;
+      }
+      header {
+        width: 640px;
+        margin: auto;
+      }
+      section {
+        width: 640px;
+        margin: auto;
+      }
+      section p {
+        margin-bottom: 27px;
+        font-size: 20px;
+        line-height: 1.6;
+        color: #333;
+      }
+      section img {
+        max-width: 640px;
+      }
+      footer {
+        padding: 0 20px;
+        margin: 50px 0;
+        text-align: center;
+        font-size: 12px;
+      }
+      .aspectRatioPlaceholder {
+        max-width: auto !important;
+        max-height: auto !important;
+      }
+      .aspectRatioPlaceholder-fill {
+        padding-bottom: 0 !important;
+      }
+      header,
+      section[data-field=subtitle],
+      section[data-field=description] {
+        display: none;
+      }
+      </style></head><body><article class="h-entry">
+<header>
+<h1 class="p-name">Formal Verification for n00bs: Part 1</h1>
+</header>
+<section data-field="subtitle" class="p-summary">
+This is first in a series of blog posts on Formal Verification (FV).
+</section>
+<section data-field="body" class="e-content">
+<section name="31b0" class="section section--body section--first section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="ccf5" id="ccf5" class="graf graf--h3 graf--leading graf--title">Formal Verification for n00bs — Part 1: The K ecosystem</h3><p name="0178" id="0178" class="graf graf--p graf-after--h3">This is first in a series of blog posts on Formal Verification:<br>Part 1: The K ecosystem<br><a href="https://medium.com/p/74085f5cd6c1" data-href="https://medium.com/p/74085f5cd6c1" class="markup--anchor markup--p-anchor" target="_blank">Part 2: Proving the correctness of a token</a><br><a href="http://Formal%20Verification%20for%20n00bs%20-Part%203:%20An%20attempt%20to%20prevent%20classic%20hack%20with%20Act" data-href="http://Formal Verification for n00bs -Part 3: An attempt to prevent classic hack with Act" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Part 3: Formal Verification for n00bs -Part 3: An attempt to prevent classic hack with Act</a><br><a href="https://medium.com/ethworks/formal-verification-for-n00bs-part-4-understanding-k-language-6069c20cfd47" data-href="https://medium.com/ethworks/formal-verification-for-n00bs-part-4-understanding-k-language-6069c20cfd47" class="markup--anchor markup--p-anchor" target="_blank">Part 4: Understanding K language</a></p><h3 name="01f0" id="01f0" class="graf graf--h3 graf-after--p">The motivation for Formal Verification</h3><p name="ef9f" id="ef9f" class="graf graf--p graf-after--h3">Security of smart contracts is still a crucial challenge: we all remember<a href="https://www.coindesk.com/understanding-dao-hack-journalists" data-href="https://www.coindesk.com/understanding-dao-hack-journalists" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank"> the DAO</a>, <a href="https://blog.zeppelin.solutions/on-the-parity-wallet-multisig-hack-405a8c12e8f7" data-href="https://blog.zeppelin.solutions/on-the-parity-wallet-multisig-hack-405a8c12e8f7" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">parity</a> <a href="https://www.coindesk.com/ethereum-software-parity-update-critical-bug-detected" data-href="https://www.coindesk.com/ethereum-software-parity-update-critical-bug-detected" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">hacks</a>, a bunch of smaller attacks and the most recent <a href="https://thenextweb.com/hardfork/2019/01/16/constantinople-ethereum-delayed/" data-href="https://thenextweb.com/hardfork/2019/01/16/constantinople-ethereum-delayed/" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">delayed hard fork</a>. We would like to see the future in which we can be way more confident about our code.</p><blockquote name="2d9a" id="2d9a" class="graf graf--blockquote graf-after--p">Depending how you count, event over a half a billion dollars (by today’s Ethereum evaluation), was lost in a couple of biggest smart contract hacks.</blockquote><p name="c6b9" id="c6b9" class="graf graf--p graf-after--blockquote">What about if behind every responsible piece of code stands pure solid mathematics instead of personal conviction of developers? With formal verification tools for Ethereum finally maturing, it is now not only possible but also practical.</p><p name="dc42" id="dc42" class="graf graf--p graf-after--p">In this and following post we will be getting step by step into the world of K-framework, which allows to formally verify EVM smart contracts.</p><h3 name="26c4" id="26c4" class="graf graf--h3 graf-after--p">The heart: Semantics and the K language</h3><p name="5888" id="5888" class="graf graf--p graf-after--h3">The heart of the whole ecosystem is language K. K is a language specially designed for defining semantics. Semantics describes the behavior of computer programs. For example, when we say that a construction<strong class="markup--strong markup--p-strong"> x++</strong> for x that is <em class="markup--em markup--p-em">uint</em> means that a program in Solidity executing it will always increase the value of x by 1, except for one value x = 2^256–1:</p><blockquote name="8cb4" id="8cb4" class="graf graf--blockquote graf-after--p">Example of “low-level” semantics in plain words:<br><strong class="markup--strong markup--blockquote-strong">x++</strong> set value of <strong class="markup--strong markup--blockquote-strong">x</strong> to <strong class="markup--strong markup--blockquote-strong">0</strong>, if x = 2^256–1;<br><strong class="markup--strong markup--blockquote-strong">x++</strong> sets value of <strong class="markup--strong markup--blockquote-strong">x</strong> to <strong class="markup--strong markup--blockquote-strong">x+1</strong>; otherwise.</blockquote><p name="3a68" id="3a68" class="graf graf--p graf-after--blockquote">This type of semantics, describing the meaning of every single instruction, is a kind of low-level definition. Besides that, what K also allows is to create high-level semantics, feasible to formulate semantics like the one below.</p><blockquote name="8b50" id="8b50" class="graf graf--blockquote graf-after--p">Example of “high-level” semantics in plain words:<br>Function<strong class="markup--strong markup--blockquote-strong"> <em class="markup--em markup--blockquote-em">bool isPrime(int x)</em></strong> returns <strong class="markup--strong markup--blockquote-strong"><em class="markup--em markup--blockquote-em">true</em></strong> only if <strong class="markup--strong markup--blockquote-strong"><em class="markup--em markup--blockquote-em">x</em></strong> is a prime.</blockquote><p name="9d71" id="9d71" class="graf graf--p graf-after--blockquote">To formally prove that your smart contract behaves as you wish, you need to provide:</p><ul class="postList"><li name="220a" id="220a" class="graf graf--li graf-after--p">low-level semantics of the language you use.</li><li name="09f0" id="09f0" class="graf graf--li graf-after--li">code of your program (EVM bytecode)</li><li name="735a" id="735a" class="graf graf--li graf-after--li">provide high-level (intended) semantics of your program</li></ul><figure name="8dc3" id="8dc3" class="graf graf--figure graf-after--li"><img class="graf-image" data-image-id="0*_ZEJbmeeH9Xeu9oH" data-width="512" data-height="288" src="https://cdn-images-1.medium.com/max/800/0*_ZEJbmeeH9Xeu9oH"></figure><p name="4688" id="4688" class="graf graf--p graf-after--figure">Providing high-level semantics is the most interesting and at the same time most challenging: you have to formulate how you actually wish that your program behaves.</p><h3 name="1f90" id="1f90" class="graf graf--h3 graf-after--p">Magic</h3><p name="0686" id="0686" class="graf graf--p graf-after--h3">Then the magic starts. The verifier is proving (or finding a counter-example) that your program together with low-level semantics of the programming language that you use, is indeed doing exactly the same stuff as behavior described by provided high-level semantics.</p><h3 name="2551" id="2551" class="graf graf--h3 graf-after--p">The K ecosystem</h3><p name="bbec" id="bbec" class="graf graf--p graf-after--h3">The K-framework ecosystem is somewhat complex but contains all you need:</p><ul class="postList"><li name="df42" id="df42" class="graf graf--li graf-after--p"><a href="http://www.kframework.org/index.php/K_Tutorial" data-href="http://www.kframework.org/index.php/K_Tutorial" class="markup--anchor markup--li-anchor" rel="noopener" target="_blank">K language</a> that allows you to write any kind of semantics;</li><li name="84dd" id="84dd" class="graf graf--li graf-after--li">Tooling that allows proving semantics using Z3 - a tool for automatic proving created by Microsoft Research;</li><li name="54ab" id="54ab" class="graf graf--li graf-after--li">Semantics for Ethereum Virtual Machine - KEVM, written by Everett Hildenbrandt;</li><li name="f320" id="f320" class="graf graf--li graf-after--li">Two (EDIT) c̶o̶m̶p̶e̶t̶i̶n̶g̶ <a href="https://en.wikipedia.org/wiki/Domain-specific_language" data-href="https://en.wikipedia.org/wiki/Domain-specific_language" class="markup--anchor markup--li-anchor" rel="noopener" target="_blank">DSL</a>s to create high-level semantics: act (part of <a href="https://github.com/dapphub/klab/blob/master/acts.md" data-href="https://github.com/dapphub/klab/blob/master/acts.md" class="markup--anchor markup--li-anchor" rel="noopener" target="_blank">KLAB</a> created by dapphub) and <a href="https://github.com/runtimeverification/verified-smart-contracts/blob/master/resources/edsl.md" data-href="https://github.com/runtimeverification/verified-smart-contracts/blob/master/resources/edsl.md" class="markup--anchor markup--li-anchor" rel="noopener" target="_blank">eDSL</a> (created by runtimeverification).</li></ul><figure name="c03d" id="c03d" class="graf graf--figure graf-after--li"><img class="graf-image" data-image-id="1*9Uarzq7Zanzzz60tHyh_-A.png" data-width="1216" data-height="750" data-is-featured="true" src="https://cdn-images-1.medium.com/max/800/1*9Uarzq7Zanzzz60tHyh_-A.png"><figcaption class="imageCaption">The ecosystem for creating proofs on EVM</figcaption></figure><p name="e7b6" id="e7b6" class="graf graf--p graf-after--figure">So the only additional work to do after the developing process is to write high-level intended semantics and put all the machinery to work.</p><p name="e07c" id="e07c" class="graf graf--p graf-after--p">The high-level semantics you can do it directly in K or use one of the mentioned DSLs tailored, particularly for Solidity.</p><h3 name="527c" id="527c" class="graf graf--h3 graf-after--p">Let’s take a look at the example</h3><p name="b0f3" id="b0f3" class="graf graf--p graf-after--h3">The natural questions are born here: how complicated high-level semantics is possible to formulate in K? Below is an example of high-level semantics of a ERC20 <em class="markup--em markup--p-em">transfer</em> function, written in Dapphub/klab specification language:</p><figure name="e22c" id="e22c" class="graf graf--figure graf--iframe graf-after--p"><script src="https://gist.github.com/marekkirejczyk/a6948b35f0f6533c8554bface413b9a8.js"></script></figure><p name="28ca" id="28ca" class="graf graf--p graf-after--figure">What does it all mean? We will answer this question in the very next blog post in the series. Spring is coming for formal verification!</p><p name="12bc" id="12bc" class="graf graf--p graf-after--p">Special thanks to Tomasz Kazana who’s work on formal verification in Ethworks lead to writing this blog post.</p><h3 name="9471" id="9471" class="graf graf--h3 graf-after--p">Stay tuned</h3><p name="3b6f" id="3b6f" class="graf graf--p graf-after--h3">To get updates on formal verification and other Ethereum related topic <strong class="markup--strong markup--p-strong">follow us on twitter:</strong> <a href="https://twitter.com/ethworks" data-href="https://twitter.com/ethworks" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">@ethworks</a></p><p name="fada" id="fada" class="graf graf--p graf-after--p graf--trailing">You can also follow us on Medium if you like the story 👏 👏 👏.</p></div></div></section>
+</section>
+<footer><p>By <a href="https://medium.com/@marekkirejczyk" class="p-author h-card">Marek Kirejczyk</a> on <a href="https://medium.com/p/b4781db2a383"><time class="dt-published" datetime="2019-01-25T11:15:24.082Z">January 25, 2019</time></a>.</p><p><a href="https://medium.com/@marekkirejczyk/formal-verification-for-n00bs-part-1-b4781db2a383" class="p-canonical">Canonical link</a></p><p>Exported from <a href="https://medium.com">Medium</a> on September 22, 2025.</p></footer></article></body></html>

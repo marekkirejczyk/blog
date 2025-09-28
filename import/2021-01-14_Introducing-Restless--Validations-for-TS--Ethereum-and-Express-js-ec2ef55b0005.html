@@ -1,0 +1,72 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Introducing Restless: Validations for TS, Ethereum and Express.js</title><style>
+      * {
+        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+      }
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        font-size: 50px;
+        margin-bottom: 17px;
+        color: #333;
+      }
+      h2 {
+        font-size: 24px;
+        line-height: 1.6;
+        margin: 30px 0 0 0;
+        margin-bottom: 18px;
+        margin-top: 33px;
+        color: #333;
+      }
+      h3 {
+        font-size: 30px;
+        margin: 10px 0 20px 0;
+        color: #333;
+      }
+      header {
+        width: 640px;
+        margin: auto;
+      }
+      section {
+        width: 640px;
+        margin: auto;
+      }
+      section p {
+        margin-bottom: 27px;
+        font-size: 20px;
+        line-height: 1.6;
+        color: #333;
+      }
+      section img {
+        max-width: 640px;
+      }
+      footer {
+        padding: 0 20px;
+        margin: 50px 0;
+        text-align: center;
+        font-size: 12px;
+      }
+      .aspectRatioPlaceholder {
+        max-width: auto !important;
+        max-height: auto !important;
+      }
+      .aspectRatioPlaceholder-fill {
+        padding-bottom: 0 !important;
+      }
+      header,
+      section[data-field=subtitle],
+      section[data-field=description] {
+        display: none;
+      }
+      </style></head><body><article class="h-entry">
+<header>
+<h1 class="p-name">Introducing Restless: Validations for TS, Ethereum and Express.js</h1>
+</header>
+<section data-field="subtitle" class="p-summary">
+Validations are … everywhere
+</section>
+<section data-field="body" class="e-content">
+<section name="6392" class="section section--body section--first"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--outsetColumn"><figure name="3f71" id="3f71" class="graf graf--figure graf--layoutOutsetCenter graf--leading"><img class="graf-image" data-image-id="1*uA54CgI3xdYAYgnz__Arig.png" data-width="2732" data-height="1282" data-is-featured="true" src="https://cdn-images-1.medium.com/max/1200/1*uA54CgI3xdYAYgnz__Arig.png"></figure></div><div class="section-inner sectionLayout--insetColumn"><h3 name="f5b6" id="f5b6" class="graf graf--h3 graf-after--figure graf--title">Introducing Restless: Validations for TS, Ethereum and Express.js</h3><h4 name="c6bd" id="c6bd" class="graf graf--h4 graf-after--h3 graf--subtitle">Validations are … everywhere</h4><p name="1cdd" id="1cdd" class="graf graf--p graf-after--h4">Data validations and sanitization are ubiquitous throughout all kinds of programming. From web to mobile, from back-end to front-end, and of course, in the blockchain space, where a single injection can carry devastating results.</p><h4 name="1732" id="1732" class="graf graf--h4 graf-after--p">😬 Validations are broken</h4><p name="2427" id="2427" class="graf graf--p graf-after--h4">It is also an annoying topic at times. There are many sanitization libraries, and one could expect that topic is exhausted. However, if we look for a lib with a reasonable list of expectations, you might find nothing that fits the bill.</p><p name="dc2a" id="dc2a" class="graf graf--p graf-after--p">The solid validation lib should have the following properties:</p><ul class="postList"><li name="d33b" id="d33b" class="graf graf--li graf-after--p"><strong class="markup--strong markup--li-strong">Type safety</strong> — sanitized data should automatically convert to a proper type (in TypeScript),</li><li name="a012" id="a012" class="graf graf--li graf-after--li"><strong class="markup--strong markup--li-strong">Reusability</strong> — Ability to define validations once and use them in multiple places,</li><li name="19bc" id="19bc" class="graf graf--li graf-after--li"><strong class="markup--strong markup--li-strong">Composability</strong> — ability to create new validations for complex types (i.e. objects and arrays) using previously defined validations,</li><li name="4912" id="4912" class="graf graf--li graf-after--li"><strong class="markup--strong markup--li-strong">Readable errors</strong> — if a validation fails, it should provide a meaningful message for the user,</li><li name="57a0" id="57a0" class="graf graf--li graf-after--li"><strong class="markup--strong markup--li-strong">Customization</strong> — the ability to easily create new completely custom validations,</li><li name="9825" id="9825" class="graf graf--li graf-after--li"><strong class="markup--strong markup--li-strong">Simple</strong> — if it takes more than 15min to learn the lib and start using it, it is too complex,</li><li name="c83f" id="c83f" class="graf graf--li graf-after--li"><strong class="markup--strong markup--li-strong">Small</strong> — our js project dependencies trees are already too big; we don’t want to make it even bigger.</li></ul><p name="56ba" id="56ba" class="graf graf--p graf-after--li">It would be a nice bonus if it had out-of-the-box support for our favorite technologies like Express.js and, of course, Ethereum.</p><h3 name="c07b" id="c07b" class="graf graf--h3 graf-after--p">🎩 Introducing Restless</h3><p name="5541" id="5541" class="graf graf--p graf-after--h3">And so we created Restless, a simple library for validations that can rise to the challange! Core <code class="markup--code markup--p-code">@restless/sanitizers</code> library takes only <strong class="markup--strong markup--p-strong">37kb </strong>unpacked and has <strong class="markup--strong markup--p-strong">zero dependencies</strong>. Purely functional — just the way you like it. But let’s start from scratch.</p><h4 name="7fb9" id="7fb9" class="graf graf--h4 graf-after--p">🛠️ Installation</h4><p name="28c6" id="28c6" class="graf graf--p graf-after--h4">Install core restless library to start using sanitizers and validation:</p><pre name="916c" id="916c" class="graf graf--pre graf-after--p"><code class="markup--code markup--pre-code">yarn add @restless/sanitizers</code></pre><h4 name="468f" id="468f" class="graf graf--h4 graf-after--pre">A simple example</h4><p name="cfd2" id="cfd2" class="graf graf--p graf-after--h4">Let’s start by casting a string to number, pretty straightforward:</p><pre name="c8ab" id="c8ab" class="graf graf--pre graf-after--p">cast(&#39;123&#39;, asNumber) // 123</pre><p name="71d0" id="71d0" class="graf graf--p graf-after--pre">If one tries to cast invalid number representation an error will be thrown:</p><pre name="208d" id="208d" class="graf graf--pre graf-after--p">cast(&#39;foo&#39;, asNumber) // TypeError</pre><p name="fc65" id="fc65" class="graf graf--p graf-after--pre">Error can be easily customized:</p><pre name="97c7" id="97c7" class="graf graf--pre graf-after--p">cast(&#39;foo&#39;, asNumber, &#39;My custom message&#39;)</pre><h4 name="6377" id="6377" class="graf graf--h4 graf-after--pre">🪄 Magic: Type safety</h4><p name="0d8d" id="0d8d" class="graf graf--p graf-after--h4">Now let’s assign result of a cast to variable of proper type, here is how it looks like in my Visual Studio Code:</p><figure name="bfe7" id="bfe7" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*ke8p7So5MNzLd9n6tIrBTA.png" data-width="1090" data-height="54" src="https://cdn-images-1.medium.com/max/800/1*ke8p7So5MNzLd9n6tIrBTA.png"></figure><p name="8718" id="8718" class="graf graf--p graf-after--figure">Now let’s see what happens if I accidentally try to assign result to a wrong type:</p><figure name="509f" id="509f" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*z5_NL-Y1ybgpuQFNS_yGZw.png" data-width="1182" data-height="234" src="https://cdn-images-1.medium.com/max/800/1*z5_NL-Y1ybgpuQFNS_yGZw.png"></figure><p name="5112" id="5112" class="graf graf--p graf-after--figure">Compiler and IDE knows the assignment is wrong, because there is a type mismatch. The data is sanitized and type safe.</p><h3 name="b2db" id="b2db" class="graf graf--h3 graf-after--p">🧰 Composability and reusability</h3><p name="d85b" id="d85b" class="graf graf--p graf-after--h3">You can define complex sanitizers for arrays:</p><pre name="dcc2" id="dcc2" class="graf graf--pre graf-after--p">const sanitizer = asArray(asNumber)</pre><p name="ddcd" id="ddcd" class="graf graf--p graf-after--pre">And objects:</p><pre name="f112" id="f112" class="graf graf--pre graf-after--p">const sanitizer = asObject({ foo: asNumber, bar: asString })</pre><p name="c400" id="c400" class="graf graf--p graf-after--pre">Once defined they can be used anywhere in the codebase.</p><h4 name="d9a8" id="d9a8" class="graf graf--h4 graf-after--p">⚙️ Creating a custom validator</h4><p name="37f5" id="37f5" class="graf graf--p graf-after--h4">Creating a custom validator is simple, here is an example function that checks if value provided is string is only capital letters:</p><pre name="4a12" id="4a12" class="graf graf--pre graf-after--p">export const asCapitalString: Sanitizer&lt;string&gt; = (value, path) =&gt;  <br>  typeof value === &#39;string&#39; &amp;&amp; value.match(/[A-Z]/)<br>    ? Result.ok(value)<br>    : Result.error([{ path, expected: &#39;string&#39; }])</pre><h4 name="5b62" id="5b62" class="graf graf--h4 graf-after--pre">💸 <strong class="markup--strong markup--h4-strong">Ethereum</strong></h4><p name="edc1" id="edc1" class="graf graf--p graf-after--h4">For Ethereum support install <code class="markup--code markup--p-code">@restless/ethereum</code> package:</p><pre name="08c9" id="08c9" class="graf graf--pre graf-after--p"><code class="markup--code markup--pre-code">yarn add @restless/ethereum</code></pre><p name="84e3" id="84e3" class="graf graf--p graf-after--pre">Now you can use additional sanitizers:</p><pre name="2655" id="2655" class="graf graf--pre graf-after--p">asEthAddress(&#39;0xA5fE...f213&#39;, ...)<br>asBigNumber(&#39;10000000000000&#39;, ...)<br>asHexBytes(...)<br><code class="markup--code markup--pre-code">asTransactionHash(...)</code></pre><h4 name="a5cd" id="a5cd" class="graf graf--h4 graf-after--pre">🚄 <strong class="markup--strong markup--h4-strong">Express.js</strong></h4><p name="6b2d" id="6b2d" class="graf graf--p graf-after--h4">For Express.js support install <code class="markup--code markup--p-code">@restless/restless</code> package:</p><pre name="2abe" id="2abe" class="graf graf--pre graf-after--p"><code class="markup--code markup--pre-code">yarn add @restless/restless</code></pre><p name="47a7" id="47a7" class="graf graf--p graf-after--pre">You can now use a couple of new functions like<code class="markup--code markup--p-code">sanitize</code>, <code class="markup--code markup--p-code">asyncHandler</code> and <code class="markup--code markup--p-code">responseOf</code> which will make sure you are properly sanitizing your data and formulating responses. An example route could look like this:</p><pre name="d8b8" id="d8b8" class="graf graf--pre graf-after--p">const app = express()<br>app.get(&#39;/:foo&#39;, asyncHandler(<br>  sanitize({<br>    foo: asNumber,<br>    body: asObject({<br>      bar: asNumber<br>    }),<br>    query: asObject({<br>      baz: asNumber<br>    })<br>  })<br>  (data) =&gt; responseOf(data)<br>))</pre><p name="0369" id="0369" class="graf graf--p graf-after--pre">The <code class="markup--code markup--p-code">sanitize</code> transforms the request into an object that matches a provided schema, <code class="markup--code markup--p-code">responseOf</code> formulates proper response with HTTP code and serialized JSON data. <code class="markup--code markup--p-code">asyncHandler</code> wraps it all into a middleware that can handle async functions and convert exceptions to proper HTTP responses.</p><h4 name="ef46" id="ef46" class="graf graf--h4 graf-after--p">📕 Documentation</h4><p name="0f2b" id="0f2b" class="graf graf--p graf-after--h4 graf--trailing">To learn more check documentation for the project on 🌐 <a href="http://getrestless.io/" data-href="http://getrestless.io/" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Restless website</a> and 💾 <a href="https://github.com/EthWorks/restless" data-href="https://github.com/EthWorks/restless" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Github</a>.</p></div></div></section><section name="3f5d" class="section section--body section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="4e62" id="4e62" class="graf graf--p graf--leading">We are <a href="https://ethworks.io/" data-href="https://ethworks.io/" class="markup--anchor markup--p-anchor" rel="noopener nofollow noopener" target="_blank">Ethworks</a>. A genuinely remarkable team for your blockchain project.</p><p name="8ac9" id="8ac9" class="graf graf--p graf-after--p graf--trailing">Follow us on 🐦 <a href="https://twitter.com/ethworks" data-href="https://twitter.com/ethworks" class="markup--anchor markup--p-anchor" rel="noopener nofollow noopener noopener" target="_blank">Twitter</a>!</p></div></div></section>
+</section>
+<footer><p>By <a href="https://medium.com/@marekkirejczyk" class="p-author h-card">Marek Kirejczyk</a> on <a href="https://medium.com/p/ec2ef55b0005"><time class="dt-published" datetime="2021-01-14T10:09:29.430Z">January 14, 2021</time></a>.</p><p><a href="https://medium.com/@marekkirejczyk/introducing-restless-validations-for-ts-ethereum-and-express-js-ec2ef55b0005" class="p-canonical">Canonical link</a></p><p>Exported from <a href="https://medium.com">Medium</a> on September 22, 2025.</p></footer></article></body></html>

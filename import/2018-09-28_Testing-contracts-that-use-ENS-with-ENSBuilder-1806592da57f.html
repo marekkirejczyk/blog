@@ -1,0 +1,72 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Testing contracts that use ENS with ENSBuilder</title><style>
+      * {
+        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+      }
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        font-size: 50px;
+        margin-bottom: 17px;
+        color: #333;
+      }
+      h2 {
+        font-size: 24px;
+        line-height: 1.6;
+        margin: 30px 0 0 0;
+        margin-bottom: 18px;
+        margin-top: 33px;
+        color: #333;
+      }
+      h3 {
+        font-size: 30px;
+        margin: 10px 0 20px 0;
+        color: #333;
+      }
+      header {
+        width: 640px;
+        margin: auto;
+      }
+      section {
+        width: 640px;
+        margin: auto;
+      }
+      section p {
+        margin-bottom: 27px;
+        font-size: 20px;
+        line-height: 1.6;
+        color: #333;
+      }
+      section img {
+        max-width: 640px;
+      }
+      footer {
+        padding: 0 20px;
+        margin: 50px 0;
+        text-align: center;
+        font-size: 12px;
+      }
+      .aspectRatioPlaceholder {
+        max-width: auto !important;
+        max-height: auto !important;
+      }
+      .aspectRatioPlaceholder-fill {
+        padding-bottom: 0 !important;
+      }
+      header,
+      section[data-field=subtitle],
+      section[data-field=description] {
+        display: none;
+      }
+      </style></head><body><article class="h-entry">
+<header>
+<h1 class="p-name">Testing contracts that use ENS with ENSBuilder</h1>
+</header>
+<section data-field="subtitle" class="p-summary">
+When it comes to testing contracts and functionality that uses Ethereum Naming System (ENS), it is a bit tricky. It is difficult to test in…
+</section>
+<section data-field="body" class="e-content">
+<section name="67e0" class="section section--body section--first"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="cd72" id="cd72" class="graf graf--h3 graf--leading graf--title">Testing contracts that use ENS with ENSBuilder</h3><blockquote name="d11a" id="d11a" class="graf graf--pullquote graf-after--h3">When it comes to testing contracts and functionality that uses <a href="https://ens.domains/" data-href="https://ens.domains/" class="markup--anchor markup--pullquote-anchor" rel="noopener" target="_blank">Ethereum Naming System</a> (ENS), it is a bit tricky. It is difficult to test in isolation from ENS, and it is hard to stub ENS.</blockquote><figure name="2bee" id="2bee" class="graf graf--figure graf-after--pullquote"><img class="graf-image" data-image-id="1*tX6TatfVqjtOHuMDm0kakA.png" data-width="793" data-height="301" src="https://cdn-images-1.medium.com/max/800/1*tX6TatfVqjtOHuMDm0kakA.png"></figure><p name="68a6" id="68a6" class="graf graf--p graf-after--figure">We stumble upon that challenge when working on <a href="https://github.com/EthWorks/ENSBuilder" data-href="https://github.com/EthWorks/ENSBuilder" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Universal Login SDK</a>.</p><p name="cdbc" id="cdbc" class="graf graf--p graf-after--p">To solve that problem we created a simple library called <a href="https://github.com/ethworks" data-href="https://github.com/ethworks" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">ENSBuilder</a>, which allows one to quickly set up and configure a standalone instance of ENS, on a local environment, in tests or on a test chain.</p><p name="44bd" id="44bd" class="graf graf--p graf-after--p">With ENSBuilder setup is as easy as a single method call:</p><pre name="37af" id="37af" class="graf graf--pre graf-after--p">const ensAddress = await builder.bootstrapWith(‘example’, ‘eth’);</pre><p name="c80f" id="c80f" class="graf graf--p graf-after--pre">And you already have a copy of ENS, up and running, as well as two domains registered: ‘ens’ and ‘example.ens’.</p><p name="0472" id="0472" class="graf graf--p graf-after--p">You can now register an address:</p><pre name="cb3c" id="cb3c" class="graf graf--pre graf-after--p">await builder.registerAddress(‘marek’, ‘example.eth’, ‘0x…’);</pre><h3 name="fc67" id="fc67" class="graf graf--h3 graf-after--pre">Ethers.js</h3><p name="5786" id="5786" class="graf graf--p graf-after--h3">The builder uses <a href="https://github.com/ethers-io/ethers.js/" data-href="https://github.com/ethers-io/ethers.js/" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">ethers.js</a> as a contract abstraction. W<a href="https://github.com/ethereum/web3.js/y" data-href="https://github.com/ethereum/web3.js/y" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">eb3js</a> is also supported but will require you to pass a private key. We plan to add better web3js support if we see requests from people to do it. We would also happily accept PRs :)</p><p name="99cd" id="99cd" class="graf graf--p graf-after--p">Why Ethers.js you may ask?<br>We find ethers.js to be a stable, light, feature complete and production ready alternative to web3js. Therefore we are using it both for tests as well as application code.</p><h3 name="b7eb" id="b7eb" class="graf graf--h3 graf-after--p">Getting Started</h3><p name="fcc3" id="fcc3" class="graf graf--p graf-after--h3 graf--trailing">For in-depth information as well as a quick tutorial <strong class="markup--strong markup--p-strong">go to </strong><a href="https://github.com/ethworks/ensbuilder" data-href="https://github.com/ethworks/ensbuilder" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank"><strong class="markup--strong markup--p-strong">EnsBuilder GitHub</strong></a><strong class="markup--strong markup--p-strong">.</strong></p></div></div></section><section name="ee60" class="section section--body section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="b070" id="b070" class="graf graf--p graf--leading">If you enjoyed this post, please hit the 👏 button and if you would like to get notified when new story shows up, click follow button below.</p><p name="a3e5" id="a3e5" class="graf graf--p graf-after--p graf--trailing">You can also follow us on <a href="https://www.facebook.com/ethworks" data-href="https://www.facebook.com/ethworks" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Facebook</a> and <a href="https://twitter.com/ethworks" data-href="https://twitter.com/ethworks" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Twitter</a>.</p></div></div></section>
+</section>
+<footer><p>By <a href="https://medium.com/@marekkirejczyk" class="p-author h-card">Marek Kirejczyk</a> on <a href="https://medium.com/p/1806592da57f"><time class="dt-published" datetime="2018-09-28T07:47:05.559Z">September 28, 2018</time></a>.</p><p><a href="https://medium.com/@marekkirejczyk/testing-contracts-that-use-ens-with-ensbuilder-1806592da57f" class="p-canonical">Canonical link</a></p><p>Exported from <a href="https://medium.com">Medium</a> on September 22, 2025.</p></footer></article></body></html>

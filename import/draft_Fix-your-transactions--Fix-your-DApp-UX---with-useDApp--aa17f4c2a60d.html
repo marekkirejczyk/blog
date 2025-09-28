@@ -1,0 +1,75 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Fix your transactions. Fix your DApp UX. (with useDApp)</title><style>
+      * {
+        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+      }
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        font-size: 50px;
+        margin-bottom: 17px;
+        color: #333;
+      }
+      h2 {
+        font-size: 24px;
+        line-height: 1.6;
+        margin: 30px 0 0 0;
+        margin-bottom: 18px;
+        margin-top: 33px;
+        color: #333;
+      }
+      h3 {
+        font-size: 30px;
+        margin: 10px 0 20px 0;
+        color: #333;
+      }
+      header {
+        width: 640px;
+        margin: auto;
+      }
+      section {
+        width: 640px;
+        margin: auto;
+      }
+      section p {
+        margin-bottom: 27px;
+        font-size: 20px;
+        line-height: 1.6;
+        color: #333;
+      }
+      section img {
+        max-width: 640px;
+      }
+      footer {
+        padding: 0 20px;
+        margin: 50px 0;
+        text-align: center;
+        font-size: 12px;
+      }
+      .aspectRatioPlaceholder {
+        max-width: auto !important;
+        max-height: auto !important;
+      }
+      .aspectRatioPlaceholder-fill {
+        padding-bottom: 0 !important;
+      }
+      header,
+      section[data-field=subtitle],
+      section[data-field=description] {
+        display: none;
+      }
+      </style></head><body><article class="h-entry">
+<header>
+<h1 class="p-name">Fix your transactions. Fix your DApp UX. (with useDApp)</h1>
+</header>
+<section data-field="subtitle" class="p-summary">
+This is the 3rd post of our series on new useDApp features:
+1. Introducing useDApp
+2. Deep dive into custom hooks and testing
+3…
+</section>
+<section data-field="body" class="e-content">
+<section name="6e86" class="section section--body section--first section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><figure name="af94" id="af94" class="graf graf--figure graf--leading"><img class="graf-image" data-image-id="1*IeDaZ7dGsrWAgS_OgiKydA.png" data-width="984" data-height="355" src="https://cdn-images-1.medium.com/max/800/1*IeDaZ7dGsrWAgS_OgiKydA.png"></figure><h3 name="2e39" id="2e39" class="graf graf--h3 graf-after--figure graf--title">Fix your transactions. Fix your DApp UX. (with useDApp)</h3><p name="34c6" id="34c6" class="graf graf--p graf--empty graf-after--h3"><br></p><p name="7aee" id="7aee" class="graf graf--p graf-after--p">This is the 3rd post of our series on new useDApp features:<br>1. <a href="https://medium.com/ethworks/introducing-usedapp-framework-for-rapid-dapp-development-4959361f242a" data-href="https://medium.com/ethworks/introducing-usedapp-framework-for-rapid-dapp-development-4959361f242a" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Introducing useDApp</a><br>2. <a href="https://medium.com/ethworks/usedapp-deep-dive-into-custom-hooks-and-testing-4a59fbc1769a" data-href="https://medium.com/ethworks/usedapp-deep-dive-into-custom-hooks-and-testing-4a59fbc1769a" class="markup--anchor markup--p-anchor" target="_blank">Deep dive into custom hooks and testing</a><br>3. Transactions and notifications</p><p name="b9a3" id="b9a3" class="graf graf--p graf-after--p">In  the previous blog posts we explored how to <a href="https://medium.com/ethworks/introducing-usedapp-framework-for-rapid-dapp-development-4959361f242a" data-href="https://medium.com/ethworks/introducing-usedapp-framework-for-rapid-dapp-development-4959361f242a" class="markup--anchor markup--p-anchor" target="_blank">build</a> and <a href="https://medium.com/ethworks/usedapp-deep-dive-into-custom-hooks-and-testing-4a59fbc1769a" data-href="https://medium.com/ethworks/usedapp-deep-dive-into-custom-hooks-and-testing-4a59fbc1769a" class="markup--anchor markup--p-anchor" target="_blank">test</a> DApps make calls to blockchain. Now it’s high time we looked into transactions.</p><h3 name="234b" id="234b" class="graf graf--h3 graf-after--p">📩 Sending transactions</h3><p name="d057" id="d057" class="graf graf--p graf-after--h3">Sending transactions seems like a trivial task at the first glance. However, there is more to it than meets the eye. Let’s start by iterating over possible states that the user can see when dealing with transactions:</p><ul class="postList"><li name="3366" id="3366" class="graf graf--li graf-after--p"><strong class="markup--strong markup--li-strong">None</strong> — first we need to show the user a piece of UI that will allow them to initiate a transaction. Modeling it as a state of transaction helps to get simple readable code. Take a look at an example component below that allows to wrap ETH into WETH.</li></ul><figure name="3f58" id="3f58" class="graf graf--figure graf-after--li"><img class="graf-image" data-image-id="1*jo41GeXtLQfSCTmGHxak1Q.png" data-width="676" data-height="104" src="https://cdn-images-1.medium.com/max/800/1*jo41GeXtLQfSCTmGHxak1Q.png"></figure><ul class="postList"><li name="0c8a" id="0c8a" class="graf graf--li graf-after--figure"><strong class="markup--strong markup--li-strong">Mining</strong> — then when a transaction is sent to the network, but not yet mined, we should display a proper indicator of the operation in progress.<br><em class="markup--em markup--li-em">Note:</em><strong class="markup--strong markup--li-strong"> </strong>In this state <code class="markup--code markup--li-code">TransactionRequest</code><em class="markup--em markup--li-em"> </em>object is available with transaction details including <em class="markup--em markup--li-em">transaction hash, </em>so among other things, we can show a link to the blockchain explorer<em class="markup--em markup--li-em">.</em></li></ul><figure name="419e" id="419e" class="graf graf--figure graf-after--li"><img class="graf-image" data-image-id="1*zRVgnlIHwrofIf1qIwnGGw.png" data-width="662" data-height="110" src="https://cdn-images-1.medium.com/max/800/1*zRVgnlIHwrofIf1qIwnGGw.png"></figure><ul class="postList"><li name="694d" id="694d" class="graf graf--li graf-after--figure"><strong class="markup--strong markup--li-strong">Success</strong> — when a transaction has been mined successfully, we are suppose to signal it to the user.<br><em class="markup--em markup--li-em">Note: </em>In this state <code class="markup--code markup--li-code">TransactionRequest</code>and <code class="markup--code markup--li-code">TransactionReceipt</code> are available.</li></ul><figure name="3721" id="3721" class="graf graf--figure graf-after--li"><img class="graf-image" data-image-id="1*HU0V7ALST2vemhSQOXIi2w.png" data-width="642" data-height="158" src="https://cdn-images-1.medium.com/max/800/1*HU0V7ALST2vemhSQOXIi2w.png"></figure><ul class="postList"><li name="0900" id="0900" class="graf graf--li graf-after--figure"><strong class="markup--strong markup--li-strong">Failed</strong> — when a transaction has been mined, but ended up reverted, we signal that to the user as well.<br><em class="markup--em markup--li-em">Note: </em>Again <code class="markup--code markup--li-code">TransactionRequest</code> and <code class="markup--code markup--li-code">TransactionReceipt</code> are available.</li><li name="c259" id="c259" class="graf graf--li graf-after--li"><strong class="markup--strong markup--li-strong">Exception</strong> — when a transaction hasn’t started, due to the exception that was thrown before the transaction was propagated to the network, we inform the user. <br>The exception could have come from:<br>- application/library code (e.g. unexpected exception like malformed arguments) <br>- Metamask (e.g user discarded transaction). <br><em class="markup--em markup--li-em">Note</em>: In this state the message error is available (as well as exception object).</li></ul><figure name="d25f" id="d25f" class="graf graf--figure graf-after--li"><img class="graf-image" data-image-id="1*-9OjtLUnyPLuntlvPLQOYA.png" data-width="754" data-height="146" src="https://cdn-images-1.medium.com/max/800/1*-9OjtLUnyPLuntlvPLQOYA.png"></figure><p name="669d" id="669d" class="graf graf--p graf-after--figure">Now let’s look at code that can manage all the cases below:</p><p name="45cb" id="45cb" class="graf graf--p graf-after--p">[CODE]</p><p name="00cf" id="00cf" class="graf graf--p graf-after--p">As you can see with useDApp — each case maps directly into a single line code that can show proper information to the user. </p><p name="6daf" id="6daf" class="graf graf--p graf-after--p">Additionally, if you work with TypeScript — <code class="markup--code markup--p-code">TransactionStatus</code> is  type safe, so only fields available for given state can be used in any given case in the <code class="markup--code markup--p-code">if</code> statement.</p><p name="9d34" id="9d34" class="graf graf--p graf-after--p">Checkout also a transaction example available <a href="https://example.usedapp.io/transactions" data-href="https://example.usedapp.io/transactions" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">here</a> and code <a href="https://github.com/EthWorks/useDApp/blob/master/packages/example/src/components/Notifications/Forms.tsx" data-href="https://github.com/EthWorks/useDApp/blob/master/packages/example/src/components/Notifications/Forms.tsx" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">here</a>.</p><h3 name="6788" id="6788" class="graf graf--h3 graf-after--p">🛎<a href="https://emojipedia.org/bellhop-bell/" data-href="https://emojipedia.org/bellhop-bell/" class="markup--anchor markup--h3-anchor" rel="noopener" target="_blank">️</a> Notifications</h3><p name="006a" id="006a" class="graf graf--p graf-after--h3">Most of the time displaying transaction status alone is not enough, as the user can navigate to another screen and lose the context.</p><p name="48b1" id="48b1" class="graf graf--p graf-after--p">It is then a good practice to either show list of pending transactions and/or notifications when the transaction status has changed. See the animation below.</p><p name="3ff0" id="3ff0" class="graf graf--p graf-after--p">[ANIMATED GIF]</p><p name="c73a" id="c73a" class="graf graf--p graf-after--p">And here is a snippet of code that displays notification:</p><p name="28ee" id="28ee" class="graf graf--p graf-after--p">[CODE]</p><p name="4e17" id="4e17" class="graf graf--p graf-after--p"><em class="markup--em markup--p-em">Note</em>: Additionally when a wallet connects or disconnects, relevant notifications are triggered.</p><p name="ecbd" id="ecbd" class="graf graf--p graf-after--p">Checkout also notifications example available <a href="https://example.usedapp.io/transactions" data-href="https://example.usedapp.io/transactions" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">here</a> and code <a href="https://github.com/EthWorks/useDApp/blob/master/packages/example/src/components/Notifications/Forms.tsx" data-href="https://github.com/EthWorks/useDApp/blob/master/packages/example/src/components/Notifications/Forms.tsx" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">here</a>.</p><h3 name="7094" id="7094" class="graf graf--h3 graf-after--p">📭 Transactions list</h3><p name="6ec8" id="6ec8" class="graf graf--p graf-after--h3">Notifications improve user experience greatly. But what if transaction is slow or if there are multiple transactions in progress or if the notification has already faded out? For these situations it is good to incorporate the list of all recent transactions in the UI. It goes for the pending, recently mined and failed ones. See the animation below:</p><p name="cddd" id="cddd" class="graf graf--p graf-after--p">[ANIMATED GIF]</p><p name="8eab" id="8eab" class="graf graf--p graf-after--p">And here comes the example code:</p><p name="2605" id="2605" class="graf graf--p graf-after--p">Checkout also transaction list example available <a href="https://example.usedapp.io/transactions" data-href="https://example.usedapp.io/transactions" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">here</a> and code <a href="https://github.com/EthWorks/useDApp/blob/master/packages/example/src/components/Notifications/Forms.tsx" data-href="https://github.com/EthWorks/useDApp/blob/master/packages/example/src/components/Notifications/Forms.tsx" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">here</a>.</p><blockquote name="ed60" id="ed60" class="graf graf--blockquote graf-after--p">It used to take days for a skilled developer to implement proper notifications and list of transactions. With useDApp it is a single line of code each. It takes care of all the annoying details: local storage, page refresh and chain switch support etc</blockquote><h3 name="de03" id="de03" class="graf graf--h3 graf-after--blockquote">🤸 Join us at 0xHack hackathon and win up to 💰 $10.000</h3><figure name="8504" id="8504" class="graf graf--figure graf-after--h3"><img class="graf-image" data-image-id="1*kJxIR2s_IA0gOz4kPqveiw.png" data-width="2652" data-height="1378" src="https://cdn-images-1.medium.com/max/800/1*kJxIR2s_IA0gOz4kPqveiw.png"></figure><p name="b4d8" id="b4d8" class="graf graf--p graf-after--figure">We are organising <a href="https://0xhack.dev/" data-href="https://0xhack.dev/" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">0xHack</a> together with our <a href="https://0xhack.dev/#prizes" data-href="https://0xhack.dev/#prizes" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">great partners</a>. It is a two-week <strong class="markup--strong markup--p-strong">online hackathon</strong>, starting 14th of May. It is free, open for all and there is<br> 💰10.000 DAI to win in bounties with useDApp:</p><p name="07f0" id="07f0" class="graf graf--p graf-after--p">🏆💲3000 DAI and 💲2000 DAI — for two best new feature implementations <br>🏆💲2000 DAI and 💲1000 DAI — for two best DApps using useDApp<br>🏆💲1000 DAI —for  best tutorial or guide for useDApp<br>🏆 5x 💲200 DAI — for DApps using useDApp</p><h3 name="75c2" id="75c2" class="graf graf--h3 graf-after--p">Join now 👇🏼</h3><p name="5fd8" id="5fd8" class="graf graf--p graf-after--h3">Go to <a href="https://0xhack.dev/" data-href="https://0xhack.dev/" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">0xhack.dev</a> and join now!</p><p name="f385" id="f385" class="graf graf--p graf--empty graf-after--p"><br></p><p name="3267" id="3267" class="graf graf--p graf--empty graf-after--p"><br></p><h3 name="5e8f" id="5e8f" class="graf graf--h3 graf--empty graf-after--p graf--trailing"><br></h3></div></div></section>
+</section>
+<footer><p><a href="https://medium.com/p/aa17f4c2a60d">View original.</a></p><p>Exported from <a href="https://medium.com">Medium</a> on September 22, 2025.</p></footer></article></body></html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Pragmatic smart contracting (TDD, Pairing, Waffle &amp; Buidler)</title><style>
+      * {
+        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+      }
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        font-size: 50px;
+        margin-bottom: 17px;
+        color: #333;
+      }
+      h2 {
+        font-size: 24px;
+        line-height: 1.6;
+        margin: 30px 0 0 0;
+        margin-bottom: 18px;
+        margin-top: 33px;
+        color: #333;
+      }
+      h3 {
+        font-size: 30px;
+        margin: 10px 0 20px 0;
+        color: #333;
+      }
+      header {
+        width: 640px;
+        margin: auto;
+      }
+      section {
+        width: 640px;
+        margin: auto;
+      }
+      section p {
+        margin-bottom: 27px;
+        font-size: 20px;
+        line-height: 1.6;
+        color: #333;
+      }
+      section img {
+        max-width: 640px;
+      }
+      footer {
+        padding: 0 20px;
+        margin: 50px 0;
+        text-align: center;
+        font-size: 12px;
+      }
+      .aspectRatioPlaceholder {
+        max-width: auto !important;
+        max-height: auto !important;
+      }
+      .aspectRatioPlaceholder-fill {
+        padding-bottom: 0 !important;
+      }
+      header,
+      section[data-field=subtitle],
+      section[data-field=description] {
+        display: none;
+      }
+      </style></head><body><article class="h-entry">
+<header>
+<h1 class="p-name">Pragmatic smart contracting (TDD, Pairing, Waffle &amp; Buidler)</h1>
+</header>
+<section data-field="subtitle" class="p-summary">
+With major security incidents popping up at least several times a year, an obvious question might arise: What would be a pragmatic…
+</section>
+<section data-field="body" class="e-content">
+<section name="65c2" class="section section--body section--first section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--outsetColumn"><figure name="8023" id="8023" class="graf graf--figure graf--layoutOutsetCenter graf--leading"><img class="graf-image" data-image-id="1*x0Of4Ru0WyUfx-gDcYCnIg.png" data-width="3000" data-height="1650" data-is-featured="true" src="https://cdn-images-1.medium.com/max/1200/1*x0Of4Ru0WyUfx-gDcYCnIg.png"></figure></div><div class="section-inner sectionLayout--insetColumn"><h3 name="f7d0" id="f7d0" class="graf graf--h3 graf-after--figure graf--title">Pragmatic smart contracting (TDD, Pairing, Waffle &amp; Buidler)</h3><p name="984e" id="984e" class="graf graf--p graf-after--h3">With major security incidents popping up at least several times a year, an obvious question might arise: What would be a pragmatic approach to create high-quality, security-sensitive software like smart contracts?</p><h3 name="2b39" id="2b39" class="graf graf--h3 graf-after--p">Formal Verification not here yet</h3><p name="011c" id="011c" class="graf graf--p graf-after--h3">We once put a lot of hope in formal verification (FV) but it became somewhat of a disappointment due to its high cost and slow process. Especially in times when it is common to skip not only the secondary security audit, but (sic!) in some cases even the first one (which we strongly recommend against!).</p><p name="4321" id="4321" class="graf graf--p graf-after--p">If you want to learn more about FV you might wanna have a look at our <a href="https://medium.com/ethworks/formal-verification-for-n00bs-part-1-b4781db2a383" data-href="https://medium.com/ethworks/formal-verification-for-n00bs-part-1-b4781db2a383" class="markup--anchor markup--p-anchor" target="_blank">formal verification series</a> and <a href="https://medium.com/universal-ethereum/what-we-learned-building-universal-login-part-1-security-2e49ca4e7319" data-href="https://medium.com/universal-ethereum/what-we-learned-building-universal-login-part-1-security-2e49ca4e7319" class="markup--anchor markup--p-anchor" target="_blank">some conclusions</a>.</p><h3 name="9ae0" id="9ae0" class="graf graf--h3 graf-after--p">TDD and pairing</h3><p name="9968" id="9968" class="graf graf--p graf-after--h3">The approach we adopted at Ethworks is the good old Extreme Programming duo: Test Driven Development (TDD) and Ping-Pong Pair Programming (PPPP).</p><figure name="3629" id="3629" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*fSCuU_YAmCZZpwVOHpK7ag@2x.png" data-width="3938" data-height="2752" src="https://cdn-images-1.medium.com/max/800/1*fSCuU_YAmCZZpwVOHpK7ag@2x.png"></figure><p name="3f19" id="3f19" class="graf graf--p graf-after--figure">DD consists in writing tests before implementation, which results in well-tested, well-designed, easily refactorable code and higher test coverage</p><p name="b69d" id="b69d" class="graf graf--p graf-after--p">PPPP on the other hand involves two developers working with one computer and switching keyboard as they go through different phases: writing test, implementation and refactoring. With two pairs of eyes on the code all the time, it is easier to avoid most defects, shortcuts, and build better understanding of the code and unintended consequences.</p><h3 name="92f7" id="92f7" class="graf graf--h3 graf-after--p">The time reports</h3><p name="c21c" id="c21c" class="graf graf--p graf-after--h3">Recently one of our customers asked us about time reports that looked somewhat like this:</p></div><div class="section-inner sectionLayout--outsetColumn"><figure name="0fc8" id="0fc8" class="graf graf--figure graf--layoutOutsetCenter graf-after--p"><img class="graf-image" data-image-id="1*lTv8ADbVwnhmZfLgWYGIyg.png" data-width="8988" data-height="2062" src="https://cdn-images-1.medium.com/max/1200/1*lTv8ADbVwnhmZfLgWYGIyg.png"><figcaption class="imageCaption">Almost identical time reports from two developers</figcaption></figure></div><div class="section-inner sectionLayout--insetColumn"><p name="ec7a" id="ec7a" class="graf graf--p graf-after--figure">We thought it is a great opportunity to share more about how we write smart contracts. If an image says a thousand words, then a live coding session is even better. Which was also an excuse to demonstrate the modern smart contract development stack with <a href="https://getwaffle.io/" data-href="https://getwaffle.io/" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Waffle</a>, <a href="https://buidler.dev/" data-href="https://buidler.dev/" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Buidler</a>, as well other excellent tools like <a href="https://github.com/ethereum-ts/TypeChain" data-href="https://github.com/ethereum-ts/TypeChain" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">TypeChain</a> and <a href="https://github.com/ethers-io/ethers.js/" data-href="https://github.com/ethers-io/ethers.js/" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Ethers.js</a>.</p><p name="3342" id="3342" class="graf graf--p graf-after--p">A good toolkit is crucial for effective TDD. We build Waffle with that in mind, providing wide range of matchers and short cohesive syntax. Speed of test execution is also crucial and that is where Buidler with it EVM comes in handy.</p><h3 name="bbd9" id="bbd9" class="graf graf--h3 graf-after--p">Live demo</h3><p name="2203" id="2203" class="graf graf--p graf-after--h3">And so we use our presentation at <a href="https://ethonline.org/" data-href="https://ethonline.org/" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">EthOnline</a> to perform the session during the first day. We build (well almost…) a simple decentralised exchange in AMM model in just 15 min. Checkout the video below:</p><figure name="b93a" id="b93a" class="graf graf--figure graf--iframe graf-after--p"><iframe src="https://www.youtube.com/embed/gCEyIWPShpw?feature=oembed" width="700" height="393" frameborder="0" scrolling="no"></iframe></figure><p name="64b6" id="64b6" class="graf graf--p graf-after--figure">While conference live demo can’t demonstrate how the coding looks like in real life, we hope it gives you a good glimpse.</p><p name="bedd" id="bedd" class="graf graf--p graf-after--p">For those who who didn’t heard about those techniques before, we provide a quick FAQ section below.</p><h3 name="20a3" id="20a3" class="graf graf--h3 graf-after--p">FAQ</h3><p name="a76a" id="a76a" class="graf graf--p graf-after--h3"><strong class="markup--strong markup--p-strong">Do you test drive all the code?<br></strong>Yes, we write the majority of production code with TDD. One good exception to that might be spikes — prototypes, experimental pieces of code that we write to learn, or test a new tech or approach.</p><p name="d5fd" id="d5fd" class="graf graf--p graf-after--p"><strong class="markup--strong markup--p-strong">Do you write all the code in pairs?<br></strong>Nope, just the more challenging parts. Especially often at the beginning of a project or new big feature. Also for learning, skill sharing and on-boarding new developers.</p><p name="8377" id="8377" class="graf graf--p graf-after--p"><strong class="markup--strong markup--p-strong">Isn’t pairing slower (and therefore more expensive)?<br></strong>Not really, the consensus among practitioners seems to be that the speed is similar (maybe a bit slower) in the short term, but there is a huge boost in the long term.</p><p name="7082" id="7082" class="graf graf--p graf-after--p">Pairing tends to lead towards faster knowledge acquisition and skill sharing, fewer defects and higher quality code. All of that adds up. The more complex the challange, the more pronounced the benefit.</p><p name="89b9" id="89b9" class="graf graf--p graf-after--p"><strong class="markup--strong markup--p-strong">Isn’t TDD slower (and more expensive)?<br></strong>In a similar way as pairing, benefits of test driving tend to outweigh investments and boosts performance in the long term.</p><p name="9514" id="9514" class="graf graf--p graf-after--p"><strong class="markup--strong markup--p-strong">I still don’t get it/believe it is more performant!<br></strong>Both TDD and PPPP are somewhat unintuitive, but there is a lot of great in depth material about it. <a href="https://www.amazon.com/Test-Driven-Development-Kent-Beck/dp/0321146530" data-href="https://www.amazon.com/Test-Driven-Development-Kent-Beck/dp/0321146530" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">“Test Driven Development…”</a> by Kent Beck is a good start for test driving and <a href="https://www.amazon.com/Pair-Programming-Illuminated-Laurie-Williams/dp/0201745763/ref=sr_1_1?crid=1UV95XQEMI053&amp;dchild=1&amp;keywords=pair+programming+illuminated&amp;qid=1602576733&amp;sprefix=pair+programming+%2Caps%2C238&amp;sr=8-1" data-href="https://www.amazon.com/Pair-Programming-Illuminated-Laurie-Williams/dp/0201745763/ref=sr_1_1?crid=1UV95XQEMI053&amp;dchild=1&amp;keywords=pair+programming+illuminated&amp;qid=1602576733&amp;sprefix=pair+programming+%2Caps%2C238&amp;sr=8-1" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Pair Programming Illuminated</a> is a great explanation of paring in general.</p><p name="5df9" id="5df9" class="graf graf--p graf-after--p"><strong class="markup--strong markup--p-strong">Can I skip security audit for code written that way?<br></strong>Definitely not.</p><h3 name="98d1" id="98d1" class="graf graf--h3 graf-after--p">We await your feedback</h3><p name="9164" id="9164" class="graf graf--p graf-after--h3 graf--trailing">Do you love it? Or do you hate it? Let us know in the comments ;)</p></div></div></section>
+</section>
+<footer><p>By <a href="https://medium.com/@marekkirejczyk" class="p-author h-card">Marek Kirejczyk</a> on <a href="https://medium.com/p/335e42c8762d"><time class="dt-published" datetime="2020-10-13T07:44:37.598Z">October 13, 2020</time></a>.</p><p><a href="https://medium.com/@marekkirejczyk/pragmatic-smart-contracting-tdd-pairing-waffle-buidler-335e42c8762d" class="p-canonical">Canonical link</a></p><p>Exported from <a href="https://medium.com">Medium</a> on September 22, 2025.</p></footer></article></body></html>

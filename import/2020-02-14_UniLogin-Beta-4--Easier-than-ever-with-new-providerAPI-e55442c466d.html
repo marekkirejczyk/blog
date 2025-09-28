@@ -1,0 +1,72 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>UniLogin Beta 4: Easier than ever with new providerAPI</title><style>
+      * {
+        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+      }
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        font-size: 50px;
+        margin-bottom: 17px;
+        color: #333;
+      }
+      h2 {
+        font-size: 24px;
+        line-height: 1.6;
+        margin: 30px 0 0 0;
+        margin-bottom: 18px;
+        margin-top: 33px;
+        color: #333;
+      }
+      h3 {
+        font-size: 30px;
+        margin: 10px 0 20px 0;
+        color: #333;
+      }
+      header {
+        width: 640px;
+        margin: auto;
+      }
+      section {
+        width: 640px;
+        margin: auto;
+      }
+      section p {
+        margin-bottom: 27px;
+        font-size: 20px;
+        line-height: 1.6;
+        color: #333;
+      }
+      section img {
+        max-width: 640px;
+      }
+      footer {
+        padding: 0 20px;
+        margin: 50px 0;
+        text-align: center;
+        font-size: 12px;
+      }
+      .aspectRatioPlaceholder {
+        max-width: auto !important;
+        max-height: auto !important;
+      }
+      .aspectRatioPlaceholder-fill {
+        padding-bottom: 0 !important;
+      }
+      header,
+      section[data-field=subtitle],
+      section[data-field=description] {
+        display: none;
+      }
+      </style></head><body><article class="h-entry">
+<header>
+<h1 class="p-name">UniLogin Beta 4: Easier than ever with new providerAPI</h1>
+</header>
+<section data-field="subtitle" class="p-summary">
+Note: We recently changed the name from Universal Login to Unilogin (link to the announcement here).
+</section>
+<section data-field="body" class="e-content">
+<section name="e9cd" class="section section--body section--first section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="d757" id="d757" class="graf graf--h3 graf--leading graf--title">UniLogin Beta 4: Easier than ever with new providerAPI</h3><p name="72b5" id="72b5" class="graf graf--p graf-after--h3"><em class="markup--em markup--p-em">Note: We recently changed the name from Universal Login to Unilogin (link to the announcement </em><a href="https://medium.com/universal-ethereum/universal-login-is-now-unilogin-eb4683efadfc" data-href="https://medium.com/universal-ethereum/universal-login-is-now-unilogin-eb4683efadfc" class="markup--anchor markup--p-anchor" target="_blank"><em class="markup--em markup--p-em">here</em></a><em class="markup--em markup--p-em">).</em></p><p name="5930" id="5930" class="graf graf--p graf-after--p">We are happy to announce Beta 4 with a new Web3 provider API.</p><h3 name="62c5" id="62c5" class="graf graf--h3 graf-after--p">Integrating Web3 provider API</h3><p name="3e63" id="3e63" class="graf graf--p graf-after--h3">A new API is straightforward to integrate; you can do it in 3 easy steps:</p><ul class="postList"><li name="f640" id="f640" class="graf graf--li graf-after--p"><strong class="markup--strong markup--li-strong">Install npm:</strong></li></ul><pre name="a473" id="a473" class="graf graf--pre graf-after--li">yarn add @universal-login/provider</pre><ul class="postList"><li name="483b" id="483b" class="graf graf--li graf-after--pre"><strong class="markup--strong markup--li-strong">Import UniLogin</strong></li></ul><pre name="680b" id="680b" class="graf graf--pre graf-after--li">import UniLoginProvider from &#39;@universal-login/provider&#39;;</pre><ul class="postList"><li name="392c" id="392c" class="graf graf--li graf-after--pre"><strong class="markup--strong markup--li-strong">Configure existing web3:</strong></li></ul><pre name="e4ce" id="e4ce" class="graf graf--pre graf-after--li">web3.setProvider(<br>  UniLoginProvider.createPicker(web3.currentProvider)<br>);</pre><p name="7547" id="7547" class="graf graf--p graf-after--pre">That’s it. Done!</p><h3 name="e069" id="e069" class="graf graf--h3 graf-after--p"><strong class="markup--strong markup--h3-strong">Wonders of UniLogin</strong></h3><p name="2cfe" id="2cfe" class="graf graf--p graf-after--h3">That is all you need to do to unleash all the wonders of UniLogin. When a user wants to interact with Ethereum for the first time, the dialog to pick UniLogin or MetaMask appears.</p><figure name="2faa" id="2faa" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*sWw6ONmAK_qj12w7eDrp4A.png" data-width="2514" data-height="1713" data-is-featured="true" src="https://cdn-images-1.medium.com/max/800/1*sWw6ONmAK_qj12w7eDrp4A.png"></figure><p name="5728" id="5728" class="graf graf--p graf-after--figure">If the user picks MetaMask, the application works like it always did. If on the other hand, users pick UniLogin, the application guides her step by step into creating the account, including on-ramping.</p><figure name="f621" id="f621" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*QLR_b3Og9Kooy4M53Rv2Rg.png" data-width="2934" data-height="2472" src="https://cdn-images-1.medium.com/max/800/1*QLR_b3Og9Kooy4M53Rv2Rg.png"></figure><p name="f15b" id="f15b" class="graf graf--p graf-after--figure">If a user wants to make a transaction or interact with the blockchain, you will get a dialog that allows you to confirm and customize gas options.</p><figure name="00d5" id="00d5" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*5-f3bTnTlmYcF8-UyVVfTQ.png" data-width="2934" data-height="2472" src="https://cdn-images-1.medium.com/max/800/1*5-f3bTnTlmYcF8-UyVVfTQ.png"></figure><p name="f5e4" id="f5e4" class="graf graf--p graf-after--figure">On top of that, when the transaction is being mined a dialog is displayed, so that you don’t have to implement your own.</p><p name="f2a0" id="f2a0" class="graf graf--p graf-after--p">We implemented a small in-app wallet inside your application so that users don’t have to install anything or leave your application to have full control over his account.</p><h3 name="9a78" id="9a78" class="graf graf--h3 graf-after--p">Button to trigger account management</h3><p name="27e2" id="27e2" class="graf graf--p graf-after--h3">You can add a UniLogin button. It allows the user to manage his account on demand. Adding the button is just one line in HTML:</p><pre name="23e9" id="23e9" class="graf graf--pre graf-after--p">&lt;button id=&quot;unilogin-button&quot; /&gt;</pre><figure name="4805" id="4805" class="graf graf--figure graf-after--pre"><img class="graf-image" data-image-id="1*fndKhP71SzXdDcMiKb0v0Q.png" data-width="1778" data-height="1230" src="https://cdn-images-1.medium.com/max/800/1*fndKhP71SzXdDcMiKb0v0Q.png"></figure><h3 name="7d7b" id="7d7b" class="graf graf--h3 graf-after--figure">Summary</h3><ul class="postList"><li name="90ab" id="90ab" class="graf graf--li graf-after--h3">With UniLogin, using Ethereum dapps is easier than ever, with the user guided step by step without ever leaving your application.</li><li name="c28c" id="c28c" class="graf graf--li graf-after--li">DApp development is faster than ever, as you can save time not having to build onboarding and top-up.</li></ul><h3 name="30b0" id="30b0" class="graf graf--h3 graf-after--li">What is next?</h3><p name="c324" id="c324" class="graf graf--p graf-after--h3">This is last the last beta. We are now focusing on stability and minor features and getting the first RC1 out later this month and onward to a first stable version in March!</p><h3 name="ef74" id="ef74" class="graf graf--h3 graf-after--p">Follow us!</h3><p name="7831" id="7831" class="graf graf--p graf-after--h3">To make sure you don’t miss the next posts in the series, follow us <a href="https://medium.com/universal-ethereum" data-href="https://medium.com/universal-ethereum" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Medium</a> and <a href="https://twitter.com/unilogin" data-href="https://twitter.com/unilogin" class="markup--anchor markup--p-anchor" rel="noopener nofollow noopener" target="_blank">Twitter</a>.</p><h3 name="46af" id="46af" class="graf graf--h3 graf-after--p">Pilot program</h3><p name="df5c" id="df5c" class="graf graf--p graf-after--h3">Still not signed-up for our Beta program? Fix it!</p><p name="2361" id="2361" class="graf graf--p graf-after--p graf--trailing"><a href="http://tiny.cc/unilogin" data-href="http://tiny.cc/unilogin" class="markup--anchor markup--p-anchor" rel="noopener nofollow noopener" target="_blank">Join our Pilot program</a> 👮🏽 🛩</p></div></div></section>
+</section>
+<footer><p>By <a href="https://medium.com/@marekkirejczyk" class="p-author h-card">Marek Kirejczyk</a> on <a href="https://medium.com/p/e55442c466d"><time class="dt-published" datetime="2020-02-14T16:06:57.500Z">February 14, 2020</time></a>.</p><p><a href="https://medium.com/@marekkirejczyk/unilogin-beta-4-easier-than-ever-with-new-providerapi-e55442c466d" class="p-canonical">Canonical link</a></p><p>Exported from <a href="https://medium.com">Medium</a> on September 22, 2025.</p></footer></article></body></html>

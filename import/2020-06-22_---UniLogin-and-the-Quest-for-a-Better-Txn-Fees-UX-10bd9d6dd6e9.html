@@ -1,0 +1,72 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>🦄 UniLogin and the Quest for a Better Txn Fees UX</title><style>
+      * {
+        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+      }
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        font-size: 50px;
+        margin-bottom: 17px;
+        color: #333;
+      }
+      h2 {
+        font-size: 24px;
+        line-height: 1.6;
+        margin: 30px 0 0 0;
+        margin-bottom: 18px;
+        margin-top: 33px;
+        color: #333;
+      }
+      h3 {
+        font-size: 30px;
+        margin: 10px 0 20px 0;
+        color: #333;
+      }
+      header {
+        width: 640px;
+        margin: auto;
+      }
+      section {
+        width: 640px;
+        margin: auto;
+      }
+      section p {
+        margin-bottom: 27px;
+        font-size: 20px;
+        line-height: 1.6;
+        color: #333;
+      }
+      section img {
+        max-width: 640px;
+      }
+      footer {
+        padding: 0 20px;
+        margin: 50px 0;
+        text-align: center;
+        font-size: 12px;
+      }
+      .aspectRatioPlaceholder {
+        max-width: auto !important;
+        max-height: auto !important;
+      }
+      .aspectRatioPlaceholder-fill {
+        padding-bottom: 0 !important;
+      }
+      header,
+      section[data-field=subtitle],
+      section[data-field=description] {
+        display: none;
+      }
+      </style></head><body><article class="h-entry">
+<header>
+<h1 class="p-name">🦄 UniLogin and the Quest for a Better Txn Fees UX</h1>
+</header>
+<section data-field="subtitle" class="p-summary">
+Transaction fees remain one of the main usability challenges for Ethereum and blockchains in general. There are a few different problems…
+</section>
+<section data-field="body" class="e-content">
+<section name="7147" class="section section--body section--first section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="c6e6" id="c6e6" class="graf graf--h3 graf--leading graf--title">🦄 UniLogin and the Quest for a Better Txn Fees UX</h3></div><div class="section-inner sectionLayout--outsetColumn"><figure name="765b" id="765b" class="graf graf--figure graf--layoutOutsetCenter graf-after--h3"><img class="graf-image" data-image-id="1*EXSqTOTYimOoM45OTp1kGQ.png" data-width="1500" data-height="1000" data-is-featured="true" src="https://cdn-images-1.medium.com/max/1200/1*EXSqTOTYimOoM45OTp1kGQ.png"></figure></div><div class="section-inner sectionLayout--insetColumn"><p name="f41a" id="f41a" class="graf graf--p graf-after--figure">Transaction fees remain one of the main usability challenges for Ethereum and blockchains in general. There are a few different problems with them.</p><h4 name="7646" id="7646" class="graf graf--h4 graf-after--p"><strong class="markup--strong markup--h4-strong">Problem 1: Fluctuations</strong></h4><p name="0396" id="0396" class="graf graf--p graf-after--h4">Fluctuations gas prices make fees unpredictable. The chart below is just one illustration of how volatile gas prices can be.</p></div><div class="section-inner sectionLayout--outsetColumn"><figure name="864f" id="864f" class="graf graf--figure graf--layoutOutsetCenter graf-after--p"><img class="graf-image" data-image-id="1*27a4nbU2EZIgHHz_AoZfJQ.png" data-width="2190" data-height="706" src="https://cdn-images-1.medium.com/max/1200/1*27a4nbU2EZIgHHz_AoZfJQ.png"><figcaption class="imageCaption">Historical gas prices on Ethereum</figcaption></figure></div><div class="section-inner sectionLayout--insetColumn"><h4 name="5ec1" id="5ec1" class="graf graf--h4 graf-after--figure"><strong class="markup--strong markup--h4-strong">Problem 2: Necessity of ETH</strong></h4><p name="7960" id="7960" class="graf graf--p graf-after--h4">A user may want to move ERC20 tokens around but still needs ETH to do it. This can result in what the user perceives as a bizarre situation where, despite possessing significant assets, they get an “Insufficient funds” error message.</p><figure name="b995" id="b995" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*ezxSCb_-NQB1LJW4S6x0Kg.png" data-width="2340" data-height="1270" src="https://cdn-images-1.medium.com/max/800/1*ezxSCb_-NQB1LJW4S6x0Kg.png"><figcaption class="imageCaption">Surprising error message in Metamask</figcaption></figure><h4 name="63da" id="63da" class="graf graf--h4 graf-after--figure"><strong class="markup--strong markup--h4-strong">Problem 3: Fee calculations</strong></h4><p name="3cf7" id="3cf7" class="graf graf--p graf-after--h4">The fee calculation model is somewhat complex, which leads to a bad user experience.</p></div><div class="section-inner sectionLayout--outsetColumn"><figure name="34fb" id="34fb" class="graf graf--figure graf--layoutOutsetCenter graf-after--p"><img class="graf-image" data-image-id="1*V6KmnWdXEXHsp_0NRu9WRQ.png" data-width="1256" data-height="644" src="https://cdn-images-1.medium.com/max/1200/1*V6KmnWdXEXHsp_0NRu9WRQ.png"><figcaption class="imageCaption">Somewhat complex Metamask UI for managing transaction fees.</figcaption></figure></div><div class="section-inner sectionLayout--insetColumn"><h3 name="c3a8" id="c3a8" class="graf graf--h3 graf-after--figure">A New Hope</h3><p name="c519" id="c519" class="graf graf--p graf-after--h3">Here is an interesting fact: in our interviews with dapp developers, many of them stated <strong class="markup--strong markup--p-strong">they would gladly pay fees for their users, as long as they made money on their users’ actions.</strong></p><p name="beff" id="beff" class="graf graf--p graf-after--p">People familiar with the topic can already see that trend in <em class="markup--em markup--p-em">Argent’s fair use gas policy</em>.</p><p name="9e8e" id="9e8e" class="graf graf--p graf-after--p">To fight fee related challenges with UniLogin, we are introducing two fee modes.</p><h3 name="3378" id="3378" class="graf graf--h3 graf-after--p">Mode 1: Meta-transactions with token fees</h3><p name="a864" id="a864" class="graf graf--p graf-after--h3">If the user has to pay their own fees, it is now possible to pay them with the ERC20 tokens already in their possession instead of ETH using meta-transactions. This means users not only don’t need to have ETH, they don’t have to even known what ETH is.</p><p name="af06" id="af06" class="graf graf--p graf-after--p">Below is a video of RSVPing to an event on <a href="https://kickback.events/" data-href="https://kickback.events/" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Kickback</a>…</p></div><div class="section-inner sectionLayout--outsetColumn"><figure name="e6dd" id="e6dd" class="graf graf--figure graf--layoutOutsetCenter graf-after--p"><img class="graf-image" data-image-id="1*yeXcg3UNr3G5ksGrA7jz2g.gif" data-width="1920" data-height="1080" src="https://cdn-images-1.medium.com/max/1200/1*yeXcg3UNr3G5ksGrA7jz2g.gif"><figcaption class="imageCaption">RSVP to an event, pay transaction fee in DAI</figcaption></figure></div><div class="section-inner sectionLayout--insetColumn"><p name="d432" id="d432" class="graf graf--p graf-after--figure">…and the full on-boarding flow with wallet creation using only DAI (with our favorite on-ramp provider <a href="http://ramp.network/" data-href="http://ramp.network/" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Ramp</a>):</p></div><div class="section-inner sectionLayout--outsetColumn"><figure name="8f19" id="8f19" class="graf graf--figure graf--layoutOutsetCenter graf-after--p"><img class="graf-image" data-image-id="1*y6TzviCdsrKZScKqiw6hJg.gif" data-width="1280" data-height="720" src="https://cdn-images-1.medium.com/max/1200/1*y6TzviCdsrKZScKqiw6hJg.gif"><figcaption class="imageCaption">DAI only onboarding</figcaption></figure></div><div class="section-inner sectionLayout--insetColumn"><p name="f7f6" id="f7f6" class="graf graf--p graf-after--figure">You can try this out with one of our partners: <a href="https://gnosis-safe.io/" data-href="https://gnosis-safe.io/" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">GnosisSafe</a>, <a href="https://kickback.events/" data-href="https://kickback.events/" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Kickback</a> or <a href="https://beta.jarvis.network/" data-href="https://beta.jarvis.network/" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Jarvis</a>.</p><h3 name="c560" id="c560" class="graf graf--h3 graf-after--p">Mode 2: Fee-less transactions</h3><p name="9f90" id="9f90" class="graf graf--p graf-after--h3">If a dapp developer decides they want to cover user fees, the UX becomes even better. Just create a wallet and send transactions. No fee dialogs, no transaction speed widgets, no unnecessary UI bloat.</p><p name="c51c" id="c51c" class="graf graf--p graf-after--p">Check out the video below in Jarvis Wallet which demonstrates creation of a wallet…</p><figure name="78ba" id="78ba" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*tMbcBE8IljKDCYVAhvaFIw.gif" data-width="600" data-height="338" src="https://cdn-images-1.medium.com/max/800/1*tMbcBE8IljKDCYVAhvaFIw.gif"></figure><p name="4a2d" id="4a2d" class="graf graf--p graf-after--figure">…and sending a transaction with this method:</p><figure name="a0af" id="a0af" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*yRjyh5C5mFk0Ef6tfRQWlw.gif" data-width="600" data-height="338" src="https://cdn-images-1.medium.com/max/800/1*yRjyh5C5mFk0Ef6tfRQWlw.gif"></figure><h3 name="ca41" id="ca41" class="graf graf--h3 graf-after--figure">The Future of Fees</h3><p name="1e50" id="1e50" class="graf graf--p graf-after--h3">These new features are introduced in UniLogin Beta 4 — 0.6.0</p><p name="83a1" id="83a1" class="graf graf--p graf-after--p">Shoot us an email to <em class="markup--em markup--p-em">marek [at] universallogin.io</em> if you would like to test <em class="markup--em markup--p-em">fee-less</em> transactions on your application.</p><p name="c45e" id="c45e" class="graf graf--p graf-after--p">In the future, we envision our customers dynamically making decisions of whether to cover a user’s fee or not based on various inputs: transaction data, the state of network and reputation of the user.</p><h3 name="3df6" id="3df6" class="graf graf--h3 graf-after--p">Bonus: Web3 Modal ❤️ UniLogin</h3><p name="909d" id="909d" class="graf graf--p graf-after--h3">As a bonus, we are happy to let you know that <a href="https://web3modal.com/" data-href="https://web3modal.com/" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Web3 Modal</a> now supports UniLogin!</p><h3 name="e9c8" id="e9c8" class="graf graf--h3 graf-after--p">Follow us!</h3><p name="9cd8" id="9cd8" class="graf graf--p graf-after--h3">To make sure you don’t miss the next posts in the series, follow us <a href="https://medium.com/universal-ethereum" data-href="https://medium.com/universal-ethereum" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Medium</a> and <a href="https://twitter.com/unilogin" data-href="https://twitter.com/unilogin" class="markup--anchor markup--p-anchor" rel="noopener nofollow noopener" target="_blank">Twitter</a>.</p><h3 name="a529" id="a529" class="graf graf--h3 graf-after--p">Pilot program</h3><p name="b8e7" id="b8e7" class="graf graf--p graf-after--h3">Still not signed-up for our Beta program? Fix it!</p><p name="3e3c" id="3e3c" class="graf graf--p graf-after--p graf--trailing"><a href="http://tiny.cc/unilogin" data-href="http://tiny.cc/unilogin" class="markup--anchor markup--p-anchor" rel="noopener nofollow noopener" target="_blank">Join our Pilot program</a> 👮🏽 🛩</p></div></div></section>
+</section>
+<footer><p>By <a href="https://medium.com/@marekkirejczyk" class="p-author h-card">Marek Kirejczyk</a> on <a href="https://medium.com/p/10bd9d6dd6e9"><time class="dt-published" datetime="2020-06-22T18:28:02.155Z">June 22, 2020</time></a>.</p><p><a href="https://medium.com/@marekkirejczyk/unilogin-and-the-quest-for-a-better-txn-fees-ux-10bd9d6dd6e9" class="p-canonical">Canonical link</a></p><p>Exported from <a href="https://medium.com">Medium</a> on September 22, 2025.</p></footer></article></body></html>

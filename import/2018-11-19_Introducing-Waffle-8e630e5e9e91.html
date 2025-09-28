@@ -1,0 +1,72 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Introducing Waffle</title><style>
+      * {
+        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+      }
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        font-size: 50px;
+        margin-bottom: 17px;
+        color: #333;
+      }
+      h2 {
+        font-size: 24px;
+        line-height: 1.6;
+        margin: 30px 0 0 0;
+        margin-bottom: 18px;
+        margin-top: 33px;
+        color: #333;
+      }
+      h3 {
+        font-size: 30px;
+        margin: 10px 0 20px 0;
+        color: #333;
+      }
+      header {
+        width: 640px;
+        margin: auto;
+      }
+      section {
+        width: 640px;
+        margin: auto;
+      }
+      section p {
+        margin-bottom: 27px;
+        font-size: 20px;
+        line-height: 1.6;
+        color: #333;
+      }
+      section img {
+        max-width: 640px;
+      }
+      footer {
+        padding: 0 20px;
+        margin: 50px 0;
+        text-align: center;
+        font-size: 12px;
+      }
+      .aspectRatioPlaceholder {
+        max-width: auto !important;
+        max-height: auto !important;
+      }
+      .aspectRatioPlaceholder-fill {
+        padding-bottom: 0 !important;
+      }
+      header,
+      section[data-field=subtitle],
+      section[data-field=description] {
+        display: none;
+      }
+      </style></head><body><article class="h-entry">
+<header>
+<h1 class="p-name">Introducing Waffle</h1>
+</header>
+<section data-field="subtitle" class="p-summary">
+If you care about the quality of your software, you care about tests. You care about syntax and speed. We find a good testing framework is…
+</section>
+<section data-field="body" class="e-content">
+<section name="bc33" class="section section--body section--first"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="0eab" id="0eab" class="graf graf--h3 graf--leading graf--title">Introducing Waffle</h3><figure name="65d4" id="65d4" class="graf graf--figure graf-after--h3"><img class="graf-image" data-image-id="1*ibIslpTHApZbM41npK01xA.png" data-width="350" data-height="300" data-is-featured="true" src="https://cdn-images-1.medium.com/max/800/1*ibIslpTHApZbM41npK01xA.png"></figure><p name="cf26" id="cf26" class="graf graf--p graf-after--figure graf--trailing">If you care about the quality of your software, you care about tests. If you care about tests, you care about syntax and speed. We find a good testing framework is essential for creating quality software. Which brings us to smart contracts.</p></div></div></section><section name="1a3c" class="section section--body section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="d056" id="d056" class="graf graf--p graf--leading">Today testing smart contracts seem cumbersome and tedious. Frameworks have verbose syntax and make it hard to formulate precise expectations.</p><p name="d5a3" id="d5a3" class="graf graf--p graf-after--p">And so we would like to announce waffle — a framework for testing smart contracts. It allows you to write short but expressive tests.</p><blockquote name="e4f7" id="e4f7" class="graf graf--blockquote graf-after--p">Waffle is simpler and sweeter than Truffle.</blockquote><p name="b120" id="b120" class="graf graf--p graf-after--blockquote">For example, it is easy to check what was the reason for a revert:</p><figure name="a3ba" id="a3ba" class="graf graf--figure graf--iframe graf-after--p"><script src="https://gist.github.com/marekkirejczyk/223932a2f0a40ec69d306ffeb4f9b0cb.js"></script></figure><p name="b9b9" id="b9b9" class="graf graf--p graf-after--figure">It is easy to check which event was emitted and with what arguments:</p><figure name="c694" id="c694" class="graf graf--figure graf--iframe graf-after--p"><script src="https://gist.github.com/marekkirejczyk/fdc8297122f9057c2d047b763e3cc761.js"></script></figure><p name="525d" id="525d" class="graf graf--p graf-after--figure">I hope the code above is pretty self-explanatory. Here is a more complete example with a couple of tests written for OpenSolidity ERC20 based token:</p><figure name="061b" id="061b" class="graf graf--figure graf--iframe graf-after--p"><script src="https://gist.github.com/marekkirejczyk/dd9ff4e34117b24d8f9b4966ab56c86e.js"></script></figure><blockquote name="a496" id="a496" class="graf graf--blockquote graf-after--figure">Waffle is aiming to replace Truffle. It is simpler, faster and easier to learn and use. However, it only focuses on testing and not on creating applications.</blockquote><h3 name="a265" id="a265" class="graf graf--h3 graf-after--blockquote">About Waffle</h3><blockquote name="4209" id="4209" class="graf graf--blockquote graf-after--h3">Waffle tastes best with ES6.</blockquote><p name="9b83" id="9b83" class="graf graf--p graf-after--blockquote">It is based on ethers.js and mocha.</p><p name="8353" id="8353" class="graf graf--p graf-after--p">Ethers.js is a stable, small and robust js lib for accessing ethereum. It gained a lot of traction recently and seems to be on the way to be the standard js JSON RPC abstraction.</p><h3 name="c759" id="c759" class="graf graf--h3 graf-after--p">Roadmap</h3><p name="b213" id="b213" class="graf graf--p graf-after--h3">We tested Waffle for a couple of months now and it works well for us. Our next goal is <strong class="markup--strong markup--p-strong">speed</strong>. On our roadmap you can find:<br>- faster contract compilation<br>- faster test execution<br>- support for running tests with Geth (aside from ganache)<br>and more!</p><h3 name="f5db" id="f5db" class="graf graf--h3 graf-after--p">Getting started</h3><p name="7759" id="7759" class="graf graf--p graf-after--h3">To learn more and start using visit Waffle <a href="https://github.com/ethworks/waffle" data-href="https://github.com/ethworks/waffle" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">GitHub.</a></p><h3 name="c487" id="c487" class="graf graf--h3 graf-after--p">What about Mocking?</h3><figure name="92ac" id="92ac" class="graf graf--figure graf-after--h3"><img class="graf-image" data-image-id="1*1cC72iIqzgP4lCNCxpTG9g.png" data-width="256" data-height="64" src="https://cdn-images-1.medium.com/max/800/1*1cC72iIqzgP4lCNCxpTG9g.png"></figure><p name="0332" id="0332" class="graf graf--p graf-after--figure">Do you miss mocking smart contract functionality? Check our other library <a href="https://github.com/EthWorks/Doppelganger" data-href="https://github.com/EthWorks/Doppelganger" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank"><em class="markup--em markup--p-em">doppelgänger</em></a><em class="markup--em markup--p-em">.</em></p><h3 name="e6a2" id="e6a2" class="graf graf--h3 graf-after--p">Get updates</h3><p name="8535" id="8535" class="graf graf--p graf-after--h3">If would like to get updates on what we do — <strong class="markup--strong markup--p-strong">follow</strong> us on Medium and if you like the story 👏 👏 👏.</p><p name="a1b7" id="a1b7" class="graf graf--p graf-after--p graf--trailing">If you would like to get updates on Waffle ⭐️ and <strong class="markup--strong markup--p-strong">follow </strong>us<strong class="markup--strong markup--p-strong"> </strong>waffle <a href="https://github.com/ethworks/waffle" data-href="https://github.com/ethworks/waffle" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">GitHub</a>.</p></div></div></section>
+</section>
+<footer><p>By <a href="https://medium.com/@marekkirejczyk" class="p-author h-card">Marek Kirejczyk</a> on <a href="https://medium.com/p/8e630e5e9e91"><time class="dt-published" datetime="2018-11-19T10:18:50.437Z">November 19, 2018</time></a>.</p><p><a href="https://medium.com/@marekkirejczyk/meet-waffle-8e630e5e9e91" class="p-canonical">Canonical link</a></p><p>Exported from <a href="https://medium.com">Medium</a> on September 22, 2025.</p></footer></article></body></html>

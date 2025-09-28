@@ -1,0 +1,72 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Spificator: a Usability Pattern for DApps</title><style>
+      * {
+        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+      }
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        font-size: 50px;
+        margin-bottom: 17px;
+        color: #333;
+      }
+      h2 {
+        font-size: 24px;
+        line-height: 1.6;
+        margin: 30px 0 0 0;
+        margin-bottom: 18px;
+        margin-top: 33px;
+        color: #333;
+      }
+      h3 {
+        font-size: 30px;
+        margin: 10px 0 20px 0;
+        color: #333;
+      }
+      header {
+        width: 640px;
+        margin: auto;
+      }
+      section {
+        width: 640px;
+        margin: auto;
+      }
+      section p {
+        margin-bottom: 27px;
+        font-size: 20px;
+        line-height: 1.6;
+        color: #333;
+      }
+      section img {
+        max-width: 640px;
+      }
+      footer {
+        padding: 0 20px;
+        margin: 50px 0;
+        text-align: center;
+        font-size: 12px;
+      }
+      .aspectRatioPlaceholder {
+        max-width: auto !important;
+        max-height: auto !important;
+      }
+      .aspectRatioPlaceholder-fill {
+        padding-bottom: 0 !important;
+      }
+      header,
+      section[data-field=subtitle],
+      section[data-field=description] {
+        display: none;
+      }
+      </style></head><body><article class="h-entry">
+<header>
+<h1 class="p-name">Spificator: a Usability Pattern for DApps</h1>
+</header>
+<section data-field="subtitle" class="p-summary">
+In this post, we would like to propose a new usability pattern for dapps.
+</section>
+<section data-field="body" class="e-content">
+<section name="10e3" class="section section--body section--first"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="9b44" id="9b44" class="graf graf--h3 graf--leading graf--title">Spificator: a Usability Pattern for DApps</h3><figure name="862f" id="862f" class="graf graf--figure graf-after--h3"><img class="graf-image" data-image-id="1*7fzVinPL3cIpU7WO4LIMJQ.jpeg" data-width="1200" data-height="800" data-is-featured="true" src="https://cdn-images-1.medium.com/max/800/1*7fzVinPL3cIpU7WO4LIMJQ.jpeg"></figure><p name="d2ad" id="d2ad" class="graf graf--p graf-after--figure">In this post, we would like to propose a new usability pattern for dapps.</p><figure name="2425" id="2425" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*OOr-MgGZJ7q9OW-QTk9bWg.png" data-width="146" data-height="98" src="https://cdn-images-1.medium.com/max/800/1*OOr-MgGZJ7q9OW-QTk9bWg.png"><figcaption class="imageCaption">Spificator</figcaption></figure><h3 name="0c15" id="0c15" class="graf graf--h3 graf-after--figure">The challenge with dapps</h3><p name="b221" id="b221" class="graf graf--p graf-after--h3">Dapps have slow reaction times when it comes to saving information. Simple operations take tens of seconds and occasionally a couple of minutes. It happens when you send an ethereum transaction and wait for it to be mined. It is also the case for other distributed technologies. It is not uncommon to wait 30 seconds for pictures from IPFS to save or load.</p><p name="17ab" id="17ab" class="graf graf--p graf-after--p">It is going to be a significant problem for dapp adoption, as users these days are not used to waiting.</p><h3 name="f9e7" id="f9e7" class="graf graf--h3 graf-after--p">DApp designer dilemma:</h3><p name="8bd0" id="8bd0" class="graf graf--p graf-after--h3">A common dilemma for DApp designer is: What to do with UI when waiting for any particular operation to complete or fail? <br>Do you block the application the whole time? Or do you allow a user to continue using the dapp? In the first case, you force a user to wait unreasonably long time. In the second case, you risk a sudden change of application state, when an operation is complete. This leads to either inconsistent UI or unexpected flipping in the interface.</p><h3 name="ff5a" id="ff5a" class="graf graf--h3 graf-after--p">Constraints</h3><p name="115f" id="115f" class="graf graf--p graf-after--h3">Let’s examine constraints, of those operations:</p><ul class="postList"><li name="fe96" id="fe96" class="graf graf--li graf-after--p">any operation might be successful, or it might fail</li><li name="dee3" id="dee3" class="graf graf--li graf-after--li">time taken for any single operation is unpredictable, can be low seconds, occasionally can be a couple of minutes</li><li name="881c" id="881c" class="graf graf--li graf-after--li">we don’t know what the progress of the operation is, so we can’t show a progress bar or any other indicator</li><li name="8da7" id="8da7" class="graf graf--li graf-after--li">in a general case, we don’t know what future UI change might be, a simple transaction on the blockchain might result in multiple changes in many UI parts</li><li name="3204" id="3204" class="graf graf--li graf-after--li">multiple operations might be in progress at once</li><li name="ee35" id="ee35" class="graf graf--li graf-after--li">in many cases, we would like a user to be able to perform other actions, be aware that something is happening and inform him once an operation is complete</li></ul><h3 name="b005" id="b005" class="graf graf--h3 graf-after--li">Introducing Spificator</h3><p name="3bd2" id="3bd2" class="graf graf--p graf-after--h3">Constraints above lead us to propose a new UI pattern, we call Spificator. It is a combination of spinner and notifications.</p><p name="ddd0" id="ddd0" class="graf graf--p graf-after--p">Spificator is a persistent part of UI, similar to notifications icon, most likely placed somewhere near menu bar.</p><figure name="97a8" id="97a8" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*fJXr55TB8dg9i0DRcKrLOQ.png" data-width="448" data-height="95" src="https://cdn-images-1.medium.com/max/800/1*fJXr55TB8dg9i0DRcKrLOQ.png"><figcaption class="imageCaption">Spificator</figcaption></figure><p name="1c95" id="1c95" class="graf graf--p graf-after--figure">At all times Spificator shows primary information about the status of operations:</p><ul class="postList"><li name="add8" id="add8" class="graf graf--li graf-after--p">Are there any operations in progress at any given moment?</li></ul><figure name="54b5" id="54b5" class="graf graf--figure graf-after--li"><img class="graf-image" data-image-id="1*OOr-MgGZJ7q9OW-QTk9bWg.png" data-width="146" data-height="98" src="https://cdn-images-1.medium.com/max/800/1*OOr-MgGZJ7q9OW-QTk9bWg.png"><figcaption class="imageCaption">One operation in progress</figcaption></figure><ul class="postList"><li name="0656" id="0656" class="graf graf--li graf-after--figure">Are then any new operations that succeeded or failed?</li></ul><figure name="4629" id="4629" class="graf graf--figure graf-after--li"><img class="graf-image" data-image-id="1*K0_NxtGX2IFOxxj6zvAD4g.png" data-width="148" data-height="86" src="https://cdn-images-1.medium.com/max/800/1*K0_NxtGX2IFOxxj6zvAD4g.png"><figcaption class="imageCaption">One operation successful</figcaption></figure><ul class="postList"><li name="6c62" id="6c62" class="graf graf--li graf-after--figure">There can be multiple operations happening at the same time.</li></ul><figure name="b0a4" id="b0a4" class="graf graf--figure graf-after--li"><img class="graf-image" data-image-id="1*UeD5SPRzYKJSQpx3KA2rOw.png" data-width="197" data-height="102" src="https://cdn-images-1.medium.com/max/800/1*UeD5SPRzYKJSQpx3KA2rOw.png"><figcaption class="imageCaption">Spificator with 39 successful operations and two fails.</figcaption></figure><p name="832f" id="832f" class="graf graf--p graf-after--figure">If a user clicks on it, she will be presented detailed list — similar to notification list used widely in web applications.</p><figure name="2d7f" id="2d7f" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*IunKzYbWUz3WJ__ZL1fOeA.png" data-width="379" data-height="480" src="https://cdn-images-1.medium.com/max/800/1*IunKzYbWUz3WJ__ZL1fOeA.png"><figcaption class="imageCaption">Spificator with notifications open</figcaption></figure><h3 name="e2bc" id="e2bc" class="graf graf--h3 graf-after--figure">Spificator API</h3><p name="711c" id="711c" class="graf graf--p graf-after--h3">A nice thing about Spificators is they are easy to use once you implemented generic API. We implemented generic TransactionBuilder, which requires just a couple of lines of code to wrap any blockchain transaction with Spificator UI:</p><pre name="4bcd" id="4bcd" class="graf graf--pre graf-after--p">new TransactionBuilder(dispatch, aBlockchainOperations()<br>    .setTitle(&#39;Creating market&#39;)<br>    .onTxCallback((tx) =&gt; onTransactionPropagation() )<br>    .onSuccessCallback((market) =&gt; onTransactionMined()))<br>    .send();</pre><p name="e1df" id="e1df" class="graf graf--p graf-after--pre"><code class="markup--code markup--p-code">aBlockchainOperations</code> is a particular blockchain operation (returns a promise),<code class="markup--code markup--p-code">onTransactionPropagation</code> and <code class="markup--code markup--p-code">onTransactionMined</code>handle custom application code.</p><p name="d2d5" id="d2d5" class="graf graf--p graf-after--p">A new version supporting web3js 1.0 is coming.</p><h3 name="9f81" id="9f81" class="graf graf--h3 graf-after--p">Feedback welcome</h3><p name="a82a" id="a82a" class="graf graf--p graf-after--h3">You can play with Spificator in Ambrosus marketplace demo <a href="https://ambrosus-demo.com/" data-href="https://ambrosus-demo.com/" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">here</a>.<br>(Note: Running on kovan network)</p><p name="ff15" id="ff15" class="graf graf--p graf-after--p graf--trailing">Let us know in the comments what you think about Spificator. We will be happy to extract it to a separate library for you guys to use if you like it!</p></div></div></section><section name="e26b" class="section section--body section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="a76f" id="a76f" class="graf graf--p graf--leading graf--trailing">If you enjoyed this post, please hit the clap button below 👏👏👏</p></div></div></section>
+</section>
+<footer><p>By <a href="https://medium.com/@marekkirejczyk" class="p-author h-card">Marek Kirejczyk</a> on <a href="https://medium.com/p/1ae52de94ec1"><time class="dt-published" datetime="2017-10-18T22:42:09.723Z">October 18, 2017</time></a>.</p><p><a href="https://medium.com/@marekkirejczyk/spificator-a-usability-pattern-for-dapps-1ae52de94ec1" class="p-canonical">Canonical link</a></p><p>Exported from <a href="https://medium.com">Medium</a> on September 22, 2025.</p></footer></article></body></html>

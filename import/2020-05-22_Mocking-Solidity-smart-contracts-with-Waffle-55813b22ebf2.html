@@ -1,0 +1,72 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Mocking Solidity smart contracts with Waffle</title><style>
+      * {
+        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+      }
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        font-size: 50px;
+        margin-bottom: 17px;
+        color: #333;
+      }
+      h2 {
+        font-size: 24px;
+        line-height: 1.6;
+        margin: 30px 0 0 0;
+        margin-bottom: 18px;
+        margin-top: 33px;
+        color: #333;
+      }
+      h3 {
+        font-size: 30px;
+        margin: 10px 0 20px 0;
+        color: #333;
+      }
+      header {
+        width: 640px;
+        margin: auto;
+      }
+      section {
+        width: 640px;
+        margin: auto;
+      }
+      section p {
+        margin-bottom: 27px;
+        font-size: 20px;
+        line-height: 1.6;
+        color: #333;
+      }
+      section img {
+        max-width: 640px;
+      }
+      footer {
+        padding: 0 20px;
+        margin: 50px 0;
+        text-align: center;
+        font-size: 12px;
+      }
+      .aspectRatioPlaceholder {
+        max-width: auto !important;
+        max-height: auto !important;
+      }
+      .aspectRatioPlaceholder-fill {
+        padding-bottom: 0 !important;
+      }
+      header,
+      section[data-field=subtitle],
+      section[data-field=description] {
+        display: none;
+      }
+      </style></head><body><article class="h-entry">
+<header>
+<h1 class="p-name">Mocking Solidity smart contracts with Waffle</h1>
+</header>
+<section data-field="subtitle" class="p-summary">
+Testing smart contracts written in Solidity is still somewhat cumbersome. One subtle reason is that we keep writing our unit tests as if…
+</section>
+<section data-field="body" class="e-content">
+<section name="7e00" class="section section--body section--first"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><figure name="4141" id="4141" class="graf graf--figure graf--leading"><img class="graf-image" data-image-id="1*vt0XUm3uRBXZmxsE0SByhg.png" data-width="1000" data-height="666" data-is-featured="true" src="https://cdn-images-1.medium.com/max/800/1*vt0XUm3uRBXZmxsE0SByhg.png"></figure><h3 name="28d6" id="28d6" class="graf graf--h3 graf-after--figure graf--title">Mocking Solidity smart contracts with Waffle</h3><p name="a268" id="a268" class="graf graf--p graf-after--h3">Testing smart contracts written in Solidity is still somewhat cumbersome. One subtle reason is that we keep writing our <em class="markup--em markup--p-em">unit tests</em> as if they were <em class="markup--em markup--p-em">integration</em> <em class="markup--em markup--p-em">tests</em> and not how we would write <em class="markup--em markup--p-em">unit tests</em>.</p><p name="c1e5" id="c1e5" class="graf graf--p graf-after--p">Surprised? Take a look at the diagram below. It represents a test for a hypothetical on-chain market that allows buying ERC721 tokens for ERC20 tokens. To test even a basic functionality, one needs to touch several other smart contracts.</p><figure name="6834" id="6834" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*FqThPqFBw-z_tqmYBg8yXg.png" data-width="600" data-height="400" src="https://cdn-images-1.medium.com/max/800/1*FqThPqFBw-z_tqmYBg8yXg.png"><figcaption class="imageCaption">Testing without mocks.</figcaption></figure><p name="2863" id="2863" class="graf graf--p graf-after--figure">How much easier would it be if we could test a single contract in isolation? Like in the picture below:</p><figure name="4128" id="4128" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*O6UEZshMGq1vIhwpZxvxRA.png" data-width="600" data-height="400" src="https://cdn-images-1.medium.com/max/800/1*O6UEZshMGq1vIhwpZxvxRA.png"><figcaption class="imageCaption">Testing with mocks.</figcaption></figure><h3 name="9c47" id="9c47" class="graf graf--h3 graf-after--figure">Mocking smart contracts</h3><p name="1cf9" id="1cf9" class="graf graf--p graf-after--h3">A common pattern is to create mock contracts for testing as separate <code class="markup--code markup--p-code">.sol</code> files. You can find them in the repositories of many popular projects like <a href="https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/contracts/mocks" data-href="https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/contracts/mocks" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">OpenZeppelin</a>, <a href="https://github.com/makerdao/dss/tree/master/src/test" data-href="https://github.com/makerdao/dss/tree/master/src/test" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">MakerDAO</a>, <a href="https://github.com/ConnextProject/indra/tree/staging/modules/contracts/contracts/funding/test-fixtures" data-href="https://github.com/ConnextProject/indra/tree/staging/modules/contracts/contracts/funding/test-fixtures" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Connext</a>, <a href="https://github.com/gnosis/safe-contracts/tree/development/contracts/mocks" data-href="https://github.com/gnosis/safe-contracts/tree/development/contracts/mocks" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Gnosis safe</a>.</p><p name="c98d" id="c98d" class="graf graf--p graf-after--p">Much as we find it to be a good practice, it is also a very limited method, and it complicates tests in several ways:</p><ul class="postList"><li name="270c" id="270c" class="graf graf--li graf-after--p">increases the amount of code in Solidity to write, build and maintain</li><li name="8be8" id="8be8" class="graf graf--li graf-after--li">limits test flexibility to a predefined mock functionality</li><li name="33a4" id="33a4" class="graf graf--li graf-after--li">makes test setup more complex, as each test might require deploying several contracts and advance them to a specific state</li><li name="ea54" id="ea54" class="graf graf--li graf-after--li">makes tests execute slowly (especially due to complex setup)</li></ul><p name="75b5" id="75b5" class="graf graf--p graf-after--li">In practice, you see many tests that deploy and establish a whole predefined smart contract system<strong class="markup--strong markup--p-strong"> </strong>and advance it to a specific state to test simple features.</p><p name="bdb7" id="bdb7" class="graf graf--p graf-after--p">Hoping to make a significant improvement, we introduced a new feature in Waffle 2.5.0 — dynamic mocking.</p><h3 name="019b" id="019b" class="graf graf--h3 graf-after--p">Dynamic mocking</h3><p name="cb54" id="cb54" class="graf graf--p graf-after--h3">With dynamic mocking, you can create a mock for a smart contract directly from a JavaScript test and define its behavior. To create a mock, use <code class="markup--code markup--p-code">deployMockContract</code> and pass a wallet and <em class="markup--em markup--p-em">abi</em> interface that it should comply with:</p><pre name="aee2" id="aee2" class="graf graf--pre graf-after--p">const mockERC20 = await deployMockContract(sender, IERC20.abi);</pre><p name="3cf1" id="3cf1" class="graf graf--p graf-after--pre">Now, you can easily test a functionality in isolation. Let’s examine a simple smart contract that allows verifying if <code class="markup--code markup--p-code">msg.sender</code> has at least a predetermined number of tokens:</p><pre name="33f0" id="33f0" class="graf graf--pre graf-after--p">pragma solidity ^0.5.15;<br><br>interface IERC20 {<br>    function balanceOf(address account) ... returns (uint256);</pre><pre name="e3f7" id="e3f7" class="graf graf--pre graf-after--pre">     ...<br>}<br><br>contract AmIRichAlready {<br>    IERC20 private tokenContract;</pre><pre name="469c" id="469c" class="graf graf--pre graf-after--pre">    uint private constant RICHNESS = 1000000 * 10 ** 18;</pre><pre name="918a" id="918a" class="graf graf--pre graf-after--pre">    constructor (IERC20 _tokenContract) public {<br>        tokenContract = _tokenContract;<br>    }<br><br>    function check() public view returns (bool) {<br>        uint balance = tokenContract.balanceOf(msg.sender);<br>        return balance &gt; RICHNESS;<br>    }<br>}</pre><p name="b124" id="b124" class="graf graf--p graf-after--pre">Now, we can test our contract extensively without adding extra Solidity code that would implement an <em class="markup--em markup--p-em">ERC20</em> mock token or import external libraries. Let’s start with creating a contract and connect it to a mock:</p><pre name="aa44" id="aa44" class="graf graf--pre graf-after--p">const [wallet, otherWallet] = new MockProvider().getWallets();</pre><pre name="5447" id="5447" class="graf graf--pre graf-after--pre">beforeEach(async () =&gt;  {<br>  mockERC20 = await deployMockContract(wallet, IERC20.abi);<br>  contract = await deployContract(wallet, AmIRichAlready, [mockERC20.address]);<br>});</pre><p name="aa9a" id="aa9a" class="graf graf--p graf-after--pre">And we can define what the mock should return and test the behavior of our method right away:</p><pre name="2220" id="2220" class="graf graf--pre graf-after--p">it(&#39;wallet has little coins&#39;, async () =&gt; {<br>  await mockERC20.mock.balanceOf.returns(parseEther(&#39;999999&#39;));<br>  expect(await contract.check()).to.be.equal(false);<br>});</pre><p name="2fdb" id="2fdb" class="graf graf--p graf-after--pre">Check out the full example on <a href="https://github.com/EthWorks/Waffle/blob/master/examples/mock-contracts/test/AmIRichAlready.test.ts" data-href="https://github.com/EthWorks/Waffle/blob/master/examples/mock-contracts/test/AmIRichAlready.test.ts" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Waffle GitHub</a>.</p><h3 name="e743" id="e743" class="graf graf--h3 graf-after--p">Defining behaviour</h3><p name="c2dc" id="c2dc" class="graf graf--p graf-after--h3">Use different variants of the syntax to define what method should return for different arguments, or if it should revert instead.</p><pre name="9ca7" id="9ca7" class="graf graf--pre graf-after--p">await mockContract.mock.&lt;nameOfMethod&gt;.returns(&lt;value&gt;)<br>await mockContract.mock.&lt;name&gt;.withArgs(&lt;args&gt;).returns(&lt;value&gt;)</pre><pre name="8334" id="8334" class="graf graf--pre graf-after--pre">await mockContract.mock.&lt;nameOfMethod&gt;.reverts()<br>await mockContract.mock.&lt;name&gt;.withArgs(&lt;args&gt;).reverts()</pre><p name="8b5e" id="8b5e" class="graf graf--p graf-after--pre">Detailed documentation for mocking functionality is available <a href="https://ethereum-waffle.readthedocs.io/en/latest/mock-contract.html" data-href="https://ethereum-waffle.readthedocs.io/en/latest/mock-contract.html" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">here</a>.</p><h3 name="785e" id="785e" class="graf graf--h3 graf-after--p">Warning: Experimental</h3><p name="1c0e" id="1c0e" class="graf graf--p graf-after--h3 graf--trailing">The feature has been released in Waffle 2.5 as experimental, so the API may change without complying with SEMVER rules. We plan to test this feature and collect feedback in the upcoming weeks and release the final API in Waffle 3.0.</p></div></div></section><section name="d6a4" class="section section--body section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="528f" id="528f" class="graf graf--p graf--leading">We are <a href="https://ethworks.io/" data-href="https://ethworks.io/" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Ethworks</a>. A truly remarkable team for your blockchain project.</p><p name="0b5d" id="0b5d" class="graf graf--p graf-after--p graf--trailing">Find us on <a href="https://twitter.com/ethworks" data-href="https://twitter.com/ethworks" class="markup--anchor markup--p-anchor" rel="noopener nofollow noopener" target="_blank">Twitter</a>, <a href="https://dribbble.com/ethworks" data-href="https://dribbble.com/ethworks" class="markup--anchor markup--p-anchor" rel="noopener nofollow noopener" target="_blank">Dribbble</a> and <a href="https://github.com/ethworks" data-href="https://github.com/ethworks" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">GitHub</a>.</p></div></div></section>
+</section>
+<footer><p>By <a href="https://medium.com/@marekkirejczyk" class="p-author h-card">Marek Kirejczyk</a> on <a href="https://medium.com/p/55813b22ebf2"><time class="dt-published" datetime="2020-05-22T06:33:48.253Z">May 22, 2020</time></a>.</p><p><a href="https://medium.com/@marekkirejczyk/mocking-solidity-smart-contracts-with-waffle-55813b22ebf2" class="p-canonical">Canonical link</a></p><p>Exported from <a href="https://medium.com">Medium</a> on September 22, 2025.</p></footer></article></body></html>

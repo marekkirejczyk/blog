@@ -1,0 +1,75 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>useDApp: Deep dive into custom hooks and testing</title><style>
+      * {
+        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+      }
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        font-size: 50px;
+        margin-bottom: 17px;
+        color: #333;
+      }
+      h2 {
+        font-size: 24px;
+        line-height: 1.6;
+        margin: 30px 0 0 0;
+        margin-bottom: 18px;
+        margin-top: 33px;
+        color: #333;
+      }
+      h3 {
+        font-size: 30px;
+        margin: 10px 0 20px 0;
+        color: #333;
+      }
+      header {
+        width: 640px;
+        margin: auto;
+      }
+      section {
+        width: 640px;
+        margin: auto;
+      }
+      section p {
+        margin-bottom: 27px;
+        font-size: 20px;
+        line-height: 1.6;
+        color: #333;
+      }
+      section img {
+        max-width: 640px;
+      }
+      footer {
+        padding: 0 20px;
+        margin: 50px 0;
+        text-align: center;
+        font-size: 12px;
+      }
+      .aspectRatioPlaceholder {
+        max-width: auto !important;
+        max-height: auto !important;
+      }
+      .aspectRatioPlaceholder-fill {
+        padding-bottom: 0 !important;
+      }
+      header,
+      section[data-field=subtitle],
+      section[data-field=description] {
+        display: none;
+      }
+      </style></head><body><article class="h-entry">
+<header>
+<h1 class="p-name">useDApp: Deep dive into custom hooks and testing</h1>
+</header>
+<section data-field="subtitle" class="p-summary">
+This is the second post of our series on new useDApp features:
+1. Introducing useDApp
+2. Deep dive into custom hooks and testing
+3. Coming…
+</section>
+<section data-field="body" class="e-content">
+<section name="de2c" class="section section--body section--first"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><figure name="97ee" id="97ee" class="graf graf--figure graf--leading"><img class="graf-image" data-image-id="1*NWfZfV39AhiUvhbny30S2g.png" data-width="984" data-height="355" data-is-featured="true" src="https://cdn-images-1.medium.com/max/800/1*NWfZfV39AhiUvhbny30S2g.png"></figure><h3 name="d5c4" id="d5c4" class="graf graf--h3 graf-after--figure graf--title"><strong class="markup--strong markup--h3-strong">useDApp: Deep d</strong>ive<strong class="markup--strong markup--h3-strong"> into custom hooks and testing</strong></h3><p name="734e" id="734e" class="graf graf--p graf-after--h3">This is the second post of our series on new useDApp features:<br>1. <a href="https://medium.com/ethworks/introducing-usedapp-framework-for-rapid-dapp-development-4959361f242a" data-href="https://medium.com/ethworks/introducing-usedapp-framework-for-rapid-dapp-development-4959361f242a" class="markup--anchor markup--p-anchor" target="_blank">Introducing useDApp</a><br>2. Deep dive into custom hooks and testing<br><em class="markup--em markup--p-em">3. Coming soon: sending transactions and notifications</em></p><h3 name="c5c2" id="c5c2" class="graf graf--h3 graf-after--p">🪝Hooks…</h3><p name="20a8" id="20a8" class="graf graf--p graf-after--h3">useDApp brings idiomatic React hooks paradigm to writing DApps to provide amazing developer and user experience. Read all about it in the <a href="https://medium.com/ethworks/introducing-usedapp-framework-for-rapid-dapp-development-4959361f242a" data-href="https://medium.com/ethworks/introducing-usedapp-framework-for-rapid-dapp-development-4959361f242a" class="markup--anchor markup--p-anchor" target="_blank">previous post</a>. And now, as promised, it is time to talk about testing.</p><p name="220d" id="220d" class="graf graf--p graf-after--p">Automated testing is easy with two exceptions: UI and integration tests (e.g code interacting with blockchain). With useDApp, a basic building block of the app is a hook that is used for interaction with blockchain. Which is partially a UI code and partially integration code. Good support for testing hooks is therefore essential.</p><h3 name="7d2f" id="7d2f" class="graf graf--h3 graf-after--p">🍱 Example hook</h3><p name="5b88" id="5b88" class="graf graf--p graf-after--h3">Let’s examine a basic example — a <code class="markup--code markup--p-code">useTokenApproval</code> hook — that returns (you guessed it) — token approval for given <em class="markup--em markup--p-em">owner</em> and <em class="markup--em markup--p-em">spender</em> addresses.</p><pre name="7a80" id="7a80" class="graf graf--pre graf-after--p"><strong class="markup--strong markup--pre-strong">function</strong> useTokenAllowance(<br>  tokenAddress: string | Falsy,<br>  ownerAddress: string | Falsy,<br>  spenderAddress: string | Falsy<br>) {<br>  <strong class="markup--strong markup--pre-strong">const</strong> [allowance] =<br>    useContractCall(<br>      ownerAddress &amp;&amp;<br>        spenderAddress &amp;&amp;<br>        tokenAddress &amp;&amp; {<br>          abi: ERC20Interface,<br>          address: tokenAddress,<br>          method: &#39;allowance&#39;,<br>          args: [ownerAddress, spenderAddress],<br>        }<br>    ) ?? []<br>  <strong class="markup--strong markup--pre-strong">return</strong> allowance<br>}</pre><p name="c239" id="c239" class="graf graf--p graf-after--pre">As you can see, it is a straightforward wrapper for <code class="markup--code markup--p-code">useChainCall</code> hook. A quick reminder what<code class="markup--code markup--p-code">useChainCall</code> does:</p><ul class="postList"><li name="8500" id="8500" class="graf graf--li graf-after--p">aggregates many calls into one call,</li><li name="97d6" id="97d6" class="graf graf--li graf-after--li">makes sure the component refreshes when return value changes (i.e. on new block, when the wallet or network changes).</li></ul><p name="67c0" id="67c0" class="graf graf--p graf-after--li">A single argument of useChainCall is <a href="https://usedapp.readthedocs.io/en/latest/core.html#contractcall" data-href="https://usedapp.readthedocs.io/en/latest/core.html#contractcall" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">ContractCall</a> with the following fields:</p><ul class="postList"><li name="5a30" id="5a30" class="graf graf--li graf-after--p">contract interface as ethers.js <code class="markup--code markup--li-code">Interface</code> (see docs <a href="https://docs.ethers.io/v5/api/utils/abi/interface/" data-href="https://docs.ethers.io/v5/api/utils/abi/interface/" class="markup--anchor markup--li-anchor" rel="noopener" target="_blank">here</a>),</li><li name="25c3" id="25c3" class="graf graf--li graf-after--li">contract <em class="markup--em markup--li-em">address</em> to call the method on,</li><li name="5049" id="5049" class="graf graf--li graf-after--li">the name of the contract function to call,</li><li name="bf58" id="bf58" class="graf graf--li graf-after--li">array of function arguments (in this case the owner and spender addresses).</li></ul><p name="4ec5" id="4ec5" class="graf graf--p graf-after--li"><strong class="markup--strong markup--p-strong">Note 1:</strong> React hooks always need to be called in the same order, regardless of whether all values have been initialized. Therefore you should call <code class="markup--code markup--p-code">useContractCall</code> with <code class="markup--code markup--p-code">null</code> as an argument if one of the variables is not yet initialized. Hence the example uses the following construction:<code class="markup--code markup--p-code">ownerAddress &amp;&amp; spenderAddress &amp;&amp; tokenAddress &amp;&amp; ...</code>.</p><p name="b12b" id="b12b" class="graf graf--p graf-after--p"><strong class="markup--strong markup--p-strong">Note 2: </strong>As <code class="markup--code markup--p-code">useChainCall</code> can return null, make sure the custom hook will return a meaningful result, hence the following construction at the end:<code class="markup--code markup--p-code">?? []</code></p><h3 name="74ac" id="74ac" class="graf graf--h3 graf-after--p">🎰 Testing hook</h3><p name="7109" id="7109" class="graf graf--p graf-after--h3">Let’s write a test for the hook. We start with a setup code that will create a <em class="markup--em markup--p-em">mock provider</em> and <em class="markup--em markup--p-em">test wallets</em>. If you know <a href="https://getwaffle.io/" data-href="https://getwaffle.io/" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Waffle</a>, the code might look familiar.</p><pre name="5f37" id="5f37" class="graf graf--pre graf-after--p"><strong class="markup--strong markup--pre-strong">const</strong> mockProvider = <strong class="markup--strong markup--pre-strong">new</strong> MockProvider()<br><strong class="markup--strong markup--pre-strong">const</strong> [deployer, spender] = mockProvider.getWallets()</pre><p name="02fc" id="02fc" class="graf graf--p graf-after--pre">And before each test deploy an ERC20 contract.</p><pre name="75fb" id="75fb" class="graf graf--pre graf-after--p"><strong class="markup--strong markup--pre-strong">let</strong> token: Contract</pre><pre name="cb81" id="cb81" class="graf graf--pre graf-after--pre">beforeEach(<strong class="markup--strong markup--pre-strong">async</strong> () =&gt; {<br>  <strong class="markup--strong markup--pre-strong">const</strong> args = [&#39;MOCKToken&#39;, &#39;MOCK&#39;, deployer.address, utils.parseEther(&quot;10&quot;)]<br>  token = <strong class="markup--strong markup--pre-strong">await</strong> deployContract(deployer, ERC20Mock, args)<br>})</pre><p name="dd9a" id="dd9a" class="graf graf--p graf-after--pre">And now we can test the hook.</p><pre name="aaf4" id="aaf4" class="graf graf--pre graf-after--p"><strong class="markup--strong markup--pre-strong">await</strong> token.approve(spender.address, utils.parseEther(&#39;1&#39;))</pre><pre name="4829" id="4829" class="graf graf--pre graf-after--pre"><strong class="markup--strong markup--pre-strong">const</strong> { result, waitForCurrent } = <strong class="markup--strong markup--pre-strong">await</strong> renderWeb3Hook(<br>  () =&gt; useTokenAllowance(token.address, deployer.address, spender.address),<br>  {<br>    mockProvider,<br>  }<br>)<br><strong class="markup--strong markup--pre-strong">await</strong> waitForCurrent((val) =&gt; val !== undefined)</pre><pre name="4807" id="4807" class="graf graf--pre graf-after--pre">expect(result.error).to.be.undefined<br>expect(result.current).to.eq(utils.parseEther(&#39;1&#39;))</pre><p name="1f70" id="1f70" class="graf graf--p graf-after--pre">First, let’s approve the spender for 1 ETH so that we can check if our hook returns the correct value.</p><p name="a54f" id="a54f" class="graf graf--p graf-after--p">We will render the hook using the helper <code class="markup--code markup--p-code">renderWeb3Hook</code> function. It works like renderHook from the <a href="https://testing-library.com/docs/react-testing-library/intro/" data-href="https://testing-library.com/docs/react-testing-library/intro/" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">react-testing-library</a>, but it wraps the hook into a special <code class="markup--code markup--p-code">DAppProvider</code>. To pass blockchain environment, we need to provide our previously created mockProvider to the hook as an argument.</p><p name="9da5" id="9da5" class="graf graf--p graf-after--p">React components update asynchronously. Reading data from the blockchain is also an async operation. To get the return value from the hook, wait for the result to be set: <code class="markup--code markup--p-code">await waitForCurrent((val) =&gt; val !== undefined)</code></p><p name="dcac" id="dcac" class="graf graf--p graf-after--p">Finally we can check if our result is correct. <code class="markup--code markup--p-code">result.current</code> is a value returned from our hook. It should be equal to 1 Ether (1 with 18 zeros).</p><h3 name="a5ae" id="a5ae" class="graf graf--h3 graf-after--p">🚀 Coming next</h3><p name="527a" id="527a" class="graf graf--p graf-after--h3">We are testing a new version of useDApp right now with new hooks for sending transactions, tracking their status and showing notifications. We will publish the new blog post soon.</p><h3 name="40c4" id="40c4" class="graf graf--h3 graf-after--p">🔥 So what do I do now?</h3><p name="8c84" id="8c84" class="graf graf--p graf-after--h3 graf--trailing">✅ Start using it (checkout the <a href="http://usedapp.io/" data-href="http://usedapp.io/" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">website</a>, <a href="https://usedapp.readthedocs.io/en/latest/getting-started.html" data-href="https://usedapp.readthedocs.io/en/latest/getting-started.html" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">docs</a>) and give us feedback (<a href="https://github.com/ethworks/usedapp" data-href="https://github.com/ethworks/usedapp" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">GitHub</a>)<br>✅ Follow us on <a href="https://twitter.com/ethworks" data-href="https://twitter.com/ethworks" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Twitter</a> for updates<br>✅ Retweet to spread the word<br>✅ Help us build a dedicated team and <strong class="markup--strong markup--p-strong">fund us on the </strong><a href="https://gitcoin.co/grants/2357/usedapp" data-href="https://gitcoin.co/grants/2357/usedapp" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank"><strong class="markup--strong markup--p-strong">Gitcoin</strong></a></p></div></div></section><section name="b04e" class="section section--body section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><p name="3406" id="3406" class="graf graf--p graf--leading graf--trailing">We are <a href="https://ethworks.io/" data-href="https://ethworks.io/" class="markup--anchor markup--p-anchor" rel="noopener nofollow noopener" target="_blank">Ethworks</a>. A genuinely remarkable team for your blockchain project.</p></div></div></section>
+</section>
+<footer><p>By <a href="https://medium.com/@marekkirejczyk" class="p-author h-card">Marek Kirejczyk</a> on <a href="https://medium.com/p/4a59fbc1769a"><time class="dt-published" datetime="2021-04-06T13:43:47.842Z">April 6, 2021</time></a>.</p><p><a href="https://medium.com/@marekkirejczyk/usedapp-deep-dive-into-custom-hooks-and-testing-4a59fbc1769a" class="p-canonical">Canonical link</a></p><p>Exported from <a href="https://medium.com">Medium</a> on September 22, 2025.</p></footer></article></body></html>

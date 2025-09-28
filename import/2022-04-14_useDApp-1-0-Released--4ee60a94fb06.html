@@ -1,0 +1,72 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>useDApp 1.0 Released!</title><style>
+      * {
+        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+      }
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        font-size: 50px;
+        margin-bottom: 17px;
+        color: #333;
+      }
+      h2 {
+        font-size: 24px;
+        line-height: 1.6;
+        margin: 30px 0 0 0;
+        margin-bottom: 18px;
+        margin-top: 33px;
+        color: #333;
+      }
+      h3 {
+        font-size: 30px;
+        margin: 10px 0 20px 0;
+        color: #333;
+      }
+      header {
+        width: 640px;
+        margin: auto;
+      }
+      section {
+        width: 640px;
+        margin: auto;
+      }
+      section p {
+        margin-bottom: 27px;
+        font-size: 20px;
+        line-height: 1.6;
+        color: #333;
+      }
+      section img {
+        max-width: 640px;
+      }
+      footer {
+        padding: 0 20px;
+        margin: 50px 0;
+        text-align: center;
+        font-size: 12px;
+      }
+      .aspectRatioPlaceholder {
+        max-width: auto !important;
+        max-height: auto !important;
+      }
+      .aspectRatioPlaceholder-fill {
+        padding-bottom: 0 !important;
+      }
+      header,
+      section[data-field=subtitle],
+      section[data-field=description] {
+        display: none;
+      }
+      </style></head><body><article class="h-entry">
+<header>
+<h1 class="p-name">useDApp 1.0 Released!</h1>
+</header>
+<section data-field="subtitle" class="p-summary">
+Multichain support, WalletConnect new docs and more!
+</section>
+<section data-field="body" class="e-content">
+<section name="ff3f" class="section section--body section--first section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><figure name="993b" id="993b" class="graf graf--figure graf--leading"><img class="graf-image" data-image-id="1*TS8vLpFSgBa8bqPeUgMVEQ.png" data-width="984" data-height="355" data-is-featured="true" src="https://cdn-images-1.medium.com/max/800/1*TS8vLpFSgBa8bqPeUgMVEQ.png"></figure><h3 name="1f57" id="1f57" class="graf graf--h3 graf-after--figure graf--title">useDApp 1.0 Released!</h3><h3 name="1796" id="1796" class="graf graf--h3 graf-after--h3">Multichain support, WalletConnect new docs and more!</h3><p name="9c63" id="9c63" class="graf graf--p graf-after--h3">We are excited to deliver useDApp version 1.0 with a bunch of major new features. It’s been a month of work for our <a href="https://medium.com/truefieng/introducing-truefi-engineering-8bd0c4b20e7f" data-href="https://medium.com/truefieng/introducing-truefi-engineering-8bd0c4b20e7f" class="markup--anchor markup--p-anchor" target="_blank">open-source team</a>, so we are excited to finally move with the desired speed 🏎</p><h3 name="fcf1" id="fcf1" class="graf graf--h3 graf-after--p">⛓ Multichain support</h3><p name="de1d" id="de1d" class="graf graf--p graf-after--h3">We are starting with a big, long-awaited feature. useDApp now supports multiple chains at once. How does it work? Very simple.</p><p name="0457" id="0457" class="graf graf--p graf-after--p">Users can read from multiple networks at the same time. By default, hooks will use the “default network” or the one that the user is connected to for writing.</p><figure name="9977" id="9977" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*HiSQEoxufqBOmcszTOqwLg.png" data-width="1264" data-height="338" src="https://cdn-images-1.medium.com/max/800/1*HiSQEoxufqBOmcszTOqwLg.png"><figcaption class="imageCaption">Reading the balance of one account on multiple networks</figcaption></figure><p name="9c47" id="9c47" class="graf graf--p graf-after--figure">The user can only be connected to one chain for writing. This limitation comes from how wallets like MetaMask work and from the standard EIP1193. However, the user can switch networks easily and, as it’s always the case with useDApp, the UI will follow.</p><p name="135c" id="135c" class="graf graf--p graf-after--p">To start working with multi-chain, just specify URLs for different networks.</p><pre name="ddaf" id="ddaf" class="graf graf--pre graf-after--p">const config: Config = {<br>  readOnlyChainId: Mainnet.chainId,<br>  readOnlyUrls: {<br>    [Mainnet.chainId]:  ‘https://mainnet.infura.io/v3/&lt;INFURA_ID&gt;&#39;,<br>    [Kovan.chainId]: ‘https://kovan.infura.io/v3/&lt;INFURA_ID&gt;&#39;,<br>  },<br>}</pre><p name="5984" id="5984" class="graf graf--p graf-after--pre">To specify the chain, simply add a parameter to any read-hook, for example, read user balance from two different networks:</p><pre name="ee9e" id="ee9e" class="graf graf--pre graf-after--p">const mainnetBalance = useEtherBalance(address, { chainId: Mainnet.chainId })<br>  const kovanBalance = useEtherBalance(address, { chainId: Kovan.chainId })</pre><p name="9506" id="9506" class="graf graf--p graf-after--pre">Check the full guide <a href="https://usedapp-docs.netlify.app/docs/Guides/Connecting/Multi%20Chain" data-href="https://usedapp-docs.netlify.app/docs/Guides/Connecting/Multi%20Chain" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">here</a>.</p><h3 name="8e96" id="8e96" class="graf graf--h3 graf-after--p">⚡️ WalletConnect</h3><p name="8f96" id="8f96" class="graf graf--p graf-after--h3">It was supposed to be a big announcement that we integrated WalletConnect. The fun part is that in fact no integration was needed. It takes just a few lines of code to integrate WalletConnect, so instead we simply add a <a href="https://usedapp-docs.netlify.app/docs/Guides/Connecting/Wallet%20Connect" data-href="https://usedapp-docs.netlify.app/docs/Guides/Connecting/Wallet%20Connect" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">guide</a> to our docs.</p><figure name="ed35" id="ed35" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*XU4Q9Ro3qbvDQLZZP6VxeQ.gif" data-width="1874" data-height="1470" src="https://cdn-images-1.medium.com/max/800/1*XU4Q9Ro3qbvDQLZZP6VxeQ.gif"></figure><pre name="0e57" id="0e57" class="graf graf--pre graf-after--figure">const { activate } = useEthers()<br>const provider = new WalletConnectProvider({<br> infuraId: ‘&lt;ChainId&gt;’,<br>})<br>await provider.enable()<br>activate(provider)</pre><p name="a3a5" id="a3a5" class="graf graf--p graf-after--pre">You can now integrate WalletConnect:</p><ul class="postList"><li name="756e" id="756e" class="graf graf--li graf-after--p">natively with just a few lines of code (see above)</li><li name="d18c" id="d18c" class="graf graf--li graf-after--li">use Web3Modal (if you have other wallets that you would like to support)</li><li name="bb51" id="bb51" class="graf graf--li graf-after--li">use Web3React connector (if you are migrating from older version).</li></ul><h3 name="667e" id="667e" class="graf graf--h3 graf-after--li">🚎 Custom chains</h3><p name="82f4" id="82f4" class="graf graf--p graf-after--h3">It used to be that you need to fork and create a PR to useDApp to connect to a new chain. The reason was that the chainId was an <em class="markup--em markup--p-em">enum</em> type. With the <em class="markup--em markup--p-em">chainId</em> being now a <em class="markup--em markup--p-em">number</em>, adding a custom chain is just a few lines of code. First define all properties of the chain:</p><pre name="b666" id="b666" class="graf graf--pre graf-after--p">export const TutorialChain: Chain = {<br>  chainId: 99999,<br>  chainName: ‘TutorialChain’,<br>  isTestChain: false,<br>  isLocalChain: false,<br>  multicallAddress: ‘0x0000000000000000000000000000000000000000’,<br>  getExplorerAddressLink: (address: string) =&gt;<br>    `https://tutorialchain.etherscan.io/address/${address}`,<br>  getExplorerTransactionLink: (transactionHash: string) =&gt;<br>    `https://tutorialchain.etherscan.io/tx/${transactionHash}`,<br>}</pre><p name="8d5e" id="8d5e" class="graf graf--p graf-after--pre">And add it to the configuration:</p><pre name="7d19" id="7d19" class="graf graf--pre graf-after--p">const config: Config = {<br>  readOnlyChainId: TutorialChain.chainId,<br>  readOnlyUrls: {<br>    [TutorialChain.chainId]: ‘&lt;url of the custom chain&gt;’,<br>  },<br>  networks: […DEFAULT_SUPPORTED_CHAINS, TutorialChain],<br>}</pre><p name="8bdb" id="8bdb" class="graf graf--p graf-after--pre">And you are ready to use the new chain. <br>Detailed description is available in the <a href="https://usedapp-docs.netlify.app/docs/Guides/Connecting/Custom%20Chains" data-href="https://usedapp-docs.netlify.app/docs/Guides/Connecting/Custom%20Chains" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">documentation</a>.</p><h3 name="dc33" id="dc33" class="graf graf--h3 graf-after--p">📘Documentation</h3><p name="17c1" id="17c1" class="graf graf--p graf-after--h3">We redesigned the documentation, it is now better structured, with more guides and better focus on the user facing API. We also added live examples to play around with.</p><figure name="d14b" id="d14b" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*RmhsplgTBm2mz08dPxYc3A.gif" data-width="3090" data-height="1342" src="https://cdn-images-1.medium.com/max/800/1*RmhsplgTBm2mz08dPxYc3A.gif"></figure><p name="55ec" id="55ec" class="graf graf--p graf-after--figure">We also started working on a migration guide, which will be important in the future, as we will want to start deprecating stuff.</p><p name="ee3e" id="ee3e" class="graf graf--p graf-after--p">Checkout the new documentation 👉 <a href="https://usedapp-docs.netlify.app/docs" data-href="https://usedapp-docs.netlify.app/docs" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">here</a>.</p><h3 name="74b8" id="74b8" class="graf graf--h3 graf-after--p">🗣 Discord</h3><p name="58c9" id="58c9" class="graf graf--p graf-after--h3">Another common request was to create a better place for communication, with Discord being the most common choice. And so we created a TrueFi open-source discord focused only on our open-source efforts:<br>👇</p><p name="85bd" id="85bd" class="graf graf--p graf-after--p"><a href="https://discord.gg/ppFxC3E44X" data-href="https://discord.gg/ppFxC3E44X" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Join Discord now</a></p><p name="da05" id="da05" class="graf graf--p graf-after--p">For that purpose, we migrated the previously existing 0xHack discord that included a useDApp channel. We are now much more responsive than we used to be!</p><h3 name="5a55" id="5a55" class="graf graf--h3 graf-after--p">👉 What’s next — useDApp 1.1</h3><p name="af2f" id="af2f" class="graf graf--p graf-after--h3">We feel that the useDApp core is feature complete, we will focus now on clean-up and optimizations. Especially, in version 1.1 and w we want to:</p><ul class="postList"><li name="c84f" id="c84f" class="graf graf--li graf-after--p">Reduce the amount of code required to create your very first application</li><li name="f090" id="f090" class="graf graf--li graf-after--li">Simplify configuration</li><li name="cc8c" id="cc8c" class="graf graf--li graf-after--li">Deprecate older methods/hooks and hide the internal API from the users</li><li name="d63d" id="d63d" class="graf graf--li graf-after--li">Work on optimisations</li></ul><p name="4beb" id="4beb" class="graf graf--p graf-after--li">After that, we have a long list of ideas for new features, that we would like to add as plugins 🎶</p><p name="a4ff" id="a4ff" class="graf graf--p graf-after--p graf--trailing">As always, stay tuned 📻<br>Follow us on <a href="https://twitter.com/truefieng" data-href="https://twitter.com/truefieng" class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">@truefieng</a> to get updates</p></div></div></section>
+</section>
+<footer><p>By <a href="https://medium.com/@marekkirejczyk" class="p-author h-card">Marek Kirejczyk</a> on <a href="https://medium.com/p/4ee60a94fb06"><time class="dt-published" datetime="2022-04-14T10:02:29.058Z">April 14, 2022</time></a>.</p><p><a href="https://medium.com/@marekkirejczyk/usedapp-1-0-released-4ee60a94fb06" class="p-canonical">Canonical link</a></p><p>Exported from <a href="https://medium.com">Medium</a> on September 22, 2025.</p></footer></article></body></html>
