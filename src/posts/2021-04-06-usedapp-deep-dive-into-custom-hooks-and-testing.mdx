@@ -1,0 +1,86 @@
+---
+title: "useDApp: Deep dive into custom hooks and testing"
+author: "Marek Kirejczyk"
+date: "2021-04-06"
+heroImage: "/images/posts/1*NWfZfV39AhiUvhbny30S2g.png"
+# tags: [] # No tags generated
+---
+
+This is the second post of our series on new useDApp features:
+1. [Introducing useDApp](https://medium.com/ethworks/introducing-usedapp-framework-for-rapid-dapp-development-4959361f242a) 
+2. Deep dive into custom hooks and testing
+*3. Coming soon: sending transactions and notifications*
+
+useDApp brings idiomatic React hooks paradigm to writing DApps to provide amazing developer and user experience. Read all about it in the [previous post](https://medium.com/ethworks/introducing-usedapp-framework-for-rapid-dapp-development-4959361f242a) . And now, as promised, it is time to talk about testing.
+
+Automated testing is easy with two exceptions: UI and integration tests (e.g code interacting with blockchain). With useDApp, a basic building block of the app is a hook that is used for interaction with blockchain. Which is partially a UI code and partially integration code. Good support for testing hooks is therefore essential.
+
+Let’s examine a basic example — a `useTokenApproval` hook — that returns (you guessed it) — token approval for given *owner* and *spender* addresses.
+
+<pre>**function** useTokenAllowance(
+ tokenAddress: string | Falsy,
+ ownerAddress: string | Falsy,
+ spenderAddress: string | Falsy
+) {
+ **const** [allowance] =
+ useContractCall(
+ ownerAddress &&
+ spenderAddress &&
+ tokenAddress && {
+ abi: ERC20Interface,
+ address: tokenAddress,
+ method: 'allowance',
+ args: [ownerAddress, spenderAddress],
+ }
+ ) ?? []
+ **return** allowance
+}</pre>As you can see, it is a straightforward wrapper for `useChainCall` hook. A quick reminder what`useChainCall` does:
+
+- aggregates many calls into one call,
+- makes sure the component refreshes when return value changes (i.e. on new block, when the wallet or network changes).
+
+A single argument of useChainCall is [ContractCall]
+with the following fields:
+
+- contract interface as ethers.js Interface (see docs [here](https://docs.ethers.io/v5/api/utils/abi/interface/) ),
+- contract *address* to call the method on,
+- the name of the contract function to call,
+- array of function arguments (in this case the owner and spender addresses).
+
+**Note 1:** React hooks always need to be called in the same order, regardless of whether all values have been initialized. Therefore you should call `useContractCall` with `null` as an argument if one of the variables is not yet initialized. Hence the example uses the following construction:`ownerAddress && spenderAddress && tokenAddress && ...`.
+
+**Note 2: **As `useChainCall` can return null, make sure the custom hook will return a meaningful result, hence the following construction at the end:`?? []`
+
+Let’s write a test for the hook. We start with a setup code that will create a *mock provider* and *test wallets*. If you know [Waffle](https://getwaffle.io/) , the code might look familiar.
+
+<pre>**const** mockProvider = **new** MockProvider()
+**const** [deployer, spender] = mockProvider.getWallets()</pre>And before each test deploy an ERC20 contract.
+
+<pre>**let** token: Contract</pre><pre>beforeEach(**async** () => {
+ **const** args = ['MOCKToken', 'MOCK', deployer.address, utils.parseEther("10")]
+ token = **await** deployContract(deployer, ERC20Mock, args)
+})</pre>And now we can test the hook.
+
+<pre>**await** token.approve(spender.address, utils.parseEther('1'))</pre><pre>**const** { result, waitForCurrent } = **await** renderWeb3Hook(
+ () => useTokenAllowance(token.address, deployer.address, spender.address),
+ {
+ mockProvider,
+ }
+)
+**await** waitForCurrent((val) => val !== undefined)</pre><pre>expect(result.error).to.be.undefined
+expect(result.current).to.eq(utils.parseEther('1'))</pre>First, let’s approve the spender for 1 ETH so that we can check if our hook returns the correct value.
+
+We will render the hook using the helper `renderWeb3Hook` function. It works like renderHook from the [react-testing-library](https://testing-library.com/docs/react-testing-library/intro/) , but it wraps the hook into a special `DAppProvider`. To pass blockchain environment, we need to provide our previously created mockProvider to the hook as an argument.
+
+React components update asynchronously. Reading data from the blockchain is also an async operation. To get the return value from the hook, wait for the result to be set: `await waitForCurrent((val) => val !== undefined)`
+
+Finally we can check if our result is correct. `result.current` is a value returned from our hook. It should be equal to 1 Ether (1 with 18 zeros).
+
+We are testing a new version of useDApp right now with new hooks for sending transactions, tracking their status and showing notifications. We will publish the new blog post soon.
+
+✅ Start using it (checkout the [website](http://usedapp.io/) , [docs](https://usedapp.readthedocs.io/en/latest/getting-started.html) ) and give us feedback ( [GitHub](https://github.com/ethworks/usedapp) )
+✅ Follow us on [Twitter]
+for updates
+✅ Retweet to spread the word
+✅ Help us build a dedicated team and **fund us on the ** [**Gitcoin**]
+We are [Ethworks](https://ethworks.io/) . A genuinely remarkable team for your blockchain project.

@@ -1,0 +1,78 @@
+---
+title: "🦄 UniLogin and the Quest for a Better Txn Fees UX"
+author: "Marek Kirejczyk"
+date: "2020-06-22"
+heroImage: "/images/posts/1*EXSqTOTYimOoM45OTp1kGQ.png"
+# tags: [] # No tags generated
+---
+
+Transaction fees remain one of the main usability challenges for Ethereum and blockchains in general. There are a few different problems with them.
+
+#### Problem 1: Fluctuations
+Fluctuations gas prices make fees unpredictable. The chart below is just one illustration of how volatile gas prices can be.
+
+![](/images/posts/1*27a4nbU2EZIgHHz_AoZfJQ.png)
+
+*Historical gas prices on Ethereum*
+
+#### Problem 2: Necessity of ETH
+A user may want to move ERC20 tokens around but still needs ETH to do it. This can result in what the user perceives as a bizarre situation where, despite possessing significant assets, they get an “Insufficient funds” error message.
+
+![](/images/posts/1*ezxSCb_-NQB1LJW4S6x0Kg.png)
+
+*Surprising error message in Metamask*
+
+#### Problem 3: Fee calculations
+The fee calculation model is somewhat complex, which leads to a bad user experience.
+
+![](/images/posts/1*V6KmnWdXEXHsp_0NRu9WRQ.png)
+
+*Somewhat complex Metamask UI for managing transaction fees.*
+
+Here is an interesting fact: in our interviews with dapp developers, many of them stated **they would gladly pay fees for their users, as long as they made money on their users’ actions.**
+
+People familiar with the topic can already see that trend in *Argent’s fair use gas policy*.
+
+To fight fee related challenges with UniLogin, we are introducing two fee modes.
+
+If the user has to pay their own fees, it is now possible to pay them with the ERC20 tokens already in their possession instead of ETH using meta-transactions. This means users not only don’t need to have ETH, they don’t have to even known what ETH is.
+
+Below is a video of RSVPing to an event on [Kickback](https://kickback.events/) …
+
+![](/images/posts/1*yeXcg3UNr3G5ksGrA7jz2g.gif)
+
+*RSVP to an event, pay transaction fee in DAI*
+
+…and the full on-boarding flow with wallet creation using only DAI (with our favorite on-ramp provider [Ramp](http://ramp.network/) ):
+
+![](/images/posts/1*y6TzviCdsrKZScKqiw6hJg.gif)
+
+*DAI only onboarding*
+
+You can try this out with one of our partners: [GnosisSafe](https://gnosis-safe.io/) , [Kickback]
+or [Jarvis](https://beta.jarvis.network/) .
+
+If a dapp developer decides they want to cover user fees, the UX becomes even better. Just create a wallet and send transactions. No fee dialogs, no transaction speed widgets, no unnecessary UI bloat.
+
+Check out the video below in Jarvis Wallet which demonstrates creation of a wallet…
+
+![](/images/posts/1*tMbcBE8IljKDCYVAhvaFIw.gif)
+
+…and sending a transaction with this method:
+
+![]
+These new features are introduced in UniLogin Beta 4 — 0.6.0
+
+Shoot us an email to *marek [at] universallogin.io* if you would like to test *fee-less* transactions on your application.
+
+In the future, we envision our customers dynamically making decisions of whether to cover a user’s fee or not based on various inputs: transaction data, the state of network and reputation of the user.
+
+As a bonus, we are happy to let you know that [Web3 Modal]
+now supports UniLogin!
+
+To make sure you don’t miss the next posts in the series, follow us [Medium]
+and [Twitter](https://twitter.com/unilogin) .
+
+Still not signed-up for our Beta program? Fix it!
+
+[Join our Pilot program](http://tiny.cc/unilogin) 👮🏽 🛩

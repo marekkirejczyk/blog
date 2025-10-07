@@ -1,0 +1,127 @@
+---
+title: "The Problem with Formal Verification (What We Learned Building Universal Login — Part 2: Security)"
+author: "Marek Kirejczyk"
+date: "2020-02-03"
+heroImage: "/images/posts/1*hnOxSPce9XNdN1qW1AWucQ.png"
+# tags: [] # No tags generated
+---
+
+#### What We Learned Building Universal Login — Part 2: Security
+This is the second blog post in a series “What We Learned Building Universal Login”:
+
+- [Part 1: The Problem](https://medium.com/universal-ethereum/what-we-learned-building-universal-login-part-1-the-problem-6098d600e127)
+- **Part 2: Security**
+- Part 3: Developer Experience (coming soon!)
+- Part 4: User Experience (coming soon!)
+
+To solve onboarding, one needs to solve the security aspect of it. Our takeaways are:
+
+- To avoid single points of failure, build an ecosystem rather than a single app/API provider
+- In this use-case, security of smart-contracts is even more crucial than usual
+- Formal verification fails, because it is too unstable and expensive, and it forces you to do write-once rather than ongoing development
+- Gnosis safe contract fits our requirements perfectly and comes with bonuses
+- So now we can better focus on our core: solving onboarding, with the best possible UX and dev experience
+
+As described in [part 1 of this series](https://medium.com/universal-ethereum/what-we-learned-building-universal-login-part-1-the-problem-6098d600e127) , **security** is one of three sets of challenges to solve user onboarding to Ethereum (the other two are user experience and developer experience) and it consist of many smaller sub-problems, each affecting each other:
+
+- Private key getting lost or stolen leads to loss of funds
+- A single smart contract’s vulnerability can lead to catastrophic failure
+- Solving onboarding also means solving the custodial vs. non-custodial trade-off. Custodial: can be easy to use, but funds are only as secure as your custodian. Non-custodial: hard to use, as secure as your setup, but not easy to properly secure.
+- Finally, once you solve all of those problems, you need to explain how it all works and build a brand that people trust.
+
+Our general philosophy around solving security is to avoid a single point of failure (SPOF) as much as possible, by using a multisig wallet.
+
+[🔑]
+Private key lost? — no problem you store multiple keys on different devices, you can use other devices to reconnect to your funds
+
+[🔑]
+Private key stolen? — no problem, each key has limited permissions (once the amount of money is big enough to justify extra security)
+
+**But what about other SPOFs?**
+
+[🔒]
+custodian (a 3rd party that stores funds)
+ [🔒]
+application (a wallet or dapp potentially hackable)
+ [🔒]
+domain (vulnerable to hijacking)
+ [🔒]
+etc
+
+The problem with multisig wallets, so far, was that they were too hard to use. That is why our goal is to use a thriving ecosystem of apps and wallets. Each one of them can increase your safety.
+
+**The key to solve onboarding is not to build a dapp or a smart wallet. It is to build a secure ecosystem. That is the only way to avoid a single point of failure in the long run.**
+
+That also solves the custodial vs non-custodial paradox.
+
+That, unfortunately, leaves one potential point of failure: the smart contract.
+
+To ensure no single vulnerability in a smart contract is a key to build a multisig. We were very aware of this critical problem from the very beginning.
+
+From the first days of our research, we were investing heavily in security. Our first approach was to use formal verification.
+
+We assumed that with formal verification (FV):
+
+- we could move fast with confidence (by doing ongoing formal verification as we kept developing smart contracts)
+- we could hire a person in-house to work on it to propagate necessary skills within the team
+
+Soon Tomasz, a PhD in computer science, with specialization in blockchain and a background in formal verification, joined our team.
+
+We used a well tested technological stack: K (formal verification language), KEVM (EVM specification in K), and ACT (high-level specification language build by DApphub — a team working on formal verification of Maker).
+
+![](/images/posts/0*x4jKDeFCNNQNbeL3.png)
+
+*The ecosystem for creating proofs on EVM*
+
+As a by-product of that work with co-op with Tomek, I wrote a series of blog posts on formal verification available here: part [1](https://medium.com/ethworks/formal-verification-for-n00bs-part-1-b4781db2a383) , [2](https://medium.com/ethworks/formal-verification-for-n00bs-part-2-proving-the-correctness-of-a-token-74085f5cd6c1) , [3](https://medium.com/ethworks/formal-verification-for-n00bs-part-3-an-attempt-to-prevent-classic-hack-with-klab-8e8d13318086) , [4](https://medium.com/ethworks/formal-verification-for-n00bs-part-4-understanding-k-language-6069c20cfd47) .
+
+Our initial work showed much promise: in 2–3 months, we learned basics of formal verification, formally proved one of the critical contracts (KeyHolder that store keys), and added formal verification to our continuous integration.
+
+Boy, we thought we had it solved! We were wrong.
+
+Unfortunately, in the fourth month, we realized we were far from success, as problems started to pile up:
+
+- proving loops and signatures turned out to be quite challenging
+- the formal verification started taking more and more time (before it was launched after each commit, now only at night)
+- we have to keep adding additional code to smart-contracts to make FV work
+- small changes in code could result in significant changes in proofs
+- small changes in proofs could lead to significant changes in the speed of verification
+
+> Swap *a+b* to *b+a* in a proof could add (or subtract) an extra hour to your proving time
+By the end of the fourth month, formally verifying one not-too-complicated contract would take close to four hours. It was maybe 10% of our solidity code base.
+
+**It was becoming evident that:**
+
+- **you need to modify your code and fine-tune proofs heavily to make it work at all**
+- **continuous formal verification is too troublesome to be cost-effective**
+
+> **To work effectively with FV, one has to use a “write once, verify once” approach, rather than ongoing verification**
+We also learned that other teams using formal verification were running into other significant problems:
+
+- they verify most of the code automatically while leaving the hardest parts to manual formal verification on paper
+- a small bug in proofs could lead to falsely verified code
+
+And so we decided to investigate other approaches that would give us confidence and allow us to iterate faster.
+
+Gnosis Safe — a smart wallet contract- was a source for inspiration for us from the very beginning.
+
+![]
+As we were running pilots and gaining understanding of what is it that users and developers need, we discovered that Gnosis Safe contracts matured and they were very aligned with what we are building.
+
+> *Gnosis Safe, smart contracts were built by a rock-solid team, formally verified by authors of K, audited, and battle-tested. Moreover, they have almost all the functionalities we would like to build in the upcoming months.*
+Gnosis Safe comes with a bunch of additional benefits:
+
+- **The brand: **It takes time and testing to convince people that your smart contract code is safe. Gnosis Safe has already done that.
+- **Modules: **That allow extending functionality. A bunch of great modules already exist.
+
+> Thanks to Gnosis Safe contracts, Universal Login starting day one has support for great features like state channels and daily limits.
+Security is just a part of a puzzle. Even the best security is worth nothing without adoption.
+
+Before you can build adoption among users, you have to build adoption among developers. And so, user experience and developer experience are the topics of the next two posts in the series. Stay tuned.
+
+To make sure you don’t miss the next posts in the series, follow us [Medium]
+and [Twitter](https://twitter.com/unilogin) .
+
+Still not signed-up for our Beta program? Fix it!
+
+[Join our Pilot program](http://tiny.cc/unilogin) 👮🏽 🛩

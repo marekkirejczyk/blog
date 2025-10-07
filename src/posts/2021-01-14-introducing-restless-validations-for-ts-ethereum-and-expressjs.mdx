@@ -1,0 +1,105 @@
+---
+title: "Introducing Restless: Validations for TS, Ethereum and Express.js"
+author: "Marek Kirejczyk"
+date: "2021-01-14"
+heroImage: "/images/posts/1*uA54CgI3xdYAYgnz__Arig.png"
+# tags: [] # No tags generated
+---
+
+#### Validations are … everywhere
+Data validations and sanitization are ubiquitous throughout all kinds of programming. From web to mobile, from back-end to front-end, and of course, in the blockchain space, where a single injection can carry devastating results.
+
+#### 😬 Validations are broken
+It is also an annoying topic at times. There are many sanitization libraries, and one could expect that topic is exhausted. However, if we look for a lib with a reasonable list of expectations, you might find nothing that fits the bill.
+
+The solid validation lib should have the following properties:
+
+- **Type safety** — sanitized data should automatically convert to a proper type (in TypeScript),
+- **Reusability** — Ability to define validations once and use them in multiple places,
+- **Composability** — ability to create new validations for complex types (i.e. objects and arrays) using previously defined validations,
+- **Readable errors** — if a validation fails, it should provide a meaningful message for the user,
+- **Customization** — the ability to easily create new completely custom validations,
+- **Simple** — if it takes more than 15min to learn the lib and start using it, it is too complex,
+- **Small** — our js project dependencies trees are already too big; we don’t want to make it even bigger.
+
+It would be a nice bonus if it had out-of-the-box support for our favorite technologies like Express.js and, of course, Ethereum.
+
+And so we created Restless, a simple library for validations that can rise to the challange! Core `@restless/sanitizers` library takes only **37kb **unpacked and has **zero dependencies**. Purely functional — just the way you like it. But let’s start from scratch.
+
+#### 🛠️ Installation
+Install core restless library to start using sanitizers and validation:
+
+<pre>```text
+yarn add @restless/sanitizers
+```
+</pre>#### A simple example
+Let’s start by casting a string to number, pretty straightforward:
+
+<pre>cast('123', asNumber) // 123</pre>If one tries to cast invalid number representation an error will be thrown:
+
+<pre>cast('foo', asNumber) // TypeError</pre>Error can be easily customized:
+
+<pre>cast('foo', asNumber, 'My custom message')</pre>#### 🪄 Magic: Type safety
+Now let’s assign result of a cast to variable of proper type, here is how it looks like in my Visual Studio Code:
+
+![]
+Now let’s see what happens if I accidentally try to assign result to a wrong type:
+
+![]
+Compiler and IDE knows the assignment is wrong, because there is a type mismatch. The data is sanitized and type safe.
+
+You can define complex sanitizers for arrays:
+
+<pre>const sanitizer = asArray(asNumber)</pre>And objects:
+
+<pre>const sanitizer = asObject({ foo: asNumber, bar: asString })</pre>Once defined they can be used anywhere in the codebase.
+
+#### ⚙️ Creating a custom validator
+Creating a custom validator is simple, here is an example function that checks if value provided is string is only capital letters:
+
+<pre>export const asCapitalString: Sanitizer<string> = (value, path) => 
+ typeof value === 'string' && value.match(/[A-Z]/)
+ ? Result.ok(value)
+ : Result.error([{ path, expected: 'string' }])</pre>#### 💸 Ethereum
+For Ethereum support install `@restless/ethereum` package:
+
+<pre>```text
+yarn add @restless/ethereum
+```
+</pre>Now you can use additional sanitizers:
+
+<pre>asEthAddress('0xA5fE...f213', ...)
+asBigNumber('10000000000000', ...)
+asHexBytes(...)
+```text
+asTransactionHash(...)
+```
+</pre>#### 🚄 Express.js
+For Express.js support install `@restless/restless` package:
+
+<pre>```text
+yarn add @restless/restless
+```
+</pre>You can now use a couple of new functions like`sanitize`, `asyncHandler` and `responseOf` which will make sure you are properly sanitizing your data and formulating responses. An example route could look like this:
+
+<pre>const app = express()
+app.get('/:foo', asyncHandler(
+ sanitize({
+ foo: asNumber,
+ body: asObject({
+ bar: asNumber
+ }),
+ query: asObject({
+ baz: asNumber
+ })
+ })
+ (data) => responseOf(data)
+))</pre>The `sanitize` transforms the request into an object that matches a provided schema, `responseOf` formulates proper response with HTTP code and serialized JSON data. `asyncHandler` wraps it all into a middleware that can handle async functions and convert exceptions to proper HTTP responses.
+
+#### 📕 Documentation
+To learn more check documentation for the project on 🌐 [Restless website]
+and 💾 [Github](https://github.com/EthWorks/restless) .
+
+We are [Ethworks](https://ethworks.io/) . A genuinely remarkable team for your blockchain project.
+
+Follow us on 🐦 [Twitter](https://twitter.com/ethworks) !

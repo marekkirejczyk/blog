@@ -1,0 +1,25 @@
+---
+title: "Ok now I understand what you have in mind."
+author: "Marek Kirejczyk"
+date: "2016-11-26"
+heroImage: "Unknown image"
+# tags: [] # No tags generated
+---
+
+Ok now I understand what you have in mind.
+
+In my benchmarks that run a code in loops, i.e.
+
+<pre>N = 1000_000
+Benchmark.bm do |x|
+ x.report { for i in 1..N; 2 + 2 end }
+ x.report { for i in 1..N; 2+2*2; end }
+end</pre>For two reasons:
+
+- I assumed in real live you don’t write a code with 10K additions one after another (like with “2+2;” * 10_000 trick)— you run a loop to calculate something.
+- I didn’t know about [benchmark-ips]
+library, which is a shame — it would be very useful :)
+
+So I agree technically you’re correct and operation 2+2 is more or less twice as slow as 2+2+2 on the CPU level. But in practice it doesn’t matter, cause you can’t make any use of that knowledge.
+
+My aim in writing a blog post was to check how what we think about efficiency of basic operations relate to real life cases. The theory was already known to me :)

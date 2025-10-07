@@ -1,0 +1,108 @@
+---
+title: "Five reasons why I change my focus to cryptography"
+author: "Marek Kirejczyk"
+date: "2023-05-27"
+heroImage: "Unknown image"
+# tags: [] # No tags generated
+---
+
+With some extra time on my hands, I decided to invest it into switching my professional focus from blockchain to cryptography. In this post, I’d like to share my understanding of the space, which makes me excited.
+
+There is a fast growing branch of cryptography, often called Zero Knowledge Proofs (ZKPs). The name hardly represents the whole space, but it is commonly used to describe a part of cryptography being developed mainly around blockchain. It is booming with new use cases and here are some examples:
+
+- **Scaling**There is a new wave of startups trying to solve blockchain’s holy grail — scalability. This includes new L1 technologies — blockchains like [Aleo](https://www.aleo.org/) , [Aleph Zero](https://alephzero.org/) , [Mina](https://minaprotocol.com/) , [Aztec](https://techcrunch.com/2022/12/15/aztec-network-takes-on-encrypted-blockchains-with-100m-round-led-by-a16z/?guccounter=1&guce_referrer=aHR0cHM6Ly90LmNvLw&guce_referrer_sig=AQAAAH9KiBUa5DY2OofHAVZAEcY83ZKZAYWKXfy60lRMDOLn8gvV2_MlIn7ApENU5al8s9kpG72u4HLgT9wNXuICqmLTpk7bbKwfsU8eGd0kBCA6Jjwd4Zto3gpm0CqBQv2XCz7DgTyN7c-YnG9m2VjcFP3BbhNXZ3fYNAGUd_8W3Blp) , and Layer 2 solutions, mostly in the form of zkRollups, like [StarkWare](https://starkware.co/) , [zkSync](https://zksync.io/) , [Scroll](https://scroll.io/) , [Hermez](https://support.polygon.technology/support/solutions/articles/82000886637-what-is-polygon-hermez-) , to name a few.
+- **Privacy**Moreover, some of the technologies mentioned above aim to solve the second biggest challenge in the blockchain space: privacy. And there is more to come.
+- **New use cases**The BLS signatures are entering their renaissance, with [account abstraction]
+finally arriving in Ethereum. It will unlock the possibility of creating new more secure and more usable wallets. For example, you will be able to sign your transactions using multiple devices and leveraging smartphone security features like Apple’s Face ID).
+- **MPC**Along with ZKPs, another booming part of cryptography is *multi-party computation* (MPC). They are used for setup ceremonies for ZKPs. And there is more than meets the eye. There is an ongoing effort to use MPC to take privacy further than ZKPs allow.
+- **New data structures**New data structure, called Verkle Trees, is emerging, with the aim to improve and eventually replace Merkle trees, which are the base building element of blockchains. They are in turn based on polynomial commitments, which is a building block of ZKPs.
+
+The list goes on and on.
+
+Among different types of people working in cryptography, there are two major groups:
+
+- researchers (usually mathematicians)
+- implementers (usually programmers).
+
+Together with a few folks in the space, we noticed the gap between the groups. There is plenty of new math produced, but there is a lack of coding power to turn ideas into prototypes and later into a production ready code.
+
+Moreover, the two groups are often divided, they speak different languages and focus on different aspects. Therefore, even though there is a flow of money into ZKP related startups, the progress is somewhat slow.
+
+I would even risk a more radical thesis:
+
+*The bottleneck in the development of modern cryptography is the lack of hands to work on sensitive cryptography-related code.* *This relates to both quality engineers writing code, as well as auditors.*
+
+Seeing the demand-supply ratio out of balance, one can expect an inflow of a new talent to the space. And this is already the case. However, I expect the inflow to be too slow to match the demand in upcoming years. And here is why.
+
+Coding security sensitive code is slow and hard. The code not only needs to “work”. It needs to meet high cryptographic standards:
+
+- **Cover all edge cases**Code needs to work correctly in all the extreme edge cases, which are hard to test. For instance, it is impossible to do exhaustive testing on all 2²⁵⁶ cases.
+- **Be attack resistant**Even perfectly correct code is not enough. The code needs to be resistant to many different types of side-channel attacks, like timing attacks. Therefore it often needs to be written in a very specific manner, using constant time algorithms.
+- **Be a result of secure process**The process of code creation needs to be resistant to backdoor injection by malicious actors, who use a whole variety of different types of supply chain attacks.
+
+Learning cryptography and broadly defined security is a very humbling experience. It is a major investment and a long process, involving catching up with the math, history of cryptography, the vast catalog of attacks, and counter techniques.
+
+**Impact**
+
+That is not a path for the majority of software developers. I feel like other exciting areas like AI, with a lower entry curve, will be the place where most talent will flow, making cryptography a place where it will be easier to make an impact.
+
+**Challenge**
+After a wonderful almost 20-year-long journey as a software engineer, manager, and founder, I feel like I would like to come back to fundamentals, practice deep work and learn something non-trivial.
+
+Before I dived a bit deeper, cryptography seemed like a boring, slowly changing space for mathematicians, with relatively little space for an adventure for an engineer, like myself. Boy, I was wrong. ZKPs and MPC aside, it is a very exciting time in cryptography and security space.
+
+**Post quantum**
+
+With significant progress in quantum computing, there is a growing need to replace huge parts of cryptography being used today. In particular, all the RSA and Elliptic Curve Cryptography protocols can be cracked by [Shor’s algorithm](https://en.wikipedia.org/wiki/Shor%27s_algorithm) , which runs on Quantum Computers.
+
+The timing of the advent of quantum supremacy is uncertain and is probably many years ahead of us. And that is, assuming it will happen, which is still in question.
+
+However, governments and the security community need to act now, for two reasons:
+
+- First, developing new cryptography standards takes years, so work needs to start now, so that protocols are ready to use in a few years. Another few years will take the transition of applications to use new protocols.
+- The second reason is the [forward secrecy](https://en.wikipedia.org/wiki/Forward_secrecy) . Sensitive data needs to be secure against storing and being decrypted in a few years.
+
+The risk of quantum computers being able to crack modern cryptography needs to be mitigated.
+
+**Espionage**
+
+The world of security was never more exciting. There is a major cyber war going on, with reports of new major incidents a few times a year. And there are countless incidents we don’t hear about. Exploits, trojans, injection backdoors, supply chain attacks, and of course, smart contracts hacks — there is no shortage of threats. I am quite confident more of increasingly sophisticated attacks are ahead of us.
+
+**Emerging engineering practices**
+Cryptography was traditionally slow to develop. To challenge the threats we are facing and meet expectations of investors flooding crypto space with funding, the security community is in a dire need to develop new ways of building security sensitive code faster.
+
+I hope this will drive the diffusion of lesser known engineering practices. This will include [formal verification]
+and [shift left security](https://www.crowdstrike.com/cybersecurity-101/shift-left-security/) . We had the opportunity to introduce both of them in the smart contract team in my last job as CTO at Archblock and TrueFi. I have advocated for both ever since.
+
+Every few years, I like to switch to a new technological stack. I have coded commercially in C++, Java, Ruby, JavaScript, Solidity, and a few more. It is exciting for me to learn new languages, used widely in cryptography: Python and Rust. Both are quite exciting.
+
+**Rust**
+
+Rust is the best designed language I have ever seen. It is complex and has a pretty steep learning curve, but the security and performance it gives in return seem to be just worth it. I have never ever seen such high quality code in any other ecosystem. We have seen a wave of things being rewritten in Rust and we can expect more. Wherever speed and security matters, Rust will enter the scene. I’ll give you just one example why.
+
+In the last decades, we have seen numerous exploits and back doors, leveraged by governments agencies and private companies used for espionage. Vast portions of them were buffer overflows (e.g. [Heartbleed](https://en.wikipedia.org/wiki/Heartbleed) ), which Rust prevents by default. Resistance to attacks is only going to become more important in upcoming decades, as our lives will depend on many millions lines of code even more than today, written by millions of developers of various expertise. A better language for writing critical code is a must.
+
+**Python**
+
+Python is the most popular language in the world. I find it to be not-so-well designed and it does trigger my PTSD from Ruby and JS-before-typescript times, where you have to pick between extensive test suites or hours of debugging. It does, however, unlock access to an endless number of libraries unavailable in other mainstream technologies: scientific, AI, quantum computing, to name a few areas.
+
+Both languages get me excited about new opportunities they unlock.
+
+My first goal is to fully understand Plonk — a most popular general purpose ZKPs system. To understand Plonk, there is plenty of cryptography to catch-up with: Elliptic Curves, Pairings, Polynomial commitments, Arithmetization, SNARKs, and more.
+
+To learn them, I started a [hobby project]
+I am working on in my free time. I am both implementing what I am learning, and working on animation in [Manim](https://www.manim.community/) , which I will put on a newly created [youtube channel](https://www.youtube.com/@zkmarek) . You can check them out using links below:
+
+👉 [Hobby project](https://github.com/marekkirejczyk/zkmarek)
+
+👉 [Youtube channel](https://www.youtube.com/@zkmarek) (coming soon)
+
+Stay tuned!
+
+Thank you for reading! I hope you like this post and I am looking forward to your feedback.
+
+If you like this post — hit 👏 button below.
+
+To get notifications about my other writings, click *follow* below.
+
+If you want to continue the conversation and see more stuff like this, you can find me on Twitter: [@ethmarek](https://twitter.com/ethmarek) .

@@ -1,0 +1,57 @@
+---
+title: "Universal Login Beta 3: Gnosis Safe Support & More"
+author: "Marek Kirejczyk"
+date: "2020-01-28"
+heroImage: "/images/posts/1*ZZvdDU8-MwbcnR0bepV7HA.png"
+# tags: [] # No tags generated
+---
+
+Long-awaited Universal Login Beta 3 has landed, with a major announcement: we are now supporting Gnosis Safe contracts!
+
+Universal Login Beta3, enables full support for Gnosis Safe smart contracts. A newly deployed wallet is by default Gnosis Safe. Core Universal Login functionalities remain unchanged, but all processing happens now on those contracts.
+
+![](/images/posts/1*yu-Qb158ibtDoFxbCt1TeQ.gif)
+
+*Jarvis Wallet now using Gnosis Safe contracts*
+
+Like before, you can play with the current version of SDK and contracts on the [Jarvis wallet beta](https://beta.jarvis.network/) .
+
+Our previous contracts are supported, too, so users can keep using their accounts; however, currently, there is no way to migrate from one to another. You can create a new wallet and move funds to test the new wallet.
+
+There is a number of good reasons to use Gnosis Safe smart contracts. We were considering it for a while and decided to migrate before announcing version 1.0.
+
+- **Security** — Gnosis Safe is formally verified and audited code that is storing more and more value every month (currently almost $9 million worth)
+
+![](/images/posts/1*CXPjR4s03gMg5PSqAhbRWw.png)
+
+*Source: [https://explore.duneanalytics.com/](https://explore.duneanalytics.com/public/dashboards/ul0PgNtcq9MwezZThlHrgOMEIzpvEmkdwA9XoVqi)*
+
+- We discovered that Gnosis Safe contracts are very similar to ours and had implemented a number of functionalities we wanted.
+
+> Working with Gnosis Safe will save us tons of money and time on development and security audits. We can now spend it on **improving user and developer experience** instead.
+
+- Joining a **thriving eco-system** — there are other projects now building on top of Gnosis Safe with which we look forward to integrating.
+- **Integration with Gnosis Safe mobile wallet** — using Gnosis Safe contracts opens the possibility to connect with your Universal Login account to Gnosis Safe.
+
+To learn more about why we decided to migrate to Gnosis Safe, subscribe to our [blog]
+and [Twitter](https://twitter.com/unilogin) , and read our upcoming post on “*What We Learned Building Universal Login — Part 2: Security.”*
+
+See Gnosis Safe smart contracts stats below (source: [duneanalytics.com](https://explore.duneanalytics.com/public/dashboards/ul0PgNtcq9MwezZThlHrgOMEIzpvEmkdwA9XoVqi) ).
+
+![](/images/posts/1*NytZNU7nYuXu1ofm_4A8vg.png)
+
+*Source: [duneanalytics.com](https://explore.duneanalytics.com/public/dashboards/ul0PgNtcq9MwezZThlHrgOMEIzpvEmkdwA9XoVqi)*
+
+- Updated on-ramping with Ramp that now works well on mobile and supports more European banks.
+- Add support for ES Modules
+- Reduce the number of background Ajax requests to an Ethereum node
+- Improve build process and directory structure
+- Several smaller and mid-size refactorings to maintain the high-quality and testability of code as the codebase grows
+
+Beta 3 is released as npm designated by version 0.5.*.
+
+Overall, we see the SDK is becoming stable, and we move our focus to finishing the web3Provider API, which will be thedefault way to connect to Universal Login. We plan to release it soon in Beta 4. Stay tuned!
+
+Still not signed-up for our Beta program? Fix it!
+
+[Join our Pilot program](http://tiny.cc/unilogin) 👮🏽 🛩

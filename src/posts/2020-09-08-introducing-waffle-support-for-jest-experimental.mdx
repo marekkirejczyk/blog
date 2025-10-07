@@ -1,0 +1,49 @@
+---
+title: "Introducing Waffle support for Jest (experimental)"
+author: "Marek Kirejczyk"
+date: "2020-09-08"
+heroImage: "/images/posts/1*fS06HBYQWm5dTJeofv9cZg.png"
+# tags: [] # No tags generated
+---
+
+In the short three months since the release of version 3, the number of projects using Waffle has doubled!
+
+![]
+We are happy to see more and more people contributing to Waffle. And today we introduce the first major feature fully created by an external contributor.
+
+Thanks to the [great work]
+from [Adrian Li]
+and testing by [Maarten Zuidhoorn](https://github.com/Mrtenz) , we are releasing experimental support for Jest.
+
+Mocha and Chai were the default choices for Waffle due to historical reasons. However, Jest has become the most popular testing framework by the number of downloads, and so, the time has come to include support for Jest in Waffle.
+
+![]
+To start using Jest matchers, install `@ethereum-waffle/jest` using yarn or your favourite package manager, i.e.:
+
+<pre>```text
+yarn add @ethereum-waffle/jest
+```
+</pre>And below, there is a simple example of a test written with Waffle and Jest:
+
+<pre>import { waffleJest } from ‘@ethereum-waffle/jest’;</pre><pre>expect.extend(waffleJest);</pre><pre>test('object assignment', () => { 
+ expect(await token.balanceOf(wallet.address))
+ .toEqBN(993);
+});</pre>Currently, there is no documentation yet, so one has to take a look at [tests]
+or [PR]
+for more examples. Similarly to the *chai* module, `@ethereum-waffle/jest` supports matchers related to:
+
+- **BigNumber** (toEqBN, toBeGtBN, toBeLtBN, toBeGteBN, toBeLteBN) e.g.:expect(BigNumber.from(2)).toEqBN(2)
+- **Transaction revert:**await expect(token.transfer(sender, '0x0', 100)).toBeReverted(); await expect(token.transfer(sender, '0x0',100) .toBeRevertedWith('transfer from the zero address');
+- **Events**:await expect(tx).toHaveEmitted(contract, ‘Transfer’); await expect(tx).toHaveEmittedWith(events, ‘Transfer’, [sender, recipient, amount);
+- **Calling functions**:expect(‘totalSupply’).toBeCalledOnContract(token); expect(‘balanceOf’).toBeCalledOnContractWith(token, address);
+- **Balance change:**await expect(...).toChangeBalance(sender, ‘-200’);await expect(…).toChangeBalances([sender, receiver], [‘-200’, 200]);
+- **Hex strings:**expect(‘0x28…0e’).toBeProperAddress();expect(‘0x28…40’).toBeProperPrivateKey();expect(‘0x702’).toBeProperHex(2)
+
+We are introducing support for Jest in Waffle 3.1 as an experimental feature, which means that:
+
+- we don’t promise to keep and maintain this feature at this point,
+- there might be breaking changes introduced without a major version change,
+- we didn’t test how it works with [Buidler]
+and… we didn’t test much in general.
+
+We would love to hear your feedback on Jest support. Is it working? Do you love it or hate it? Let us know in comments!

@@ -1,0 +1,83 @@
+---
+title: "Fix your transactions. Fix your DApp UX. (with useDApp)"
+author: "Unknown author"
+date: "Unknown date"
+heroImage: "/images/posts/1*IeDaZ7dGsrWAgS_OgiKydA.png"
+# tags: [] # No tags generated
+---
+
+This is the 3rd post of our series on new useDApp features:
+1. [Introducing useDApp](https://medium.com/ethworks/introducing-usedapp-framework-for-rapid-dapp-development-4959361f242a) 
+2. [Deep dive into custom hooks and testing](https://medium.com/ethworks/usedapp-deep-dive-into-custom-hooks-and-testing-4a59fbc1769a) 
+3. Transactions and notifications
+
+In the previous blog posts we explored how to [build]
+and [test]
+DApps make calls to blockchain. Now it’s high time we looked into transactions.
+
+Sending transactions seems like a trivial task at the first glance. However, there is more to it than meets the eye. Let’s start by iterating over possible states that the user can see when dealing with transactions:
+
+- **None** — first we need to show the user a piece of UI that will allow them to initiate a transaction. Modeling it as a state of transaction helps to get simple readable code. Take a look at an example component below that allows to wrap ETH into WETH.
+
+![](/images/posts/1*jo41GeXtLQfSCTmGHxak1Q.png)
+
+- **Mining** — then when a transaction is sent to the network, but not yet mined, we should display a proper indicator of the operation in progress.*Note:*** **In this state TransactionRequest* *object is available with transaction details including *transaction hash, *so among other things, we can show a link to the blockchain explorer*.*
+
+![](/images/posts/1*zRVgnlIHwrofIf1qIwnGGw.png)
+
+- **Success** — when a transaction has been mined successfully, we are suppose to signal it to the user.*Note: *In this state TransactionRequestand TransactionReceipt are available.
+
+![](/images/posts/1*HU0V7ALST2vemhSQOXIi2w.png)
+
+- **Failed** — when a transaction has been mined, but ended up reverted, we signal that to the user as well.*Note: *Again TransactionRequest and TransactionReceipt are available.
+- **Exception** — when a transaction hasn’t started, due to the exception that was thrown before the transaction was propagated to the network, we inform the user. The exception could have come from:- application/library code (e.g. unexpected exception like malformed arguments) - Metamask (e.g user discarded transaction). *Note*: In this state the message error is available (as well as exception object).
+
+![]
+Now let’s look at code that can manage all the cases below:
+
+[CODE]
+
+As you can see with useDApp — each case maps directly into a single line code that can show proper information to the user.
+
+Additionally, if you work with TypeScript — `TransactionStatus` is type safe, so only fields available for given state can be used in any given case in the `if` statement.
+
+Checkout also a transaction example available [here]
+and code [here](https://github.com/EthWorks/useDApp/blob/master/packages/example/src/components/Notifications/Forms.tsx) .
+
+Most of the time displaying transaction status alone is not enough, as the user can navigate to another screen and lose the context.
+
+It is then a good practice to either show list of pending transactions and/or notifications when the transaction status has changed. See the animation below.
+
+[ANIMATED GIF]
+
+And here is a snippet of code that displays notification:
+
+[CODE]
+
+*Note*: Additionally when a wallet connects or disconnects, relevant notifications are triggered.
+
+Checkout also notifications example available [here]
+and code [here](https://github.com/EthWorks/useDApp/blob/master/packages/example/src/components/Notifications/Forms.tsx) .
+
+Notifications improve user experience greatly. But what if transaction is slow or if there are multiple transactions in progress or if the notification has already faded out? For these situations it is good to incorporate the list of all recent transactions in the UI. It goes for the pending, recently mined and failed ones. See the animation below:
+
+[ANIMATED GIF]
+
+And here comes the example code:
+
+Checkout also transaction list example available [here]
+and code [here](https://github.com/EthWorks/useDApp/blob/master/packages/example/src/components/Notifications/Forms.tsx) .
+
+> It used to take days for a skilled developer to implement proper notifications and list of transactions. With useDApp it is a single line of code each. It takes care of all the annoying details: local storage, page refresh and chain switch support etc
+![]
+We are organising [0xHack]
+together with our [great partners](https://0xhack.dev/#prizes) . It is a two-week **online hackathon**, starting 14th of May. It is free, open for all and there is
+ 💰10.000 DAI to win in bounties with useDApp:
+
+🏆💲3000 DAI and 💲2000 DAI — for two best new feature implementations 
+🏆💲2000 DAI and 💲1000 DAI — for two best DApps using useDApp
+🏆💲1000 DAI —for best tutorial or guide for useDApp
+🏆 5x 💲200 DAI — for DApps using useDApp
+
+Go to [0xhack.dev]
+and join now!

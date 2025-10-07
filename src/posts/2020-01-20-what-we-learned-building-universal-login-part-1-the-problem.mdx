@@ -1,0 +1,71 @@
+---
+title: "What We Learned Building Universal Login — Part 1: The Problem"
+author: "Marek Kirejczyk"
+date: "2020-01-20"
+heroImage: "/images/posts/1*PwU7-ZauqAk1_KJPuWndsw.png"
+# tags: [] # No tags generated
+---
+
+Ethereum conferences are the heartbeat of the ecosystem: Universal Login started as an idea at EDCON Toronto, found a team at Dappcon, was launched as a company at Devcon, **so we’ll be proud to be at this years ** [**ETHDenver**](https://medium.com/u/79079ae79889) **, talking about the lessons we learned and the next steps on the project.**
+
+Defining the problem you want to solve often sounds simple, but in fact it’s often the most complicated part of trying to solve it. In this post we want to talk about our journey on figuring out the real issues that plague onboarding users to Ethereum apps.
+
+In the next few posts, we hope to talk about how we are doing on security, user experience and—equally important—developer experience. To follow these, follow our series or **simply watch ** [**our ETHDENVER talk**](http://www.ethdenver.com) **!**
+
+We started Universal Login as a research project in summer 2018, over a year ago. Some would say it is a long time in blockchain space, but for us, it felt short and intense. We BUIDLed, we tested, we learned, and pivoted — a lot.
+
+We started with a clear goal: to onboard the first one billion users to the essential part of the blockchain ecosystem: dapps.
+
+We call it, for short: **solving onboarding**.
+
+We are living in a hermetic and relatively small blockchain community. It is easy to forget how hard it is for a non-tech-savvy user to use dapps. If you are a dapp developer, you are probably aware that any marketing effort pointed outside of the blockchain community is pointless. The moment you want to activate users, conversions cut down to almost zero.
+
+![](/images/posts/1*18N1IL1rO1cvOMMujU7ytQ.png)
+
+*The Awesome Blockchain Project Funnel vs dapp*
+
+There has been great improvement in usability in the blockchain space since we started, but the fundamental onboarding problem is still not solved.
+
+![](/images/posts/1*ChQMODjiPIhkGyxZYECVrw.png)
+
+*Solving onboarding is confusing and feels bad sometimes, but it is a problem that we need to solve.*
+
+We thought we solved it, we thought we nailed it — so many times. And boy, we were wrong.
+
+It turns out that solving* *onboarding consists of many sub-problems. It is like inception: you solve one problem, another pops up. You have to go deeper.
+
+![](/images/posts/0*g7vIRdHsOJ5wLBPB.jpg)
+
+*Solving onboarding forces you to go deeper again and again*
+
+Below is a list of some of the sub-problems we found along the way, grouped into major categories. Some were more obvious, others less so.
+
+- Private key getting lost or stolen leads to loss of funds
+- A single smart contract’s vulnerability can lead to catastrophic failure
+- Solving onboarding also means solving the custodial vs. non-custodial trade-off. Custodial: can be easy to use, but funds are only as secure as your custodian. Non-custodial: hard to use, as secure as your setup, but not easy to properly secure.
+- Finally, once you solve all of those problems, you need to explain how it all works and build a brand that people trust.
+
+- The mental model of blockchain is complicated with private keys, gas fees, and transactions that can succeed or fail
+- Transactions are slow, and you need to do many of them to perform basic actions (i.e., famous ERC20 approve and transferFrom example). That is not what mainstream users are used to.
+- Buying cryptocurrency is hard, as it requires many steps with registrations, KYC, custom software installations, etc.
+
+- As a dapp developer, you find yourself spending time solving UX challenges instead of working on your core application.
+- Implementing good onboarding flow and optimizing it takes months of developments, with on-ramp integrations and tackling edge cases.
+- The blockchain development model is surprisingly complicated in comparison to Web and Mobile development. And I am not even talking about security of smart-contracts or front-running. Rather about stuff like: [👷]
+Constructing an application state based on multiple sources: blockchain state, blockchain events, and database; reacting to state changes and edge-cases like network reorgs. As your application become successful it all becomes part of the game. [👷]
+Handling waiting for transactions, gas parameters, failed transactions. [👷]
+Occasionally looking at te mempool to give feedback on what is going on with their transaction. [👷]
+And there is only more stuff coming all the time with half a dozen of L2 solutions being around the corner
+- The main takeaway is: Onboarding solutions should not add complexity to the development model, they should simplify it.
+
+The answer to each of the sub-problem affects other sub-problems, while every single one of sub-problem can make all other solutions irrelevant.
+
+![](/images/posts/1*3F_5wtzxzHrTS8rn-17_JA.gif)
+
+*What solving onboarding feels like*
+
+I am pretty sure each of those problems is going to be obvious looking backward, but none of those problems are easy now. We can see many attempts, but none of them fully solve onboarding yet. We believe the solution is around the corner. We believe we have found a way.
+
+We will explain how we solve onboarding, its sub-problems and what we have learned in next posts in the series. Stay tuned!
+
+**Follow us on ** [**Medium**](https://medium.com/universal-ethereum) ** and ** [**Twitter**](https://twitter.com/unilogin) ** and sign-up to our ** [**pilot program**](http://tiny.cc/unilogin) **.**

@@ -1,0 +1,108 @@
+---
+title: "Formal Verification for n00bs -Part 2: proving the correctness of a token"
+author: "Marek Kirejczyk"
+date: "2019-02-02"
+heroImage: "/images/posts/1*SCqqcStV-C1RNfeWh__YgA.png"
+# tags: [] # No tags generated
+---
+
+This is the second post of a series Formal Verification for n00bs:
+ [Part 1: The K ecosystem]
+Part 2: Proving the correctness of a token
+ [Part 3: Formal Verification for n00bs -Part 3: An attempt to prevent classic hack with Act]
+[Part 4: Understanding K language]
+In this post, we will explain an example of a high-level semantics of a single function of an Ethereum smart contract and a step-by-step guide for executing the proof.
+
+We will take a look at an official example given by KLAB in their GitHub repository of a transfer function for a simple token.
+
+The first important file is the source file of the analyzed contract [token.sol](https://github.com/dapphub/klab/blob/master/examples/token/dapp/src/token.sol) , see below.
+
+Second important file is high-level semantics of a function **transfer** from the **Token** contract above. File [spec.md]
+contains semantics written in ACT, a specific DSL language, created by KLAB. See below.
+
+The specification above is split logically into 4 sections:
+
+- **Preamble: **Consists of **behavior** and **interface** headers. States behavior (intended!) of what function and from which contract we are about to describe;
+- **Types:** a section with declarations of auxiliary variables;
+- **Statements of our semantic claim:** here are described under the **storage **header;
+- **Assumptions of our semantic claim: **covered by two headers: **iff** and **if**.
+
+The syntax is as follows:
+
+where:
+
+- <name> — stands for our name for our described semantics, for informative purposes only. It does not need to be the same as the name of the function, as in our case;
+- <contract> — identifies the name of considerate contract;
+- <function> — identifies the name and the interface of considerate function.
+
+</function></contract></name>So, in our case, we declare that we are starting the description of intended behavior of a function **transfer** from the contract **Token**.
+
+Types are our internal variables used only for the purpose of our specification. We use EVM types here. In our case, we declared *FromBal* and *ToBal*, both uint256 integers.
+
+We will now focus on assumptions that are at the bottom of the spec, specifically under headers **iff** and **if**. The meaning of this section is slightly unintuitive:
+
+**iff** <*condition*> — states intention that *condition* is either true or execution will revert;
+
+**if** <*condition*> — states intention that we care only about the case when the *condition* is true.
+
+Note that in our example we have a somewhat complex condition for **iff.**
+
+The construction above states that values of all ** fit inside range of ** (i.e. no overflows happen).
+
+In our case: both** (FromBal-Value)** and** (ToBal+Value)** must contain in the range of uint256.
+
+The condition for **if** is much simpler. It just states that **CALLER_ID** is different from **To**, where **CALLER_ID** denotes the address of the caller of the transfer function.
+
+#### About assumptions more formally
+Intuitive meaning for semantics is the following: if assumptions are met before the execution of the function, then — after the execution — all the statements must hold.
+
+Here, this is *almost* true. A small hook is in the fact, that the assumptions part is divided into **if** and **iff** part. Formally, it works the following way:
+
+denotes that:
+
+> if — at the beginning — both A and B hold, then the execution finishes with success and afterwards all **Statements** holds;
+> if — at the beginning — B holds and A doesn’t hold, then the execution finishes with a REVERT;
+> the case when B does not hold is not covered by the considerated semantics.
+In our case, statements section is described only by two clauses, both under **storage** header. In general, other headers are possible (**stack**, **pc -**program counter), but let’s focus precisely on what we have:
+
+A line <**X> |-> => **can be stated informally as:
+
+If we denote the value of the memory (before the execution) at address <**X>** with <**Y>**, then it is equal to <**Z>** after the execution.
+
+> Unobvious aspect of the above notation is hidden in the declaration of <x>. The issue comes from the fact that our semantics are verified not with the source code but with the corresponding bytecode of the contract. It means that we cannot refer directly to variables (**balanceOf**, **totalSupply**) but we need to provide the storage address(or key in ethereum storage Merkle Patricia trie if you will) that keeps the data (here we refer to low-level implementation of EVM). This is somewhat complicated (especially for maps) and the details can be found [[here]](https://github.com/dapphub/klab/blob/master/acts.md#storage) . For our purposes it is sufficient to know that element of index **i** in a map **balanceOf** in our contract is kept in the Merkle tree at position **hash(0 + i)** which is denoted as **#hashedLocation(“Solidity”, 0, i)** in language K (that is underneath ACT). **0 **comes from **balanceOf** being the very first variable declaration in the contract**. **At this point you might be a bit lost since in the spec file you can see for example **#Token.balances[To]** that seems to refer directly to the variable **balanceOf**. This is however only an illusion since in the file [klab/examples/token/src/storage.md](https://github.com/dapphub/klab/blob/master/examples/token/src/storage.md) 
+</x>> you see a macro that translates this expression into to actual address. This is written in K language. We will dig into K in future posts.
+Finally, the** intended semantics described in the spec file** might be in informally expressed as follows:
+
+> The behaviour of **transfer(address To, uint Value)** when the address of the caller is equal to **To** is undefined. So we assume that **CALLER_ID** is always different from **To**. Then, if either **(balanceOf[To] + Value)** or **(balanceOf[CALLER_ID]-Value)** falls out of range of uint256, the function finishes wit **REVERT**. Finally, if both above expressions are in range of uint256, then the value of **balanceOf[CALLER_ID]** decreases by **Value**, and **balances[To]** increases by **Value**.
+Let’s check (automatically!) if the above semantics is corresponding to the actual code. We need to:
+
+1. Compile the source file into the bytecode. The result is already here: [klab/examples/token/dapp/out/token.sol.json]
+If you wish to repeat this step by yourself, remember to compile with the flags:
+
+2. Build K statements from the bytecode and semantics. You can do that by running
+
+inside the directory examples/token. The result will be visible at examples/token/out/specs.
+
+> To reproduce the above step you need to have **klab** installed. (A detailed tutorial for this is at k [lab GitHub](https://github.com/dapphub/klab#setting-up-klab-server-and-client) )
+3. Run the machinery. KLAB uses a client-server architecture, so you need to run two processes (same as above, klab must be installed):
+
+Server:
+
+Client:
+
+(it may take a while: on my MacBookAir it took ~10 minutes)
+
+Please note, that — in step 2 — the description compiled into two different K statements (i.e. one statement describes the case when **iff** section holds and the other — when it fails). So, to verify our semantics, these K statements have to **both pass**. That is also why the client above runs two tests, one after the other.
+
+If both above K statements passed the klab verification, it means that the considerate code really behaves exactly as described in our semantics. Well, a precisian would add: unless there is a bug in underneath KEVM description of EVM, or there is a bug in K-framework itself ;)
+
+Homework recommendation :)
+
+1. Try to spoil the implementation (for example remove safe math operations) and re-run the proving process to make sure that the proof will fail.
+
+2. Try to write a high-level semantics for the same function, but for the not-yet-covered case, i.e. **CALLER_ID == To** and verify if it is consistent with the actual code.
+
+3. See [https://github.com/dapphub/fv-tutorial.git](https://github.com/dapphub/fv-tutorial.git)  — a great set of tasks prepared by dapphub for Devcon4 workshop. Here the problem is reversed to the above problem 1. Given implementations and specifications that do *not agree* with each other, try to fix it.
+
+#### Acknowledgments
+*Thanks to Tomasz Kazana for his support and contribution to this post.*

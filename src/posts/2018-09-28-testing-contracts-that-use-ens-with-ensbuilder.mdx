@@ -1,0 +1,32 @@
+---
+title: "Testing contracts that use ENS with ENSBuilder"
+author: "Marek Kirejczyk"
+date: "2018-09-28"
+heroImage: "/images/posts/1*tX6TatfVqjtOHuMDm0kakA.png"
+# tags: [] # No tags generated
+---
+
+> When it comes to testing contracts and functionality that uses [Ethereum Naming System](https://ens.domains/) (ENS), it is a bit tricky. It is difficult to test in isolation from ENS, and it is hard to stub ENS.
+We stumble upon that challenge when working on [Universal Login SDK](https://github.com/EthWorks/ENSBuilder) .
+
+To solve that problem we created a simple library called [ENSBuilder](https://github.com/ethworks) , which allows one to quickly set up and configure a standalone instance of ENS, on a local environment, in tests or on a test chain.
+
+With ENSBuilder setup is as easy as a single method call:
+
+<pre>const ensAddress = await builder.bootstrapWith(‘example’, ‘eth’);</pre>And you already have a copy of ENS, up and running, as well as two domains registered: ‘ens’ and ‘example.ens’.
+
+You can now register an address:
+
+<pre>await builder.registerAddress(‘marek’, ‘example.eth’, ‘0x…’);</pre>The builder uses [ethers.js]
+as a contract abstraction. W [eb3js]
+is also supported but will require you to pass a private key. We plan to add better web3js support if we see requests from people to do it. We would also happily accept PRs :)
+
+Why Ethers.js you may ask?
+We find ethers.js to be a stable, light, feature complete and production ready alternative to web3js. Therefore we are using it both for tests as well as application code.
+
+For in-depth information as well as a quick tutorial **go to ** [**EnsBuilder GitHub**](https://github.com/ethworks/ensbuilder) **.**
+
+If you enjoyed this post, please hit the 👏 button and if you would like to get notified when new story shows up, click follow button below.
+
+You can also follow us on [Facebook]
+and [Twitter](https://twitter.com/ethworks) .

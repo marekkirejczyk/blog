@@ -1,0 +1,127 @@
+---
+title: "Pair Programming demystified!"
+author: "Marek Kirejczyk"
+date: "2016-01-10"
+heroImage: "Unknown image"
+# tags: [] # No tags generated
+---
+
+#### Problems of mature teams
+As I work with a lot of very decent teams, the kind of teams that keep delivering commitment at the end of each sprint, the kind of teams who care about quality of code, often teams that are into software craftsmanship, I can see recurring problems of those teams:
+
+**Siloses.** Even though we (Agile Coaches & Trainers) talk a lot about collaborative code ownership, bus factors and breaking the silos, the reality is that teams have natural tendency to fall into silos — simply because people have preferences on what they like to work on and people tend to see taking responsibility for some part of the work very natural.
+
+**Slower learning. **The problem above leads pretty quickly to reduced rate of learning and that leads quickly to… **being bored. **Lots of people in our industry can’t stand working on one thing longer that couple of months. Funny thing to notice is that as teams naturally fall into siloses, they themselves build situation in which they get bored quickly.
+
+**Rotations are hard. **Once your product owner/customer/manager establishes relationship with a team or a developer, it is hard for them to switch to another project. It makes previous problem even bigger.
+
+**Keeping a good code quality is quite hard too. **The team has to pay attention to the architecture, quality tests, code design, maintenance of infrastructure, monitoring, deployment automation. In a nutshell — keep the technical debt low. That’s a lot to cover, even for decent teams. A good code review should help but… a **good code review is damn hard**. It is a thing you rarely see in nature. There is a number of reasons for that. Here are just a few from the top of my mind:
+
+- Good code review takes a lot of very focused time — average about 20% of what it took to write a code, but in highly focused state of mind (even more than coding)
+- It takes probably 2–3 iterations before the code is satisfying for both the reviewer and the reviewee. That alone can extend one day ticket to a one week ticket. So from what I’ve noticed, most (still very decent) teams go into one of 3 directions:
+- don’t do code review at all
+- do a crappy-fast-mostly-syntax-oriented code review
+- do a good code review which slows the team waaaay down (in terms of Kanban I’d say the team slows down the throughput 2–3x)
+
+As I was looking for solutions for each particular problem, I started digging deeper into Pair Programming and it seems to me that it can help solve all the above mentioned problems. Let’s start with basics. What is pair programming exactly? It is very simple:
+
+*“Pair programming is (…) technique in which two programmers work as a pair together on one workstation. One, the driver, writes code while the other, the observer, pointer or navigator, reviews each line of code as it is typed in. The two programmers switch roles frequently.” *(Wikipedia)
+
+Funny thing I discovered is that pair programming is a very mythologised area of agile software development. Even though it’s principles are very simple, people struggle to understand it. So I thought it’s time to bring this ancient knowledge back to light. Let me start by enumerating…
+
+#### Myths of Pair Programming
+**Myth #1 : Pair Programming will double the workload**
+
+It seems simple — two people working on one thing. It means the same work must now take double amount of time or take double amount of people to be completed. The reality is a bit more complex. By quoting the book “Pair programming illuminated”, I used to convince people that pair programming is as effective or more effective than working alone. Moreover, there is scientific research to back this thesis. As **this myth rises a lot of controversy** I decided to dig deeper. Here are the most important things to consider:
+
+1) There are good pairs and bad pairs. You can have synergy or anti-synergy. Pair programming is very effective for good pairs. It seems there is more good pair then bad pairs in general. I will assume most pair is the team are good.
+
+2) If you look closer into “scientific research” — within a scope of a sprint, the good pair of programmers will deliver similar amount of code (or a bit less). Actually, it seems that the only viable source of information is Microsoft research in Visual Basic team which suggests that teams who do pairing deliver a little less than developers programming alone. (Thanks for feedback from [Paweł Lipiński]
+on this)
+
+3) The quality of code that comes from pair programming is much higher and the coders learning faster and therefore are more skilled. In a long term it builds the speed of the team which I find to be incomparable with a non-pair programming team.
+
+So in the long term, teams that do pairing are faster, while it might be hard to prove it in short sprints.
+
+Finally, as we think that there is not enough evidence to convince everybody around how effective pair programming is (we already know it, just want everybody else to know it too), we’re preparing [an experiment on our own]
+in one of the companies of the DaftCode group —  [El Passion](http://blog.elpassion.com/pair-programming-experiment/) . Stay tuned for more on this!
+
+**Myth #2: It will only work with the right partner**
+
+As mentioned before, there are good and bad pairs. But surprisingly most developers like pair programming. In my experience 9/10 will like to pair program a lot (in fact, I’ve meet only one person so far who tried and doesn’t like it at all). The other thing is that those who like to pair program, like to program with most of people. So the **that-ain’t-gonna-work pairs are rare**. Of course take into account that good pair programming takes time to learn, so I don’t think it is OK to judge a pair after a day. It’s better to judge the pair after a week or two.
+
+**Myth #3:** **Pair programming is only good for training**
+
+There is a number of different kind of pairings that are effective. Pairing as a way of learning is very effective. It doesn’t mean other setups are not. Different pair types is a topic for separate blog post.
+
+**Myth #4:** **I’ll get no credit for my work**
+
+That’s in fact a popular problem in pair programming teams. One way to solve it, is to assign owners to tasks /modules / projects. So that one person is responsible for it and the second person in pair rotates. In this way, you have the best of the two worlds. Someone is responsible, yet code is reviewed on the go, you have collaborative code ownership, you can keep rotating people, everyone learns all the time.
+
+**Myth #5:** **The** **Navigator finds only syntax mistakes**
+
+That one is simply not true. Good pairing has a great impact on design, architecture and quality of the code in general. Why? Check out the next section.
+
+After reading the previous section, you might be a bit sceptical. Two people sit together, some magic happens and suddenly work goes faster and quality of code is better. OK, you may say, what kind of a car salesman bullshit is that, right? Well, let me explain what mechanisms work when two programmers become one pair:
+
+#### Pair synergic behaviours
+
+1. **Pair pressure**
+
+This mechanism is simple. Pair tend to spend more time doing actual coding and making decisions than solo programmers. It is harder to jump to Facebook for “just 5 min” in a pair. Also when people reach a problem that needs thinking or seems to be over twisting a solo programmer at the moment — a pair will go into negotiation and thinking aloud mode while a single developer would probably take a break.
+
+**2. Pair negotiation**
+
+When two people meet in front of one computer, they bring two different sets of experiences, skills, attitudes and ideas. What a pair ends up building is an effect of negotiations of those two approaches. Often the negotiated solution is much better, than a first “low hanging fruit” which a solo programmer would choose.
+
+**3. Pair reviews**
+
+I mentioned before that the code review is hard and most teams end up either by slowing down the process or not getting enough value from the review. Moreover, the code review happens after the code is written, therefore many decisions have already been made and are hard to reverse. Working in a pair setup forces the navigator to do a review and in many cases it makes the driver to stop and take a suboptimal decision.
+
+**4. Pair learning**
+
+My personal theory says that teams doing pair programming with rotations, learn the order of magnitude faster than a solo programmers team. How much faster is hard to measure but there is no doubt that in a pair you learn a lot faster. This means (if you’re pair programming) after a quarter you have a team on completely different level than you would with a solo programmer and after half a year the difference is even bigger and after year… (you get the point).
+
+That will have a tremendous impact on one type of people: the ones who leave work at 5 PM and spend no time on learning afterwards. Many of them are bright and ambitious, just don’t want to spend their private time on learning for work. There is great amount of them, and for those people pair programming makes all the difference in the speed of development.
+
+**5. Pair trust**
+
+**Teams that do pair programming develop different level of trust. They know each other’s strong sides and weak points. Teams with high trust divide work better and deliver faster.**
+
+**6. Pair courage**
+
+Programming can be frightening on many occasions. Making good design or architecture decisions is hard. Touching a legacy piece of code and refactoring it requires courage. Saying ‘no’ to a manager when his request sucks — that’s a challenge too. Pairs tend to have more courage to do the right thing. Every good decision pays off.
+
+**7. Pair debugging**
+
+**Finally debugging in pairs. With the debugging it is often the case that you don’t instantly know what the problem is about. Quite often it takes a lot of time to figure out what is wrong. So when a pair is working on the bug and one developer is stuck the other takes over. As simple as that.**
+
+All those things add up, and with time lead to building more productive teams. This is not the end of the story, it is just the beginning. There is a lot of…
+
+#### Details, details, details
+There is a lot on the topic that I am not covering in this post, so I may write a second post in the future. Some of the non trivial aspects here are:
+
+- Pair rotation — pairing brings much more value if you keep rotating people. That’s on its own an important topic. No rotations is bad, random rotations are not good either.
+- There are good pairs and not-so-good pairs. The personalities, experience and personal preferences have a huge impact pair quality. There’s a lot to say about this.
+- Ping-pong pair programming — a mix of pair programming and TDD deserves a separate post if not a book.
+- Environment for pairing — long desks, extra keyboard, big screens — that all makes pairing all day long bearable.
+- How much pair programming we should do? All day, or occasionally? Good question with many valid answers.
+
+#### Pair programming @ DaftCode
+You might be interested how much pairing do we do at DaftCode and how did we introduce it? Here is a story of one of our Ruby on Rails teams:
+
+- We started with a causal pairing. Gave people permission to pair or even encourage pairing. These initial tests showed both developers and product owners how effective pairing can be. That was my way to buy in.
+- I proposed a one month experiment: let’s work only in pairs. The experiment was preceded by individual talks with every person involved in it. Luckily everyone showed a positive attitude.
+- At one of the first of our retrospections, teams decide to do as much ping-pong pair programming as they saw possible — that was a good sign.
+- We tested it for a month.
+- At the final retrospection we made a collective decision to continue.
+- After 3 months of pretty strict pair programming now team decides on it’s own when to pair and when to work solo.
+
+Would you like to learn more? Follow us on [Facebook]
+and [Twitter]
+to get notified about new posts. Also check El Passion [blog post]
+about pair programming experiment.
+
+Author: Marek Kirejczyk (twitter: [@marekkirejczyk ](https://twitter.com/marekkirejczyk) )
+
+*Originally published at * [*blog.daftcode.pl*](http://blog.daftcode.pl/pair-programming-demystified/) *.*
