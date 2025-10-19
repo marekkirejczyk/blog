@@ -18,7 +18,12 @@ const formattedDate = formatDate(date);
 const displayImage = heroImage === 'Unknown image' ? '/images/placeholder.svg' : heroImage;
 ---
 
-<BaseLayout title={title} description={title}>
+<BaseLayout 
+  title={title} 
+  description={title}
+  ogImage={displayImage}
+  ogType="article"
+>
   <article class="post">
     <div class="post-container">
       <header class="post-header">

@@ -104,7 +104,7 @@ const { title, url } = Astro.props;
       shareDropdown.classList.remove('show');
     });
 
-    // Share on Facebook
+    // Share on Facebook (reads title from Open Graph meta tags)
     shareFacebook?.addEventListener('click', (e) => {
       e.stopPropagation();
       const url = (e.currentTarget as HTMLElement).dataset.url || '';
@@ -114,7 +114,7 @@ const { title, url } = Astro.props;
       shareDropdown.classList.remove('show');
     });
 
-    // Share on LinkedIn
+    // Share on LinkedIn (reads title from Open Graph meta tags)
     shareLinkedIn?.addEventListener('click', (e) => {
       e.stopPropagation();
       const url = (e.currentTarget as HTMLElement).dataset.url || '';

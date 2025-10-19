@@ -2,10 +2,19 @@
 export interface Props {
   title?: string;
   description?: string;
+  ogImage?: string;
+  ogType?: string;
 }
 
-const { title = 'zkMarek', description = 'zkMarek\'s blog' } = Astro.props;
+const { 
+  title = 'zkMarek', 
+  description = 'zkMarek\'s blog',
+  ogImage,
+  ogType = 'website'
+} = Astro.props;
 const fullTitle = title === 'zkMarek' ? title : `${title} | zkMarek`;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site || 'http://localhost:4321');
+const imageUrl = ogImage ? new URL(ogImage, Astro.site || 'http://localhost:4321').toString() : undefined;
 ---
 
 <!DOCTYPE html>
@@ -16,6 +25,20 @@ const fullTitle = title === 'zkMarek' ? title : `${title} | zkMarek`;
   <title>{fullTitle}</title>
   <meta name="description" content={description}>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content={ogType}>
+  <meta property="og:url" content={canonicalUrl}>
+  <meta property="og:title" content={fullTitle}>
+  <meta property="og:description" content={description}>
+  {imageUrl && <meta property="og:image" content={imageUrl}>}
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content={canonicalUrl}>
+  <meta property="twitter:title" content={fullTitle}>
+  <meta property="twitter:description" content={description}>
+  {imageUrl && <meta property="twitter:image" content={imageUrl}>}
 </head>
 <body>
   <header class="header">
