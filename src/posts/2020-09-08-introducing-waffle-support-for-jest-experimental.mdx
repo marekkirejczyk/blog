@@ -20,30 +20,38 @@ Mocha and Chai were the default choices for Waffle due to historical reasons. Ho
 ![]
 To start using Jest matchers, install `@ethereum-waffle/jest` using yarn or your favourite package manager, i.e.:
 
-<pre>```text
+```bash
 yarn add @ethereum-waffle/jest
 ```
-</pre>And below, there is a simple example of a test written with Waffle and Jest:
 
-<pre>import { waffleJest } from ‘@ethereum-waffle/jest’;</pre><pre>expect.extend(waffleJest);</pre><pre>test('object assignment', () => { 
+And below, there is a simple example of a test written with Waffle and Jest:
+
+```javascript
+import { waffleJest } from '@ethereum-waffle/jest';
+
+expect.extend(waffleJest);
+
+test('object assignment', async () => { 
  expect(await token.balanceOf(wallet.address))
  .toEqBN(993);
-});</pre>Currently, there is no documentation yet, so one has to take a look at [tests]
+});
+```
+Currently, there is no documentation yet, so one has to take a look at [tests]
 or [PR]
 for more examples. Similarly to the *chai* module, `@ethereum-waffle/jest` supports matchers related to:
 
 - **BigNumber** (toEqBN, toBeGtBN, toBeLtBN, toBeGteBN, toBeLteBN) e.g.:expect(BigNumber.from(2)).toEqBN(2)
 - **Transaction revert:**await expect(token.transfer(sender, '0x0', 100)).toBeReverted(); await expect(token.transfer(sender, '0x0',100) .toBeRevertedWith('transfer from the zero address');
-- **Events**:await expect(tx).toHaveEmitted(contract, ‘Transfer’); await expect(tx).toHaveEmittedWith(events, ‘Transfer’, [sender, recipient, amount);
-- **Calling functions**:expect(‘totalSupply’).toBeCalledOnContract(token); expect(‘balanceOf’).toBeCalledOnContractWith(token, address);
-- **Balance change:**await expect(...).toChangeBalance(sender, ‘-200’);await expect(…).toChangeBalances([sender, receiver], [‘-200’, 200]);
-- **Hex strings:**expect(‘0x28…0e’).toBeProperAddress();expect(‘0x28…40’).toBeProperPrivateKey();expect(‘0x702’).toBeProperHex(2)
+- **Events**:await expect(tx).toHaveEmitted(contract, 'Transfer'); await expect(tx).toHaveEmittedWith(events, 'Transfer', [sender, recipient, amount);
+- **Calling functions**:expect('totalSupply').toBeCalledOnContract(token); expect('balanceOf').toBeCalledOnContractWith(token, address);
+- **Balance change:**await expect(...).toChangeBalance(sender, '-200');await expect(…).toChangeBalances([sender, receiver], ['-200', 200]);
+- **Hex strings:**expect('0x28…0e').toBeProperAddress();expect('0x28…40').toBeProperPrivateKey();expect('0x702').toBeProperHex(2)
 
 We are introducing support for Jest in Waffle 3.1 as an experimental feature, which means that:
 
-- we don’t promise to keep and maintain this feature at this point,
+- we don't promise to keep and maintain this feature at this point,
 - there might be breaking changes introduced without a major version change,
-- we didn’t test how it works with [Buidler]
-and… we didn’t test much in general.
+- we didn't test how it works with [Buidler]
+and… we didn't test much in general.
 
 We would love to hear your feedback on Jest support. Is it working? Do you love it or hate it? Let us know in comments!

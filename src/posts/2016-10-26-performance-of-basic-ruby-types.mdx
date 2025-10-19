@@ -6,24 +6,24 @@ heroImage: "/images/posts/1*f8cX7cIsdaJssbUPv8Wlng.jpeg"
 # tags: [] # No tags generated
 ---
 
-Modern computers are extremely fast machines, what leaves us — software engineers — with no excuses to write slow programs. One of the essentials for writing performant software is being conscious about performance of the basic operations. Let’s take a closer look at the performance characteristics of basic Ruby types: Integer, Array, Hash and String.
+Modern computers are extremely fast machines, what leaves us — software engineers — with no excuses to write slow programs. One of the essentials for writing performant software is being conscious about performance of the basic operations. Let's take a closer look at the performance characteristics of basic Ruby types: Integer, Array, Hash and String.
 
 #### Numbers and basic arithmetic operations
-Let’s start by looking at the performance of basic arithmetic operation. Below is a result from a simple Ruby benchmark performing 10M operations in the loop:
+Let's start by looking at the performance of basic arithmetic operation. Below is a result from a simple Ruby benchmark performing 10M operations in the loop:
 
 ![]
 This benchmark was done on MacBook with 1.1GHz dual-core and 8GB of RAM (1866MHz LPDDR3).
 
-The interpretation could go more or less like this: working on 10M additions takes under a second, while more composited arithmetic operations including 2 addition and 2 multiplications might be around 50% slower (not 400% as one might expects). There is no linear relationship between number of arithmetic operations and the time it takes. All in all, we’re talking about order of magnitude of 10M basic arithmetic operations per second on a modern laptop.
+The interpretation could go more or less like this: working on 10M additions takes under a second, while more composited arithmetic operations including 2 addition and 2 multiplications might be around 50% slower (not 400% as one might expects). There is no linear relationship between number of arithmetic operations and the time it takes. All in all, we're talking about order of magnitude of 10M basic arithmetic operations per second on a modern laptop.
 
 #### Array
-Let’s take a look at expected asymptotic complexity of Array operations:
+Let's take a look at expected asymptotic complexity of Array operations:
 
 ![]
-And here’s the benchmark for it:
+And here's the benchmark for it:
 
 ![]
-Can you spot something odd here? It seems like the insert operation is almost as performant as random access, even thought we would expect it is much slower. How is it possible? Well, the answer is hidden behind “Dynamic Array” which is an Array with following characteristics:
+Can you spot something odd here? It seems like the insert operation is almost as performant as random access, even thought we would expect it is much slower. How is it possible? Well, the answer is hidden behind "Dynamic Array" which is an Array with following characteristics:
 
 ![]
 Dynamic Array will double its capacity every time it lacks space to add an element. How many operations will it perform then? Take a look at the picture below:
@@ -38,28 +38,28 @@ So for n insert operations Ruby Array is doing only ~2*n assignments.
 In practice rewriting Array is done by C memcpy operation, which calls low level memory controller operation. Therefore we can cheat on asymptotic complexity and get even more performance out of it.
 
 #### Hash
-Let’s take a look at the structure behind Hash in Ruby. Hash in Ruby is … hash algorithmic structure with following algorithmic time complexity characteristics:
+Let's take a look at the structure behind Hash in Ruby. Hash in Ruby is … hash algorithmic structure with following algorithmic time complexity characteristics:
 
 ![]
-No surprises here. Check out the benchmark for Hash. This time it’s only 1M operations (not 10M like in case of Array benchmark):
+No surprises here. Check out the benchmark for Hash. This time it's only 1M operations (not 10M like in case of Array benchmark):
 
 ![]
 As you can see although Hash is much slower than Array, it is still a pretty fast beast.
 
-One interesting thing about Hash in Ruby is that it preserves the order of elements put into it. It doesn’t change complexity of operations, but uses a little bit of extra memory.
+One interesting thing about Hash in Ruby is that it preserves the order of elements put into it. It doesn't change complexity of operations, but uses a little bit of extra memory.
 
 #### String
-Let’s take a look at the String performance. Once again we will start with the benchmark:
+Let's take a look at the String performance. Once again we will start with the benchmark:
 
 ![]
-As you can see the N is much lower than for Array (100x) and Hash (10x). I put arithmetic and Array operation on top for comparison. Strings are surprisingly slow. As they are Array of chars one could argue that their performance should be similar to Array, but it’s not.
+As you can see the N is much lower than for Array (100x) and Hash (10x). I put arithmetic and Array operation on top for comparison. Strings are surprisingly slow. As they are Array of chars one could argue that their performance should be similar to Array, but it's not.
 
 **There are many learnings here:**
 
-- Strings unlike Arrays don’t utilise Dynamic Array strategy when it comes to + operator. Concatenation operator allocates new String and copies the whole Array, which is very slow operation.
+- Strings unlike Arrays don't utilise Dynamic Array strategy when it comes to + operator. Concatenation operator allocates new String and copies the whole Array, which is very slow operation.
 - UTF-8 chars have various length in bytes, which makes basic operations like retrieving n-th element non-trivial.
-- Ruby String eval (i.e. “#{ }”) have even lower performance than + operator, probably due to parsing overhead.
-- Finally << operator is almost 200x faster for given case then + operator.
+- Ruby String eval (i.e. "#{ }") have even lower performance than + operator, probably due to parsing overhead.
+- Finally `<<` operator is almost 200x faster for given case then + operator.
 - Note that String concatenation in other languages is much faster. For example JavaScript performance is better because JavaScript JIT uses Dynamic Array strategy for String operations optimisation. Ruby behavior is uncommon among programming languages.
 
 ![](/images/posts/1*kGlu-JZv7SFA_iRjtkzCLA.png)
@@ -77,8 +77,8 @@ Those points have tremendous impact on how we should code parsers and renderers.
 - Hashes are one order of magnitude slower than Arrays
 - Hashes are ordered by chronological order of inserts
 - Strings concatenation is very slow (unlike in other languages e.g. JavaScript)
-- It is much faster to use << operator instead of + or String evaluation syntax “#{}”
+- It is much faster to use `<<` operator instead of + or String evaluation syntax "#{}"
 
 ![]
-If you enjoyed this article, please don’t forget to tap ❤. You can also follow us on [Facebook]
+If you enjoyed this article, please don't forget to tap ❤. You can also follow us on [Facebook]
 and [Twitter](https://twitter.com/Daftcode_pl) .

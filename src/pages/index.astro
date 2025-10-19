@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import Pagination from '../components/Pagination.astro';
+import { getAllPosts, paginatePosts } from '../utils/posts';
+
+const allPosts = await getAllPosts();
+const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } = paginatePosts(allPosts, 1, 20);
+---
+
+<BaseLayout title="zkMarek" description="A blog about AI, blockchain, cryptography, and software development">
+  <div class="container">
+    <div class="posts-list">
+      {posts.map((post) => (
+        <PostCard
+          title={post.frontmatter.title}
+          date={post.frontmatter.date}
+          heroImage={post.frontmatter.heroImage}
+          url={post.url}
+        />
+      ))}
+    </div>
+
+    {totalPages > 1 && (
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        hasPrevPage={hasPrevPage}
+        hasNextPage={hasNextPage}
+      />
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  .posts-list {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+</style>

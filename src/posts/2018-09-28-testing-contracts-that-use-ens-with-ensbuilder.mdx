@@ -13,11 +13,19 @@ To solve that problem we created a simple library called [ENSBuilder](https://gi
 
 With ENSBuilder setup is as easy as a single method call:
 
-<pre>const ensAddress = await builder.bootstrapWith(‘example’, ‘eth’);</pre>And you already have a copy of ENS, up and running, as well as two domains registered: ‘ens’ and ‘example.ens’.
+
+```
+const ensAddress = await builder.bootstrapWith('example', 'eth');
+```
+And you already have a copy of ENS, up and running, as well as two domains registered: 'ens' and 'example.ens'.
 
 You can now register an address:
 
-<pre>await builder.registerAddress(‘marek’, ‘example.eth’, ‘0x…’);</pre>The builder uses [ethers.js]
+
+```
+await builder.registerAddress('marek', 'example.eth', '0x…');
+```
+The builder uses [ethers.js]
 as a contract abstraction. W [eb3js]
 is also supported but will require you to pass a private key. We plan to add better web3js support if we see requests from people to do it. We would also happily accept PRs :)
 

@@ -20,69 +20,103 @@ The solid validation lib should have the following properties:
 - **Readable errors** — if a validation fails, it should provide a meaningful message for the user,
 - **Customization** — the ability to easily create new completely custom validations,
 - **Simple** — if it takes more than 15min to learn the lib and start using it, it is too complex,
-- **Small** — our js project dependencies trees are already too big; we don’t want to make it even bigger.
+- **Small** — our js project dependencies trees are already too big; we don't want to make it even bigger.
 
 It would be a nice bonus if it had out-of-the-box support for our favorite technologies like Express.js and, of course, Ethereum.
 
-And so we created Restless, a simple library for validations that can rise to the challange! Core `@restless/sanitizers` library takes only **37kb **unpacked and has **zero dependencies**. Purely functional — just the way you like it. But let’s start from scratch.
+And so we created Restless, a simple library for validations that can rise to the challange! Core `@restless/sanitizers` library takes only **37kb **unpacked and has **zero dependencies**. Purely functional — just the way you like it. But let's start from scratch.
 
 #### 🛠️ Installation
 Install core restless library to start using sanitizers and validation:
 
-<pre>```text
+
+```
+```text
 yarn add @restless/sanitizers
 ```
-</pre>#### A simple example
-Let’s start by casting a string to number, pretty straightforward:
+```
+#### A simple example
+Let's start by casting a string to number, pretty straightforward:
 
-<pre>cast('123', asNumber) // 123</pre>If one tries to cast invalid number representation an error will be thrown:
 
-<pre>cast('foo', asNumber) // TypeError</pre>Error can be easily customized:
+```
+cast('123', asNumber) // 123
+```
+If one tries to cast invalid number representation an error will be thrown:
 
-<pre>cast('foo', asNumber, 'My custom message')</pre>#### 🪄 Magic: Type safety
-Now let’s assign result of a cast to variable of proper type, here is how it looks like in my Visual Studio Code:
+
+```
+cast('foo', asNumber) // TypeError
+```
+Error can be easily customized:
+
+
+```
+cast('foo', asNumber, 'My custom message')
+```
+#### 🪄 Magic: Type safety
+Now let's assign result of a cast to variable of proper type, here is how it looks like in my Visual Studio Code:
 
 ![]
-Now let’s see what happens if I accidentally try to assign result to a wrong type:
+Now let's see what happens if I accidentally try to assign result to a wrong type:
 
 ![]
 Compiler and IDE knows the assignment is wrong, because there is a type mismatch. The data is sanitized and type safe.
 
 You can define complex sanitizers for arrays:
 
-<pre>const sanitizer = asArray(asNumber)</pre>And objects:
 
-<pre>const sanitizer = asObject({ foo: asNumber, bar: asString })</pre>Once defined they can be used anywhere in the codebase.
+```typescript
+const sanitizer = asArray(asNumber)
+```
+And objects:
+
+```typescript
+const sanitizer = asObject({ foo: asNumber, bar: asString })
+```
+Once defined they can be used anywhere in the codebase.
 
 #### ⚙️ Creating a custom validator
 Creating a custom validator is simple, here is an example function that checks if value provided is string is only capital letters:
 
-<pre>export const asCapitalString: Sanitizer<string> = (value, path) => 
+```typescript
+export const asCapitalString: Sanitizer<string> = (value, path) => 
  typeof value === 'string' && value.match(/[A-Z]/)
  ? Result.ok(value)
- : Result.error([{ path, expected: 'string' }])</pre>#### 💸 Ethereum
+ : Result.error([{ path, expected: 'string' }])
+```
+#### 💸 Ethereum
 For Ethereum support install `@restless/ethereum` package:
 
-<pre>```text
+
+```
+```text
 yarn add @restless/ethereum
 ```
-</pre>Now you can use additional sanitizers:
+```
+Now you can use additional sanitizers:
 
-<pre>asEthAddress('0xA5fE...f213', ...)
+
+```
+asEthAddress('0xA5fE...f213', ...)
 asBigNumber('10000000000000', ...)
 asHexBytes(...)
 ```text
 asTransactionHash(...)
 ```
-</pre>#### 🚄 Express.js
+```
+#### 🚄 Express.js
 For Express.js support install `@restless/restless` package:
 
-<pre>```text
+
+```bash
 yarn add @restless/restless
 ```
-</pre>You can now use a couple of new functions like`sanitize`, `asyncHandler` and `responseOf` which will make sure you are properly sanitizing your data and formulating responses. An example route could look like this:
 
-<pre>const app = express()
+You can now use a couple of new functions like`sanitize`, `asyncHandler` and `responseOf` which will make sure you are properly sanitizing your data and formulating responses. An example route could look like this:
+
+```typescript
+const app = express()
 app.get('/:foo', asyncHandler(
  sanitize({
  foo: asNumber,
@@ -94,7 +128,9 @@ app.get('/:foo', asyncHandler(
  })
  })
  (data) => responseOf(data)
-))</pre>The `sanitize` transforms the request into an object that matches a provided schema, `responseOf` formulates proper response with HTTP code and serialized JSON data. `asyncHandler` wraps it all into a middleware that can handle async functions and convert exceptions to proper HTTP responses.
+))
+```
+The `sanitize` transforms the request into an object that matches a provided schema, `responseOf` formulates proper response with HTTP code and serialized JSON data. `asyncHandler` wraps it all into a middleware that can handle async functions and convert exceptions to proper HTTP responses.
 
 #### 📕 Documentation
 To learn more check documentation for the project on 🌐 [Restless website]

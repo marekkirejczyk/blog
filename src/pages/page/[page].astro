@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import Pagination from '../../components/Pagination.astro';
+import { getAllPosts, paginatePosts } from '../../utils/posts';
+
+export async function getStaticPaths() {
+  const allPosts = await getAllPosts();
+  const totalPages = Math.ceil(allPosts.length / 20);
+  
+  return Array.from({ length: totalPages - 1 }, (_, i) => ({
+    params: { page: String(i + 2) },
+  }));
+}
+
+const { page } = Astro.params;
+const pageNum = parseInt(page as string);
+
+const allPosts = await getAllPosts();
+const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } = paginatePosts(allPosts, pageNum, 20);
+---
+
+<BaseLayout title={`Page ${pageNum} | zkMarek`} description="A blog about zk, blockchain, cryptography, and software development">
+  <div class="container">
+    <div class="posts-list">
+      {posts.map((post) => (
+        <PostCard
+          title={post.frontmatter.title}
+          date={post.frontmatter.date}
+          heroImage={post.frontmatter.heroImage}
+          url={post.url}
+        />
+      ))}
+    </div>
+
+    <Pagination
+      currentPage={currentPage}
+      totalPages={totalPages}
+      hasPrevPage={hasPrevPage}
+      hasNextPage={hasNextPage}
+    />
+  </div>
+</BaseLayout>
+
+<style>
+  .posts-list {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+</style>
+

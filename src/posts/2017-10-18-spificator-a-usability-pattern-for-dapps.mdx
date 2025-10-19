@@ -19,12 +19,12 @@ It is going to be a significant problem for dapp adoption, as users these days a
 A common dilemma for DApp designer is: What to do with UI when waiting for any particular operation to complete or fail? 
 Do you block the application the whole time? Or do you allow a user to continue using the dapp? In the first case, you force a user to wait unreasonably long time. In the second case, you risk a sudden change of application state, when an operation is complete. This leads to either inconsistent UI or unexpected flipping in the interface.
 
-Let’s examine constraints, of those operations:
+Let's examine constraints, of those operations:
 
 - any operation might be successful, or it might fail
 - time taken for any single operation is unpredictable, can be low seconds, occasionally can be a couple of minutes
-- we don’t know what the progress of the operation is, so we can’t show a progress bar or any other indicator
-- in a general case, we don’t know what future UI change might be, a simple transaction on the blockchain might result in multiple changes in many UI parts
+- we don't know what the progress of the operation is, so we can't show a progress bar or any other indicator
+- in a general case, we don't know what future UI change might be, a simple transaction on the blockchain might result in multiple changes in many UI parts
 - multiple operations might be in progress at once
 - in many cases, we would like a user to be able to perform other actions, be aware that something is happening and inform him once an operation is complete
 
@@ -64,11 +64,15 @@ If a user clicks on it, she will be presented detailed list — similar to n
 
 A nice thing about Spificators is they are easy to use once you implemented generic API. We implemented generic TransactionBuilder, which requires just a couple of lines of code to wrap any blockchain transaction with Spificator UI:
 
-<pre>new TransactionBuilder(dispatch, aBlockchainOperations()
+
+```
+new TransactionBuilder(dispatch, aBlockchainOperations()
  .setTitle('Creating market')
  .onTxCallback((tx) => onTransactionPropagation() )
  .onSuccessCallback((market) => onTransactionMined()))
- .send();</pre>`aBlockchainOperations` is a particular blockchain operation (returns a promise),`onTransactionPropagation` and `onTransactionMined`handle custom application code.
+ .send();
+```
+`aBlockchainOperations` is a particular blockchain operation (returns a promise),`onTransactionPropagation` and `onTransactionMined`handle custom application code.
 
 A new version supporting web3js 1.0 is coming.
 

@@ -1,0 +1,148 @@
+---
+import { formatDate } from '../utils/posts';
+
+export interface Props {
+  title: string;
+  date: string;
+  heroImage: string;
+  url: string;
+}
+
+const { title, date, heroImage, url } = Astro.props;
+const formattedDate = formatDate(date);
+const displayImage = heroImage === 'Unknown image' ? '/images/placeholder.png' : heroImage;
+---
+
+<article class="post-card">
+  <a href={url} class="post-link">
+
+    <div class="post-image">
+      <img src={displayImage} alt={title} />
+    </div>
+
+    
+    <div class="post-content">
+      <h2 class="post-title">{title}</h2>
+      
+      <div class="post-meta">
+        <div class="author">
+          <img 
+            src="https://pbs.twimg.com/profile_images/692445308668682240/cEqpfN66_400x400.jpg" 
+            alt="zkMarek"
+            class="author-avatar"
+          />
+          <div class="author-info">
+            <a href="https://x.com/zkmarek" target="_blank" rel="noopener noreferrer" class="author-name">
+              zkMarek
+            </a>
+            <span class="post-date">{formattedDate}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </a>
+</article>
+
+<style>
+  .post-card {
+    margin-bottom: 48px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .post-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .post-link:hover {
+    text-decoration: none;
+  }
+
+  .post-image {
+    margin-bottom: 24px;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .post-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .post-link:hover .post-image img {
+    transform: scale(1.02);
+  }
+
+  .post-title {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 16px;
+    color: #000000;
+  }
+
+  .post-link:hover .post-title {
+    color: #0066cc;
+  }
+
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .author-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .author-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .author-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: #000000;
+  }
+
+  .author-name:hover {
+    text-decoration: underline;
+  }
+
+  .post-date {
+    font-size: 14px;
+    color: #666666;
+  }
+
+  @media (max-width: 768px) {
+    .post-card {
+      margin-bottom: 32px;
+      padding-bottom: 32px;
+    }
+
+    .post-title {
+      font-size: 22px;
+    }
+
+    .author-avatar {
+      width: 40px;
+      height: 40px;
+    }
+  }
+</style>
+

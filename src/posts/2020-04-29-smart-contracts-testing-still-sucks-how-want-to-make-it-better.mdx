@@ -9,7 +9,7 @@ heroImage: "/images/posts/1*tyr3NElqUbauWHzfKJ0c4w.jpeg"
 Despite these challenging times, we remain very optimistic about the future of Ethereum ecosystem. Earlier this year, when ETH price crashed, MakerDAO challenges arose. More recently, dForce protocol and Hegic have been hacked. And yet, we perceive it as a healthy part of ecosystem growth. As it is being tested, new problems arise and they need to be solved. Yet another important step in a long journey to a wide adoption.
 
 ![]
-Despite great optimism on the product’s side, we see many problems behind the curtains. One very close to our hearts relates to tooling for smart contracts development, which seems to be lagging behind. Not only is writing smart contracts still slow, error prone and somewhat cumbersome, but also we consider testing smart contracts challenging and at times even annoying.
+Despite great optimism on the product's side, we see many problems behind the curtains. One very close to our hearts relates to tooling for smart contracts development, which seems to be lagging behind. Not only is writing smart contracts still slow, error prone and somewhat cumbersome, but also we consider testing smart contracts challenging and at times even annoying.
 
 ![]
 We believe that smart contracts testing should be easy and fun. Good tests encourage developers to test more, build better code and refactor more often, which is highly correlated with better security and low development costs. Still, we find progress in terms of tooling somewhat disappointing.
@@ -17,10 +17,10 @@ We believe that smart contracts testing should be easy and fun. Good tests encou
 What we find exciting is that, though written a while ago, our tool Waffle is now getting more and more popular. We discover over and over again that yet another acknowledged project is using it.
 
 ![]
-Waffle is also the default testing framework for [Buidler](https://buidler.dev/)  —  [Nomic Labs](https://nomiclabs.io/) ’ building tool, with its adoption growing faster and faster.
+Waffle is also the default testing framework for [Buidler](https://buidler.dev/)  —  [Nomic Labs](https://nomiclabs.io/) ' building tool, with its adoption growing faster and faster.
 
 ![]
-While we see Waffle as a great start to build a better experience for smart contract developers, it doesn’t meet our high expectations on what a good tooling for writing tests should look like, yet.
+While we see Waffle as a great start to build a better experience for smart contract developers, it doesn't meet our high expectations on what a good tooling for writing tests should look like, yet.
 
 ![]
 And so, we are very glad to announce that our initial efforts have been appreciated and we have received a grant from Ethereum foundation to work on better testing experience with Waffle.
@@ -29,14 +29,22 @@ We will be working on Waffle version 3.0 and introducing exciting new features, 
 
 - Support for mocks, so that you can create a dynamic mock quickly from javascript e.g.
 
-<pre>const mockContract = await deployMockContract(wallet, Contract.interface);
+
+```
+const mockContract = await deployMockContract(wallet, Contract.interface);
 await mockContract.mock.add.returns(2);
 await mockContract.mock.mul.withArgs(2, 2).returns(4);
-await mockContract.mock.div.withArgs(3, 0).reverts();</pre>
+await mockContract.mock.div.withArgs(3, 0).reverts();
+```
+
 - Support for fakes and putting expectations on function calls e.g:
 
-<pre>expect('functionName').to.be.calledOnContract(contract)
-expect('functionName').to.be.calledOnContractWith(contract, ...args)</pre>
+
+```
+expect('functionName').to.be.calledOnContract(contract)
+expect('functionName').to.be.calledOnContractWith(contract, ...args)
+```
+
 - Support for testing with ENS
 - Support for contract flattening
 - Simplify configuration files

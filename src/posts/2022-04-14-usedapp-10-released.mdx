@@ -6,42 +6,54 @@ heroImage: "/images/posts/1*TS8vLpFSgBa8bqPeUgMVEQ.png"
 # tags: [] # No tags generated
 ---
 
-We are excited to deliver useDApp version 1.0 with a bunch of major new features. It’s been a month of work for our [open-source team](https://medium.com/truefieng/introducing-truefi-engineering-8bd0c4b20e7f) , so we are excited to finally move with the desired speed 🏎
+We are excited to deliver useDApp version 1.0 with a bunch of major new features. It's been a month of work for our [open-source team](https://medium.com/truefieng/introducing-truefi-engineering-8bd0c4b20e7f) , so we are excited to finally move with the desired speed 🏎
 
 We are starting with a big, long-awaited feature. useDApp now supports multiple chains at once. How does it work? Very simple.
 
-Users can read from multiple networks at the same time. By default, hooks will use the “default network” or the one that the user is connected to for writing.
+Users can read from multiple networks at the same time. By default, hooks will use the "default network" or the one that the user is connected to for writing.
 
 ![](/images/posts/1*HiSQEoxufqBOmcszTOqwLg.png)
 
 *Reading the balance of one account on multiple networks*
 
-The user can only be connected to one chain for writing. This limitation comes from how wallets like MetaMask work and from the standard EIP1193. However, the user can switch networks easily and, as it’s always the case with useDApp, the UI will follow.
+The user can only be connected to one chain for writing. This limitation comes from how wallets like MetaMask work and from the standard EIP1193. However, the user can switch networks easily and, as it's always the case with useDApp, the UI will follow.
 
 To start working with multi-chain, just specify URLs for different networks.
 
-<pre>const config: Config = {
+
+```
+const config: Config = {
  readOnlyChainId: Mainnet.chainId,
  readOnlyUrls: {
- [Mainnet.chainId]: ‘https://mainnet.infura.io/v3/<INFURA_ID>',
- [Kovan.chainId]: ‘https://kovan.infura.io/v3/<INFURA_ID>',
+ [Mainnet.chainId]: 'https://mainnet.infura.io/v3/`<INFURA_ID>`',
+ [Kovan.chainId]: 'https://kovan.infura.io/v3/`<INFURA_ID>`',
  },
-}</pre>To specify the chain, simply add a parameter to any read-hook, for example, read user balance from two different networks:
+}
+```
+To specify the chain, simply add a parameter to any read-hook, for example, read user balance from two different networks:
 
-<pre>const mainnetBalance = useEtherBalance(address, { chainId: Mainnet.chainId })
- const kovanBalance = useEtherBalance(address, { chainId: Kovan.chainId })</pre>Check the full guide [here](https://usedapp-docs.netlify.app/docs/Guides/Connecting/Multi%20Chain) .
+
+```
+const mainnetBalance = useEtherBalance(address, { chainId: Mainnet.chainId })
+ const kovanBalance = useEtherBalance(address, { chainId: Kovan.chainId })
+```
+Check the full guide [here](https://usedapp-docs.netlify.app/docs/Guides/Connecting/Multi%20Chain) .
 
 It was supposed to be a big announcement that we integrated WalletConnect. The fun part is that in fact no integration was needed. It takes just a few lines of code to integrate WalletConnect, so instead we simply add a [guide]
 to our docs.
 
 ![](/images/posts/1*XU4Q9Ro3qbvDQLZZP6VxeQ.gif)
 
-<pre>const { activate } = useEthers()
+
+```
+const { activate } = useEthers()
 const provider = new WalletConnectProvider({
- infuraId: ‘<ChainId>’,
+ infuraId: '`<ChainId>`',
 })
 await provider.enable()
-activate(provider)</pre>You can now integrate WalletConnect:
+activate(provider)
+```
+You can now integrate WalletConnect:
 
 - natively with just a few lines of code (see above)
 - use Web3Modal (if you have other wallets that you would like to support)
@@ -49,25 +61,33 @@ activate(provider)</pre>You can now integrate WalletConnect:
 
 It used to be that you need to fork and create a PR to useDApp to connect to a new chain. The reason was that the chainId was an *enum* type. With the *chainId* being now a *number*, adding a custom chain is just a few lines of code. First define all properties of the chain:
 
-<pre>export const TutorialChain: Chain = {
+
+```
+export const TutorialChain: Chain = {
  chainId: 99999,
- chainName: ‘TutorialChain’,
+ chainName: 'TutorialChain',
  isTestChain: false,
  isLocalChain: false,
- multicallAddress: ‘0x0000000000000000000000000000000000000000’,
+ multicallAddress: '0x0000000000000000000000000000000000000000',
  getExplorerAddressLink: (address: string) =>
  `https://tutorialchain.etherscan.io/address/${address}`,
  getExplorerTransactionLink: (transactionHash: string) =>
  `https://tutorialchain.etherscan.io/tx/${transactionHash}`,
-}</pre>And add it to the configuration:
+}
+```
+And add it to the configuration:
 
-<pre>const config: Config = {
+
+```
+const config: Config = {
  readOnlyChainId: TutorialChain.chainId,
  readOnlyUrls: {
- [TutorialChain.chainId]: ‘<url of the custom chain>’,
+ [TutorialChain.chainId]: '<url of the custom chain>',
  },
  networks: […DEFAULT_SUPPORTED_CHAINS, TutorialChain],
-}</pre>And you are ready to use the new chain. 
+}
+```
+And you are ready to use the new chain. 
 Detailed description is available in the [documentation](https://usedapp-docs.netlify.app/docs/Guides/Connecting/Custom%20Chains) .
 
 We redesigned the documentation, it is now better structured, with more guides and better focus on the user facing API. We also added live examples to play around with.

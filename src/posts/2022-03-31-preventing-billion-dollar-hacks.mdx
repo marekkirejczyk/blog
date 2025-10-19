@@ -25,7 +25,7 @@ We started by asking a few fundamental questions, like:
 - How can we combine them to achieve the best outcome?
 - How to measure our performance?
 
-We will answer them in this post. Let’s start with the tools and later we’ll look into the process.
+We will answer them in this post. Let's start with the tools and later we'll look into the process.
 
 What are the essential tools for security, aside from hiring top engineers and exhaustive testing? We all know about bug bounties and external audits. Most are aware of formal verification and phasing as well.
 
@@ -43,7 +43,7 @@ With **tests** you can say:
 > If I **transfer** **5 tokens** to another person, then the beneficiary will **get 5 tokens**.
 With a **formal specification** you can say:
 
-> If I transfer **any non-negative amount of tokens** to another person, then the beneficiary’s account **balance will increase by the exact same amount**.
+> If I transfer **any non-negative amount of tokens** to another person, then the beneficiary's account **balance will increase by the exact same amount**.
 And it will take care of all edge cases like underflows, overflows, sending to yourself, etc
 
 The tools got better over time and now, with [Certora](https://www.certora.com/) , we can run a verification after each commit. Before this, verification of somewhat complex code used to take hours or days.
@@ -68,7 +68,7 @@ For example:
 Capture recapture is a simple statistical method that allows to estimate the amount of defects that remained undetected.
 
 > In principle, if all methods found the same defect, the chances are that the majority were captured. If, on the other hand, all of them found different defects, there is a high probability there are some left unfound.
-In practice it requires a bit of statistic. The method comes from ecology where it is used to estimate an animal population’s size. Take results with a grain of salt, however high estimation on undetected bugs should be clear indicator to do additional audits.
+In practice it requires a bit of statistic. The method comes from ecology where it is used to estimate an animal population's size. Take results with a grain of salt, however high estimation on undetected bugs should be clear indicator to do additional audits.
 
 #### 🎢 Incremental roll-out
 Finally, rollout to production plays a crucial role in security. We avoid upgrading smart contracts as much as possible. Instead, we deploy new versions of smart contracts (i.e. new pools and portfolios) and allow money to pour slowly into them while the bug bounty is already running.
@@ -76,7 +76,7 @@ Finally, rollout to production plays a crucial role in security. We avoid upgrad
 An incremental roll-out also means an **incremental phase-out**. To avoid maintaining a big number of pools and huge codebase, we want to make sure that old pools are phased out and slowly taken over by new pools.
 
 #### 👮‍♂️ Red team
-Internally, we created a security team inspired by the “*red team* — *blue team*” practice. The red team’s job is to find defects in the smart contract code. Their main tool for the job is formal verification. As they try to write automatic proofs of correctness of the code, this often leads to finding subtle bugs that would be difficult to find with naked eye.
+Internally, we created a security team inspired by the "*red team* — *blue team*" practice. The red team's job is to find defects in the smart contract code. Their main tool for the job is formal verification. As they try to write automatic proofs of correctness of the code, this often leads to finding subtle bugs that would be difficult to find with naked eye.
 
 Red team is involved in the design phase as well. Therefore the boundary of the *red team* is a little blurry here.
 
@@ -94,10 +94,10 @@ We start with development of smart contracts and if we encounter defects in the 
 #### 🔎 Phase 2: Audit
 In this phase:
 
-1. We **publish the source code** in a separate repository, but don’t reveal tests or specifications, as it might hint at injected defects.
+1. We **publish the source code** in a separate repository, but don't reveal tests or specifications, as it might hint at injected defects.
 2. The security team is working full speed ahead on **formal specifications**
 3. **Two external audits** are being performed
-4. We set up a **“small” bug bounty** on Gitcoin and we pay for every found bug. If the bug was injected, the payout is small, but if it wasn’t, then the payout is significant.
+4. We set up a **"small" bug bounty** on Gitcoin and we pay for every found bug. If the bug was injected, the payout is small, but if it wasn't, then the payout is significant.
 
 #### 🏭 Phase 3: Review
 In this phase we review results:
@@ -111,7 +111,7 @@ In this phase we review results:
 And if we are confident, we can proceed to the next step.
 
 #### 🏭 Phase 4: Production
-Finally, we deploy contracts to production and the money slowly starts getting into contracts. We publish a [**“big”** **bug bounty**]
+Finally, we deploy contracts to production and the money slowly starts getting into contracts. We publish a [**"big"** **bug bounty**]
 on Immunify, with a $100k reward for a critical bug, which we plan to increase over time to $1mln per critical bug.
 
 The process requires certain discipline, not only to keep the defect registry secret and always up-to-date, but also in regard to scheduling. 

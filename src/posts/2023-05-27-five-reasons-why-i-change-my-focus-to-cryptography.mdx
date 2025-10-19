@@ -2,18 +2,18 @@
 title: "Five reasons why I change my focus to cryptography"
 author: "Marek Kirejczyk"
 date: "2023-05-27"
-heroImage: "Unknown image"
+heroImage: "/images/posts/cover-crypto.png"
 # tags: [] # No tags generated
 ---
 
-With some extra time on my hands, I decided to invest it into switching my professional focus from blockchain to cryptography. In this post, I’d like to share my understanding of the space, which makes me excited.
+With some extra time on my hands, I decided to invest it into switching my professional focus from blockchain to cryptography. In this post, I'd like to share my understanding of the space, which makes me excited.
 
 There is a fast growing branch of cryptography, often called Zero Knowledge Proofs (ZKPs). The name hardly represents the whole space, but it is commonly used to describe a part of cryptography being developed mainly around blockchain. It is booming with new use cases and here are some examples:
 
-- **Scaling**There is a new wave of startups trying to solve blockchain’s holy grail — scalability. This includes new L1 technologies — blockchains like [Aleo](https://www.aleo.org/) , [Aleph Zero](https://alephzero.org/) , [Mina](https://minaprotocol.com/) , [Aztec](https://techcrunch.com/2022/12/15/aztec-network-takes-on-encrypted-blockchains-with-100m-round-led-by-a16z/?guccounter=1&guce_referrer=aHR0cHM6Ly90LmNvLw&guce_referrer_sig=AQAAAH9KiBUa5DY2OofHAVZAEcY83ZKZAYWKXfy60lRMDOLn8gvV2_MlIn7ApENU5al8s9kpG72u4HLgT9wNXuICqmLTpk7bbKwfsU8eGd0kBCA6Jjwd4Zto3gpm0CqBQv2XCz7DgTyN7c-YnG9m2VjcFP3BbhNXZ3fYNAGUd_8W3Blp) , and Layer 2 solutions, mostly in the form of zkRollups, like [StarkWare](https://starkware.co/) , [zkSync](https://zksync.io/) , [Scroll](https://scroll.io/) , [Hermez](https://support.polygon.technology/support/solutions/articles/82000886637-what-is-polygon-hermez-) , to name a few.
+- **Scaling**There is a new wave of startups trying to solve blockchain's holy grail — scalability. This includes new L1 technologies — blockchains like [Aleo](https://www.aleo.org/) , [Aleph Zero](https://alephzero.org/) , [Mina](https://minaprotocol.com/) , [Aztec](https://techcrunch.com/2022/12/15/aztec-network-takes-on-encrypted-blockchains-with-100m-round-led-by-a16z/?guccounter=1&guce_referrer=aHR0cHM6Ly90LmNvLw&guce_referrer_sig=AQAAAH9KiBUa5DY2OofHAVZAEcY83ZKZAYWKXfy60lRMDOLn8gvV2_MlIn7ApENU5al8s9kpG72u4HLgT9wNXuICqmLTpk7bbKwfsU8eGd0kBCA6Jjwd4Zto3gpm0CqBQv2XCz7DgTyN7c-YnG9m2VjcFP3BbhNXZ3fYNAGUd_8W3Blp) , and Layer 2 solutions, mostly in the form of zkRollups, like [StarkWare](https://starkware.co/) , [zkSync](https://zksync.io/) , [Scroll](https://scroll.io/) , [Hermez](https://support.polygon.technology/support/solutions/articles/82000886637-what-is-polygon-hermez-) , to name a few.
 - **Privacy**Moreover, some of the technologies mentioned above aim to solve the second biggest challenge in the blockchain space: privacy. And there is more to come.
 - **New use cases**The BLS signatures are entering their renaissance, with [account abstraction]
-finally arriving in Ethereum. It will unlock the possibility of creating new more secure and more usable wallets. For example, you will be able to sign your transactions using multiple devices and leveraging smartphone security features like Apple’s Face ID).
+finally arriving in Ethereum. It will unlock the possibility of creating new more secure and more usable wallets. For example, you will be able to sign your transactions using multiple devices and leveraging smartphone security features like Apple's Face ID).
 - **MPC**Along with ZKPs, another booming part of cryptography is *multi-party computation* (MPC). They are used for setup ceremonies for ZKPs. And there is more than meets the eye. There is an ongoing effort to use MPC to take privacy further than ZKPs allow.
 - **New data structures**New data structure, called Verkle Trees, is emerging, with the aim to improve and eventually replace Merkle trees, which are the base building element of blockchains. They are in turn based on polynomial commitments, which is a building block of ZKPs.
 
@@ -34,7 +34,7 @@ I would even risk a more radical thesis:
 
 Seeing the demand-supply ratio out of balance, one can expect an inflow of a new talent to the space. And this is already the case. However, I expect the inflow to be too slow to match the demand in upcoming years. And here is why.
 
-Coding security sensitive code is slow and hard. The code not only needs to “work”. It needs to meet high cryptographic standards:
+Coding security sensitive code is slow and hard. The code not only needs to "work". It needs to meet high cryptographic standards:
 
 - **Cover all edge cases**Code needs to work correctly in all the extreme edge cases, which are hard to test. For instance, it is impossible to do exhaustive testing on all 2²⁵⁶ cases.
 - **Be attack resistant**Even perfectly correct code is not enough. The code needs to be resistant to many different types of side-channel attacks, like timing attacks. Therefore it often needs to be written in a very specific manner, using constant time algorithms.
@@ -53,7 +53,7 @@ Before I dived a bit deeper, cryptography seemed like a boring, slowly changing 
 
 **Post quantum**
 
-With significant progress in quantum computing, there is a growing need to replace huge parts of cryptography being used today. In particular, all the RSA and Elliptic Curve Cryptography protocols can be cracked by [Shor’s algorithm](https://en.wikipedia.org/wiki/Shor%27s_algorithm) , which runs on Quantum Computers.
+With significant progress in quantum computing, there is a growing need to replace huge parts of cryptography being used today. In particular, all the RSA and Elliptic Curve Cryptography protocols can be cracked by [Shor's algorithm](https://en.wikipedia.org/wiki/Shor%27s_algorithm) , which runs on Quantum Computers.
 
 The timing of the advent of quantum supremacy is uncertain and is probably many years ahead of us. And that is, assuming it will happen, which is still in question.
 
@@ -66,7 +66,7 @@ The risk of quantum computers being able to crack modern cryptography needs to b
 
 **Espionage**
 
-The world of security was never more exciting. There is a major cyber war going on, with reports of new major incidents a few times a year. And there are countless incidents we don’t hear about. Exploits, trojans, injection backdoors, supply chain attacks, and of course, smart contracts hacks — there is no shortage of threats. I am quite confident more of increasingly sophisticated attacks are ahead of us.
+The world of security was never more exciting. There is a major cyber war going on, with reports of new major incidents a few times a year. And there are countless incidents we don't hear about. Exploits, trojans, injection backdoors, supply chain attacks, and of course, smart contracts hacks — there is no shortage of threats. I am quite confident more of increasingly sophisticated attacks are ahead of us.
 
 **Emerging engineering practices**
 Cryptography was traditionally slow to develop. To challenge the threats we are facing and meet expectations of investors flooding crypto space with funding, the security community is in a dire need to develop new ways of building security sensitive code faster.
@@ -78,7 +78,7 @@ Every few years, I like to switch to a new technological stack. I have coded com
 
 **Rust**
 
-Rust is the best designed language I have ever seen. It is complex and has a pretty steep learning curve, but the security and performance it gives in return seem to be just worth it. I have never ever seen such high quality code in any other ecosystem. We have seen a wave of things being rewritten in Rust and we can expect more. Wherever speed and security matters, Rust will enter the scene. I’ll give you just one example why.
+Rust is the best designed language I have ever seen. It is complex and has a pretty steep learning curve, but the security and performance it gives in return seem to be just worth it. I have never ever seen such high quality code in any other ecosystem. We have seen a wave of things being rewritten in Rust and we can expect more. Wherever speed and security matters, Rust will enter the scene. I'll give you just one example why.
 
 In the last decades, we have seen numerous exploits and back doors, leveraged by governments agencies and private companies used for espionage. Vast portions of them were buffer overflows (e.g. [Heartbleed](https://en.wikipedia.org/wiki/Heartbleed) ), which Rust prevents by default. Resistance to attacks is only going to become more important in upcoming decades, as our lives will depend on many millions lines of code even more than today, written by millions of developers of various expertise. A better language for writing critical code is a must.
 

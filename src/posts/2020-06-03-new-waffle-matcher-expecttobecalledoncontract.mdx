@@ -10,19 +10,21 @@ Perhaps you read my previous post about [*mocking smart contracts*](https://medi
 
 This time, we are going to focus on another aspect of the same challenge: testing the effects of a call.
 
-Let’s examine once more a testing scenario for a hypothetical ERC721 market that allows trading non-fungible tokens for ERC20 tokens.
+Let's examine once more a testing scenario for a hypothetical ERC721 market that allows trading non-fungible tokens for ERC20 tokens.
 
 ![]
 Once a call to the *contract under test (Market* on our diagram*) *is made, one needs to inspect the effects of the call. We usually do that by querying the state of the related smart contracts. This might be somewhat complex at times, as we need to look into the state of different smart contracts, which in some cases might be private. In other cases, the state might poorly reflect interactions between contracts.
 
-Wouldn’t it be useful if we could examine precisely what the interactions between a *contract under test* and its dependencies are?
+Wouldn't it be useful if we could examine precisely what the interactions between a *contract under test* and its dependencies are?
 
 ![]
-For those complex cases, we’ve introduced a new matcher that allows us to specify expectations as to which function should be called, on which contracts, and with which arguments.
+For those complex cases, we've introduced a new matcher that allows us to specify expectations as to which function should be called, on which contracts, and with which arguments.
 
-Let’s examine an example smart contract.
+Let's examine an example smart contract.
 
-<pre>pragma solidity ^0.6.2;
+
+```
+pragma solidity ^0.6.2;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
@@ -43,26 +45,36 @@ contract AmIRichAlready {
  uint balance = tokenContract.balanceOf(msg.sender);
  return balance > RICHNESS;
  }
-}</pre>Now, with the new matcher, we can test it in the following ways. Firstly, examine if a specific function on the contract was called:
+}
+```
+Now, with the new matcher, we can test it in the following ways. Firstly, examine if a specific function on the contract was called:
 
-<pre>it('...', async () => {
+
+```
+it('...', async () => {
  ...
  await contract.check();
  expect('balanceOf').to.be.calledOnContract(ERC20);
-});</pre>Secondly, specify exact parameters to be used in the call:
+});
+```
+Secondly, specify exact parameters to be used in the call:
 
-<pre>it('...', async () => {
+
+```
+it('...', async () => {
  ...
  await contract.check();
  expect('balanceOf').to.be
  .calledOnContractWith(ERC20, [wallet.address]);
-});</pre>Full example [available here](https://github.com/EthWorks/Waffle/tree/master/examples/called-on-contract) .
+});
+```
+Full example [available here](https://github.com/EthWorks/Waffle/tree/master/examples/called-on-contract) .
 
 And here is the best part. The new matchers work with both normal and mock contracts described in the previous post. It is because Waffle records and filters EVM calls rather than inject code, like it is the case of popular testing libraries for other technologies.
 
 This feature was introduced in Waffle version 2.5.
 
-Currently, it doesn’t work with *Buidler *which some of you are using together Waffle. However, we’ll be working with the Nomic Labs team in the following weeks to integrate the matchers into the framework.
+Currently, it doesn't work with *Buidler *which some of you are using together Waffle. However, we'll be working with the Nomic Labs team in the following weeks to integrate the matchers into the framework.
 
 We are [Ethworks](https://ethworks.io/) . A truly remarkable team for your blockchain project.
 

@@ -22,7 +22,7 @@ The code of the considerate contract is [here](https://etherscan.io/address/0xc5
 The vulnerability is caused by code in line 3, where SafeMath should have been used:
 
 > The attack for the original code is the following: you can pick a huge **_value** such that for example **(2 * _value)** overflows the range of **uint256, e.g. _value = MAX_INT/2+1**This will casue **amount to equal 2 **and will bypasschecks in line 5, while amount added to receiver in line 9 will be much bigger than amount of all tokens in circulation.
-Could this bug be noticed earlier? Let’s write high-level **intended **semantics for the *batchTransfer* function and check if it is consistent with the actual code.
+Could this bug be noticed earlier? Let's write high-level **intended **semantics for the *batchTransfer* function and check if it is consistent with the actual code.
 
 > Note: We have to change the interface of the *batchTransfer* function since at this particular moment dynamic arrays are not yet supported by KLab. So, we will alter solidity code:
 The announced above high-level semantics for the *batchTransfer* function is as follows:
@@ -71,9 +71,9 @@ KLab is an upper layer of a stack of technologies (Details: [part1](https://medi
 
 K is a more expressive language but comes with its own trade-offs:
 
-- K’s prover outputs just TRUE or FALSE, while KLab’s prover is equipped with a graphical debugger that helps to find a counterexample for a failed proof. (We will cover debugger in a future blog post)
-- Second, to write directly in K, one has to understand accurately EVM (more specifically: KEVM, which description of EVM written in K) which isn’t a piece of cake.
+- K's prover outputs just TRUE or FALSE, while KLab's prover is equipped with a graphical debugger that helps to find a counterexample for a failed proof. (We will cover debugger in a future blog post)
+- Second, to write directly in K, one has to understand accurately EVM (more specifically: KEVM, which description of EVM written in K) which isn't a piece of cake.
 
-So that reality of today’s formal verification of EVM code is that one should understand both ACT and K to be efficient.
+So that reality of today's formal verification of EVM code is that one should understand both ACT and K to be efficient.
 
 And so: next time, we will give you a smooth introduction to K!

@@ -1,0 +1,77 @@
+---
+export interface Props {
+  currentPage: number;
+  totalPages: number;
+  hasPrevPage: boolean;
+  hasNextPage: boolean;
+}
+
+const { currentPage, totalPages, hasPrevPage, hasNextPage } = Astro.props;
+---
+
+<nav class="pagination">
+  {hasPrevPage && (
+    <a href={currentPage === 2 ? '/' : `/page/${currentPage - 1}`} class="pagination-link">
+      ← Previous
+    </a>
+  )}
+  
+  <span class="pagination-info">
+    Page {currentPage} of {totalPages}
+  </span>
+  
+  {hasNextPage && (
+    <a href={`/page/${currentPage + 1}`} class="pagination-link">
+      Next →
+    </a>
+  )}
+</nav>
+
+<style>
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+    margin-top: 64px;
+    padding-top: 32px;
+    border-top: 1px solid #f0f0f0;
+  }
+
+  .pagination-link {
+    font-size: 16px;
+    font-weight: 600;
+    color: #0066cc;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+  }
+
+  .pagination-link:hover {
+    background-color: #f5f5f5;
+    text-decoration: none;
+  }
+
+  .pagination-info {
+    font-size: 14px;
+    color: #666666;
+  }
+
+  @media (max-width: 768px) {
+    .pagination {
+      gap: 16px;
+      margin-top: 48px;
+    }
+
+    .pagination-link {
+      font-size: 14px;
+      padding: 6px 12px;
+    }
+
+    .pagination-info {
+      font-size: 13px;
+    }
+  }
+</style>
+

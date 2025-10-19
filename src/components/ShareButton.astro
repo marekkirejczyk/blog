@@ -1,0 +1,236 @@
+---
+export interface Props {
+  title: string;
+  url: string;
+}
+
+const { title, url } = Astro.props;
+---
+
+<div class="share-container">
+  <button class="share-button" id="shareButton">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="18" cy="5" r="3"></circle>
+      <circle cx="6" cy="12" r="3"></circle>
+      <circle cx="18" cy="19" r="3"></circle>
+      <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+      <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+    </svg>
+    Share
+  </button>
+  
+  <div class="share-dropdown" id="shareDropdown">
+    <button class="share-option" id="copyLink" data-url={url}>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+      </svg>
+      Copy link
+    </button>
+    
+    <button class="share-option" id="shareX" data-title={title} data-url={url}>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+      </svg>
+      Share on X
+    </button>
+    
+    <button class="share-option" id="shareFacebook" data-url={url}>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+      </svg>
+      Share on Facebook
+    </button>
+    
+    <button class="share-option" id="shareLinkedIn" data-url={url}>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+      </svg>
+      Share on LinkedIn
+    </button>
+  </div>
+</div>
+
+<script>
+  function initShareButton() {
+    const shareButton = document.getElementById('shareButton');
+    const shareDropdown = document.getElementById('shareDropdown');
+    const copyLink = document.getElementById('copyLink');
+    const shareX = document.getElementById('shareX');
+    const shareFacebook = document.getElementById('shareFacebook');
+    const shareLinkedIn = document.getElementById('shareLinkedIn');
+
+    if (!shareButton || !shareDropdown) return;
+
+    // Toggle dropdown
+    shareButton.addEventListener('click', (e) => {
+      e.stopPropagation();
+      shareDropdown.classList.toggle('show');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', () => {
+      shareDropdown.classList.remove('show');
+    });
+
+    // Copy link
+    copyLink?.addEventListener('click', async (e) => {
+      e.stopPropagation();
+      const url = (e.currentTarget as HTMLElement).dataset.url || '';
+      const fullUrl = window.location.origin + url;
+      
+      try {
+        await navigator.clipboard.writeText(fullUrl);
+        const originalText = copyLink.innerHTML;
+        copyLink.innerHTML = copyLink.innerHTML.replace('Copy link', 'Copied!');
+        setTimeout(() => {
+          copyLink.innerHTML = originalText;
+        }, 2000);
+      } catch (err) {
+        console.error('Failed to copy:', err);
+      }
+      
+      shareDropdown.classList.remove('show');
+    });
+
+    // Share on X
+    shareX?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const title = (e.currentTarget as HTMLElement).dataset.title || '';
+      const url = (e.currentTarget as HTMLElement).dataset.url || '';
+      const fullUrl = window.location.origin + url;
+      const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(fullUrl)}`;
+      window.open(tweetUrl, '_blank', 'width=550,height=420');
+      shareDropdown.classList.remove('show');
+    });
+
+    // Share on Facebook
+    shareFacebook?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const url = (e.currentTarget as HTMLElement).dataset.url || '';
+      const fullUrl = window.location.origin + url;
+      const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(fullUrl)}`;
+      window.open(fbUrl, '_blank', 'width=550,height=420');
+      shareDropdown.classList.remove('show');
+    });
+
+    // Share on LinkedIn
+    shareLinkedIn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const url = (e.currentTarget as HTMLElement).dataset.url || '';
+      const fullUrl = window.location.origin + url;
+      const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(fullUrl)}`;
+      window.open(linkedInUrl, '_blank', 'width=550,height=420');
+      shareDropdown.classList.remove('show');
+    });
+  }
+
+  // Initialize on page load
+  initShareButton();
+
+  // Re-initialize after navigation (for Astro view transitions if added later)
+  document.addEventListener('astro:page-load', initShareButton);
+</script>
+
+<style>
+  .share-container {
+    position: relative;
+    display: inline-block;
+  }
+
+  .share-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: transparent;
+    border: 1px solid #e0e0e0;
+    border-radius: 24px;
+    font-size: 14px;
+    color: #666666;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .share-button:hover {
+    background: #f5f5f5;
+    border-color: #d0d0d0;
+  }
+
+  .share-button svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .share-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    min-width: 200px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s;
+    z-index: 1000;
+  }
+
+  .share-dropdown.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .share-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 12px 16px;
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    color: #333333;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.2s;
+  }
+
+  .share-option:first-child {
+    border-radius: 8px 8px 0 0;
+  }
+
+  .share-option:last-child {
+    border-radius: 0 0 8px 8px;
+  }
+
+  .share-option:hover {
+    background: #f5f5f5;
+  }
+
+  .share-option svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 768px) {
+    .share-button {
+      padding: 6px 12px;
+      font-size: 13px;
+    }
+
+    .share-dropdown {
+      min-width: 180px;
+    }
+
+    .share-option {
+      padding: 10px 14px;
+      font-size: 13px;
+    }
+  }
+</style>
+

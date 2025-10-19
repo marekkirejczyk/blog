@@ -35,16 +35,34 @@ Hoping to make a significant improvement, we introduced a new feature in Waffle 
 
 With dynamic mocking, you can create a mock for a smart contract directly from a JavaScript test and define its behavior. To create a mock, use `deployMockContract` and pass a wallet and *abi* interface that it should comply with:
 
-<pre>const mockERC20 = await deployMockContract(sender, IERC20.abi);</pre>Now, you can easily test a functionality in isolation. Let’s examine a simple smart contract that allows verifying if `msg.sender` has at least a predetermined number of tokens:
 
-<pre>pragma solidity ^0.5.15;
+```
+const mockERC20 = await deployMockContract(sender, IERC20.abi);
+```
+Now, you can easily test a functionality in isolation. Let's examine a simple smart contract that allows verifying if `msg.sender` has at least a predetermined number of tokens:
+
+
+```
+pragma solidity ^0.5.15;
 
 interface IERC20 {
- function balanceOf(address account) ... returns (uint256);</pre><pre> ...
+ function balanceOf(address account) ... returns (uint256);
+```
+
+```
+...
 }
 
 contract AmIRichAlready {
- IERC20 private tokenContract;</pre><pre> uint private constant RICHNESS = 1000000 * 10 ** 18;</pre><pre> constructor (IERC20 _tokenContract) public {
+ IERC20 private tokenContract;
+```
+
+```
+uint private constant RICHNESS = 1000000 * 10 ** 18;
+```
+
+```
+constructor (IERC20 _tokenContract) public {
  tokenContract = _tokenContract;
  }
 
@@ -52,23 +70,45 @@ contract AmIRichAlready {
  uint balance = tokenContract.balanceOf(msg.sender);
  return balance > RICHNESS;
  }
-}</pre>Now, we can test our contract extensively without adding extra Solidity code that would implement an *ERC20* mock token or import external libraries. Let’s start with creating a contract and connect it to a mock:
+}
+```
+Now, we can test our contract extensively without adding extra Solidity code that would implement an *ERC20* mock token or import external libraries. Let's start with creating a contract and connect it to a mock:
 
-<pre>const [wallet, otherWallet] = new MockProvider().getWallets();</pre><pre>beforeEach(async () => {
+
+```
+const [wallet, otherWallet] = new MockProvider().getWallets();
+```
+
+```
+beforeEach(async () => {
  mockERC20 = await deployMockContract(wallet, IERC20.abi);
  contract = await deployContract(wallet, AmIRichAlready, [mockERC20.address]);
-});</pre>And we can define what the mock should return and test the behavior of our method right away:
+});
+```
+And we can define what the mock should return and test the behavior of our method right away:
 
-<pre>it('wallet has little coins', async () => {
+
+```
+it('wallet has little coins', async () => {
  await mockERC20.mock.balanceOf.returns(parseEther('999999'));
  expect(await contract.check()).to.be.equal(false);
-});</pre>Check out the full example on [Waffle GitHub](https://github.com/EthWorks/Waffle/blob/master/examples/mock-contracts/test/AmIRichAlready.test.ts) .
+});
+```
+Check out the full example on [Waffle GitHub](https://github.com/EthWorks/Waffle/blob/master/examples/mock-contracts/test/AmIRichAlready.test.ts) .
 
 Use different variants of the syntax to define what method should return for different arguments, or if it should revert instead.
 
-<pre>await mockContract.mock.<nameOfMethod>.returns(<value>)
-await mockContract.mock.<name>.withArgs(<args>).returns(<value>)</pre><pre>await mockContract.mock.<nameOfMethod>.reverts()
-await mockContract.mock.<name>.withArgs(<args>).reverts()</pre>Detailed documentation for mocking functionality is available [here](https://ethereum-waffle.readthedocs.io/en/latest/mock-contract.html) .
+
+```
+await mockContract.mock.`<nameOfMethod>`.returns(`<value>`)
+await mockContract.mock.`<name>`.withArgs(`<args>`).returns(`<value>`)
+```
+
+```
+await mockContract.mock.`<nameOfMethod>`.reverts()
+await mockContract.mock.`<name>`.withArgs(`<args>`).reverts()
+```
+Detailed documentation for mocking functionality is available [here](https://ethereum-waffle.readthedocs.io/en/latest/mock-contract.html) .
 
 The feature has been released in Waffle 2.5 as experimental, so the API may change without complying with SEMVER rules. We plan to test this feature and collect feedback in the upcoming weeks and release the final API in Waffle 3.0.
 

@@ -1,8 +1,8 @@
 ---
-title: "Learning AI coding is no longer optional. But it’s not vibe coding."
+title: "Learning AI coding is no longer optional. But it's not vibe coding."
 author: "Unknown author"
-date: "Unknown date"
-heroImage: "Unknown image"
+date: "2025-10-23"
+heroImage: "/images/posts/learning-ai.png"
 # tags: [] # No tags generated
 ---
 
@@ -23,7 +23,7 @@ First, we have **general-purpose large language models (LLMs)** like [ChatGPT](h
 - preparing documentation.
 
 Most importantly, **LLMs act as the ** [**operating system**]
-behind many other AI development tools. Mastering how to work with them is essential to unlock the *“multiplier mode”* of productivity.
+behind many other AI development tools. Mastering how to work with them is essential to unlock the *"multiplier mode"* of productivity.
 
 #### Vibe Coding Prototypes
 For **vibe coding prototypes**, we use [**Lovable**](https://lovable.dev/) . There are several competitors in this space, including [**Replit**]
@@ -40,16 +40,16 @@ What makes it remarkable is the **speed and completeness of the output**. With a
 - build the features, and
 - fix any bugs along the way.
 
-From there, you can keep prompting it to add features or modify existing ones. You don’t need to know anything about programming to **vibe code** a non-trivial web application.
+From there, you can keep prompting it to add features or modify existing ones. You don't need to know anything about programming to **vibe code** a non-trivial web application.
 
-Another cool feature is that **each prompt’s result is committed to a GitHub repository**. This means you can:
+Another cool feature is that **each prompt's result is committed to a GitHub repository**. This means you can:
 
 - easily undo or roll back changes,
 - step in to modify the code manually, and
 - even **mix vibe coding with AI-augmented coding** when you want more control or customization.
 
 #### Code Review
-For code reviews, we are currently using [**CodeRabbit**](https://www.coderabbit.ai/) , and overall we’re quite happy with it. It integrates directly with GitHub and leaves comments on Pull Requests.
+For code reviews, we are currently using [**CodeRabbit**](https://www.coderabbit.ai/) , and overall we're quite happy with it. It integrates directly with GitHub and leaves comments on Pull Requests.
 
 Not every comment is valuable, but often it:
 
@@ -57,16 +57,16 @@ Not every comment is valuable, but often it:
 - proposes cleaner syntax, and
 - suggests incremental improvements.
 
-It does **not replace traditional code review**, but it’s a reliable daily companion that provides practical, actionable pointers.
+It does **not replace traditional code review**, but it's a reliable daily companion that provides practical, actionable pointers.
 
-One of its strengths is the **low entry barrier** — you don’t need to learn new workflows or build new habits to start benefiting from it.
+One of its strengths is the **low entry barrier** — you don't need to learn new workflows or build new habits to start benefiting from it.
 
-⚠️ **Note:** you’ll need a paid version of CodeRabbit to get useful comments. The free version tends to output “poems,” which can be discouraging. It tends to be overly verbose out of the box, so a little configuration is needed to make it more usable and focused on quality.
+⚠️ **Note:** you'll need a paid version of CodeRabbit to get useful comments. The free version tends to output "poems," which can be discouraging. It tends to be overly verbose out of the box, so a little configuration is needed to make it more usable and focused on quality.
 
 #### Agent Systems (Assistants)
 We are currently using two agent systems: **Cursor** and **Claude Code**. At a high level, they follow the same idea: an AI agent that assists with coding.
 
-- **Cursor** integrates directly into the development environment. It’s a Visual Studio Code fork, which I personally find very convenient.
+- **Cursor** integrates directly into the development environment. It's a Visual Studio Code fork, which I personally find very convenient.
 - **Claude Code** is often preferred by people who code more than I do — it tends to be more accurate, gathers more context, and supports longer reasoning.
 
 In practice, we combine both, depending on the task. Some developers experiment with other tools as they emerge, which is also great to see.
@@ -77,8 +77,8 @@ Under the hood, these agent systems rely on **LLMs** that are **swappable**. At 
 There are three key things to keep in mind about AI tooling:
 
 1. **No single tool is enough.**It usually takes a combination of tools to unlock the full potential of AI-assisted coding.
-2. **Tools are intuitive, but deeper than they look.**Most are easy to start with, yet each comes with a learning curve. Once you dig in, you’ll discover they offer far more than meets the eye.
-3. **The landscape changes constantly.**New tools appear all the time, and it’s nearly impossible to stay fully up to date. My advice mirrors what I recommend for coding languages and frameworks:👉 **Master one stack **so you can later pick up others quickly.👉 If you want to get started fast, use the stack described in this section — it’s a solid entry point.
+2. **Tools are intuitive, but deeper than they look.**Most are easy to start with, yet each comes with a learning curve. Once you dig in, you'll discover they offer far more than meets the eye.
+3. **The landscape changes constantly.**New tools appear all the time, and it's nearly impossible to stay fully up to date. My advice mirrors what I recommend for coding languages and frameworks:👉 **Master one stack **so you can later pick up others quickly.👉 If you want to get started fast, use the stack described in this section — it's a solid entry point.
 
 The first and most important thing to understand about working with LLMs and agent systems is the **role they should play in your workflow**.
 
@@ -89,27 +89,27 @@ A popular analogy is to think of AI tools as eager interns.
 
 - An eager intern can produce a vast amount of code, but it may be buggy, poorly designed, or misaligned with the existing codebase.
 - Your role is to teach the intern how to code your way, while preventing serious mistakes.
-- If you’ve worked with interns before, the feeling will be familiar.
+- If you've worked with interns before, the feeling will be familiar.
 
-This analogy also highlights the current limitations of AI-assisted coding. Over time, with proper supervision, AI will begin to “converge” to your coding style, stack, and architectural decisions. In other words, the quality of the codebase will only ever be as good as the standards you enforce.
+This analogy also highlights the current limitations of AI-assisted coding. Over time, with proper supervision, AI will begin to "converge" to your coding style, stack, and architectural decisions. In other words, the quality of the codebase will only ever be as good as the standards you enforce.
 
 > By contrast, pure *vibe coding* — will likely produce buggy, insecure systems that are painful to maintain long-term. This is an example of phenomenon called AI slop.
 #### Throughput and Multipliers
-The throughput limit with AI is similar to how many interns a good engineer can manage. In practice, that’s usually **2–3 interns** at once. It takes time to discuss features, align on design, and review code before merging. But once expectations are clear, such a setup can be very productive — often yielding a **2–3× productivity multiplier**, which matches the practical improvements most engineers report with AI.
+The throughput limit with AI is similar to how many interns a good engineer can manage. In practice, that's usually **2–3 interns** at once. It takes time to discuss features, align on design, and review code before merging. But once expectations are clear, such a setup can be very productive — often yielding a **2–3× productivity multiplier**, which matches the practical improvements most engineers report with AI.
 
 #### Upsides of AI vs. Real Interns
 AI assistants have advantages over their human counterparts:
 
-- They don’t complain, take time off, switch jobs, or ask for a raise.
-- You don’t need to re-teach each “intern” what the last one already learned.
-- There’s no need to sync between them — no planning sessions or retros required.
+- They don't complain, take time off, switch jobs, or ask for a raise.
+- You don't need to re-teach each "intern" what the last one already learned.
+- There's no need to sync between them — no planning sessions or retros required.
 
 This means one engineer can often achieve as much as a three-person team. A three-person team can reach the output of six to nine engineers, and so on.
 
-> This also explains why it’s becoming **so hard to get a first job in software development.**
-That’s why **investing in learning AI-assisted coding is worth it**. And since AI continues to improve — often with significant new releases every month — the productivity multiplier will only grow.
+> This also explains why it's becoming **so hard to get a first job in software development.**
+That's why **investing in learning AI-assisted coding is worth it**. And since AI continues to improve — often with significant new releases every month — the productivity multiplier will only grow.
 
-Now let’s look at the basic techniques you need to master as a prerequisite for an AI-augmented workflow.
+Now let's look at the basic techniques you need to master as a prerequisite for an AI-augmented workflow.
 
 Great engineers — whether consciously or not — divide their work into **two phases: planning and implementation**.
 
@@ -118,14 +118,14 @@ Great engineers — whether consciously or not — divide their work int
 
 Experienced developers often move fluidly between the two. Strategic ideas may surface under the shower, while research happens casually over lunch talks with colleagues.
 
-With **LLMs and agent systems** (our “eager interns”), however, this boundary needs to become **more explicit**.
+With **LLMs and agent systems** (our "eager interns"), however, this boundary needs to become **more explicit**.
 
 #### Planning First
 A typical AI-augmented workflow begins with the planning phase, which usually means creating a document: plan, design doc, a Product Requirement Document (PRD) or whatever we call it.
 
 This document should define the **scope of the feature**, specify the **technologies** and **patterns** to use, outline **algorithms**, and describe the **testing approach**.
 
-This technique applies both to building new features and to bootstrapping new projects. That said, setting up an existing project for AI-assisted workflows differs from creating a new one from scratch. I’ll cover these nuances in the next sections — and in the following blog post, respectively.
+This technique applies both to building new features and to bootstrapping new projects. That said, setting up an existing project for AI-assisted workflows differs from creating a new one from scratch. I'll cover these nuances in the next sections — and in the following blog post, respectively.
 
 #### The Good News
 Agent systems are steadily improving at **planning**. They increasingly ask the right questions, suggest approaches, and even perform research on their own. This means that the heavy lifting of moving between planning and implementation will keep getting easier over time.
@@ -139,25 +139,25 @@ Writing documentation can feel daunting. If only there were an AI assistant to h
 Here are the essentials:
 
 1. **Start with a clear prompt: **Describe what you want built: scope/constraints/success criteria, related technical details. Also ask the LLM to analyze related existing code (if available) and to research best practices for the technologies or patterns involved.
-2. **Ask for clarifying questions first. ***In the same prompt*, tell the LLM to ask questions before answering (e.g., “Ask me clarifying questions first.”). Many agent systems do this, but being explicit works better — you know how eager interns can be…
+2. **Ask for clarifying questions first. ***In the same prompt*, tell the LLM to ask questions before answering (e.g., "Ask me clarifying questions first."). Many agent systems do this, but being explicit works better — you know how eager interns can be…
 3. **Require an implementation plan with TODOs. **If the draft lacks a step-by-step plan, ask for one explicitly.
-4. **Iterate on the draft**👉 In **ChatGPT:** type “Add to canvas,” then refine with follow-up prompts (works for code, too).👉 **Cursor / Claude:** save a .md file (e.g., plan.md) and keep asking the tool to update that file.Don’t expect perfection from the first prompt. Create a draft, then refine — and keep it concise, because you’ll need to review it carefully.
+4. **Iterate on the draft**👉 In **ChatGPT:** type "Add to canvas," then refine with follow-up prompts (works for code, too).👉 **Cursor / Claude:** save a .md file (e.g., plan.md) and keep asking the tool to update that file.Don't expect perfection from the first prompt. Create a draft, then refine — and keep it concise, because you'll need to review it carefully.
 5. **Edit via whichever path is fastest. **Ask the LLM to modify the doc or edit it yourself. Speed > purity.
-6. **Always review end-to-end. **Make sure the final doc says exactly what you intend to build. I can’t stress the importance of this enough.
+6. **Always review end-to-end. **Make sure the final doc says exactly what you intend to build. I can't stress the importance of this enough.
 
-> **Watch-out:*** Even a simple request like “Create a PRD for project X…” can produce a long document with a mix of gold and noise. That’s why the next fundamental technique is ***working in small chunks***.*
+> **Watch-out:*** Even a simple request like "Create a PRD for project X…" can produce a long document with a mix of gold and noise. That's why the next fundamental technique is ***working in small chunks***.*
 LLMs can **hallucinate** and are **eager to generate** lots of documentation and code. Your job is to **gatekeep quality** and drive a tight iterate-review loop.
 
-For a new project, it’s normal to spend a few hours researching the **tech stack**, **design options**, and **best practices** — and to keep iterating on the document.
+For a new project, it's normal to spend a few hours researching the **tech stack**, **design options**, and **best practices** — and to keep iterating on the document.
 
-After each substantial addition, **commit** so it’s easy to go back and review the **diff** of recent changes. It’s normal to make **a few to several commits per hour**; keep them **small and descriptive**.
+After each substantial addition, **commit** so it's easy to go back and review the **diff** of recent changes. It's normal to make **a few to several commits per hour**; keep them **small and descriptive**.
 
 The diff is the primary lens for collaborating with LLMs. Review each change before accepting it.
 
 #### Implementation
 When moving to the implementation phase, working in small chunks becomes even more important.
 
-When starting out with AI-assisted coding, a best practice is to instruct the assistant to handle one TODO item at a time, and only proceed to the next step after you’ve approved the current one.
+When starting out with AI-assisted coding, a best practice is to instruct the assistant to handle one TODO item at a time, and only proceed to the next step after you've approved the current one.
 
 When reviewing a chunk of work:
 
@@ -166,32 +166,32 @@ When reviewing a chunk of work:
 3. Verify test coverage — ensure the code is covered by automated tests and that all tests pass.
 4. Commit the chunk — only after everything checks out.
 
-I’ll dive deeper into **automating linting and testing** in later.
+I'll dive deeper into **automating linting and testing** in later.
 
-You won’t get predictable results from agent systems if the project isn’t properly set up. Most modern tools rely on **special configuration files**, written in a language you might recognize… plain English. **Claude** uses *claude.md, ***Cursor** uses *.cursorrules. *Other tools have their own equivalents
+You won't get predictable results from agent systems if the project isn't properly set up. Most modern tools rely on **special configuration files**, written in a language you might recognize… plain English. **Claude** uses *claude.md, ***Cursor** uses *.cursorrules. *Other tools have their own equivalents
 
 #### What to Include
 These files should describe:
 👉 the purpose of the project and its main functionalities,
 👉 its structure, tech stack (lib versions!), and architecture/design decisions and used patterns/idioms
-👉 the expected workflow (e.g., “*run tests and linter after each major change*”),
-👉 and high-level expectations (e.g., “*ask clarifying questions*,” “*work in small batches*,” “*prepare and follow TODO lists*”).
+👉 the expected workflow (e.g., "*run tests and linter after each major change*"),
+👉 and high-level expectations (e.g., "*ask clarifying questions*," "*work in small batches*," "*prepare and follow TODO lists*").
 
 > That might sound boring… but if only there were a tool for writing such files. Oh wait — there is! 🙂 Just ask your AI to generate the first version, then iterate on it as described in the previous section about docs.
 For inspiration, you can also check out [this repository](https://github.com/PatrickJS/awesome-cursorrules) .
 
 These files prevent frustration when the AI:
- 😵 generates code that doesn’t fit your design or style,
+ 😵 generates code that doesn't fit your design or style,
  😵 breaks tests, or
  😵 flickers between different libraries or conventions.
 
 With a proper setup, the AI can build features, run tests and linting, and fix issues on its own — while reducing hallucinations and inconsistencies.
 
-> Even with guardrails, the AI won’t follow rules perfectly. Think of it like an intern: enthusiastic but forgetful. Rules will be followed **most of the time**, but expect occasional lapses — especially as conversations get long and context runs out.
+> Even with guardrails, the AI won't follow rules perfectly. Think of it like an intern: enthusiastic but forgetful. Rules will be followed **most of the time**, but expect occasional lapses — especially as conversations get long and context runs out.
 #### Working with Monorepos
 For monorepos, use **multiple configuration files**:
 
-- **Top-level file:** describes the repo’s structure, high-level roles of each project, how they connect, plus build, CI, and release setup.
+- **Top-level file:** describes the repo's structure, high-level roles of each project, how they connect, plus build, CI, and release setup.
 - **Per-project file:** describes the tech stack and detailed functionality of each project.
 
 As you combine the techniques described above, the **workflow starts to reveal itself**. Once the project is properly set up, you can begin efficient work on new features.
@@ -203,7 +203,7 @@ Each feature follows the same rhythm:
 3. **Review & checks** → carefully inspect the diff, run tests and linters.
 4. **Commit** → only after everything passes.
 
-I’ll continue with a handful of more advanced techniques in the next post: *Part 3: Advanced Techniques*. Stay tuned.
+I'll continue with a handful of more advanced techniques in the next post: *Part 3: Advanced Techniques*. Stay tuned.
 
 *Thank you for reading!*
 

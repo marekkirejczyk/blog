@@ -15,9 +15,11 @@ useDApp brings idiomatic React hooks paradigm to writing DApps to provide amazin
 
 Automated testing is easy with two exceptions: UI and integration tests (e.g code interacting with blockchain). With useDApp, a basic building block of the app is a hook that is used for interaction with blockchain. Which is partially a UI code and partially integration code. Good support for testing hooks is therefore essential.
 
-Let’s examine a basic example — a `useTokenApproval` hook — that returns (you guessed it) — token approval for given *owner* and *spender* addresses.
+Let's examine a basic example — a `useTokenApproval` hook — that returns (you guessed it) — token approval for given *owner* and *spender* addresses.
 
-<pre>**function** useTokenAllowance(
+
+```
+**function** useTokenAllowance(
  tokenAddress: string | Falsy,
  ownerAddress: string | Falsy,
  spenderAddress: string | Falsy
@@ -34,7 +36,9 @@ Let’s examine a basic example — a `useTokenApproval` hook — that r
  }
  ) ?? []
  **return** allowance
-}</pre>As you can see, it is a straightforward wrapper for `useChainCall` hook. A quick reminder what`useChainCall` does:
+}
+```
+As you can see, it is a straightforward wrapper for `useChainCall` hook. A quick reminder what`useChainCall` does:
 
 - aggregates many calls into one call,
 - makes sure the component refreshes when return value changes (i.e. on new block, when the wallet or network changes).
@@ -51,24 +55,48 @@ with the following fields:
 
 **Note 2: **As `useChainCall` can return null, make sure the custom hook will return a meaningful result, hence the following construction at the end:`?? []`
 
-Let’s write a test for the hook. We start with a setup code that will create a *mock provider* and *test wallets*. If you know [Waffle](https://getwaffle.io/) , the code might look familiar.
+Let's write a test for the hook. We start with a setup code that will create a *mock provider* and *test wallets*. If you know [Waffle](https://getwaffle.io/) , the code might look familiar.
 
-<pre>**const** mockProvider = **new** MockProvider()
-**const** [deployer, spender] = mockProvider.getWallets()</pre>And before each test deploy an ERC20 contract.
 
-<pre>**let** token: Contract</pre><pre>beforeEach(**async** () => {
+```
+**const** mockProvider = **new** MockProvider()
+**const** [deployer, spender] = mockProvider.getWallets()
+```
+And before each test deploy an ERC20 contract.
+
+
+```
+**let** token: Contract
+```
+
+```
+beforeEach(**async** () => {
  **const** args = ['MOCKToken', 'MOCK', deployer.address, utils.parseEther("10")]
  token = **await** deployContract(deployer, ERC20Mock, args)
-})</pre>And now we can test the hook.
+})
+```
+And now we can test the hook.
 
-<pre>**await** token.approve(spender.address, utils.parseEther('1'))</pre><pre>**const** { result, waitForCurrent } = **await** renderWeb3Hook(
+
+```
+**await** token.approve(spender.address, utils.parseEther('1'))
+```
+
+```
+**const** { result, waitForCurrent } = **await** renderWeb3Hook(
  () => useTokenAllowance(token.address, deployer.address, spender.address),
  {
  mockProvider,
  }
 )
-**await** waitForCurrent((val) => val !== undefined)</pre><pre>expect(result.error).to.be.undefined
-expect(result.current).to.eq(utils.parseEther('1'))</pre>First, let’s approve the spender for 1 ETH so that we can check if our hook returns the correct value.
+**await** waitForCurrent((val) => val !== undefined)
+```
+
+```
+expect(result.error).to.be.undefined
+expect(result.current).to.eq(utils.parseEther('1'))
+```
+First, let's approve the spender for 1 ETH so that we can check if our hook returns the correct value.
 
 We will render the hook using the helper `renderWeb3Hook` function. It works like renderHook from the [react-testing-library](https://testing-library.com/docs/react-testing-library/intro/) , but it wraps the hook into a special `DAppProvider`. To pass blockchain environment, we need to provide our previously created mockProvider to the hook as an argument.
 

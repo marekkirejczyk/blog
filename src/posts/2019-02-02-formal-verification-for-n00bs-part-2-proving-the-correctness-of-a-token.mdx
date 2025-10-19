@@ -31,19 +31,19 @@ The syntax is as follows:
 
 where:
 
-- <name> — stands for our name for our described semantics, for informative purposes only. It does not need to be the same as the name of the function, as in our case;
-- <contract> — identifies the name of considerate contract;
-- <function> — identifies the name and the interface of considerate function.
+- `<name>` — stands for our name for our described semantics, for informative purposes only. It does not need to be the same as the name of the function, as in our case;
+- `<contract>` — identifies the name of considerate contract;
+- `<function>` — identifies the name and the interface of considerate function.
 
-</function></contract></name>So, in our case, we declare that we are starting the description of intended behavior of a function **transfer** from the contract **Token**.
+`</function>``</contract>``</name>`So, in our case, we declare that we are starting the description of intended behavior of a function **transfer** from the contract **Token**.
 
 Types are our internal variables used only for the purpose of our specification. We use EVM types here. In our case, we declared *FromBal* and *ToBal*, both uint256 integers.
 
 We will now focus on assumptions that are at the bottom of the spec, specifically under headers **iff** and **if**. The meaning of this section is slightly unintuitive:
 
-**iff** <*condition*> — states intention that *condition* is either true or execution will revert;
+**iff** `<condition>` — states intention that *condition* is either true or execution will revert;
 
-**if** <*condition*> — states intention that we care only about the case when the *condition* is true.
+**if** `<condition>` — states intention that we care only about the case when the *condition* is true.
 
 Note that in our example we have a somewhat complex condition for **iff.**
 
@@ -61,20 +61,19 @@ Here, this is *almost* true. A small hook is in the fact, that the assumptions p
 denotes that:
 
 > if — at the beginning — both A and B hold, then the execution finishes with success and afterwards all **Statements** holds;
-> if — at the beginning — B holds and A doesn’t hold, then the execution finishes with a REVERT;
+> if — at the beginning — B holds and A doesn't hold, then the execution finishes with a REVERT;
 > the case when B does not hold is not covered by the considerated semantics.
-In our case, statements section is described only by two clauses, both under **storage** header. In general, other headers are possible (**stack**, **pc -**program counter), but let’s focus precisely on what we have:
+In our case, statements section is described only by two clauses, both under **storage** header. In general, other headers are possible (**stack**, **pc -**program counter), but let's focus precisely on what we have:
 
-A line <**X> |-> => **can be stated informally as:
+A line `<X> |-> <Z> => <W>` can be stated informally as:
 
-If we denote the value of the memory (before the execution) at address <**X>** with <**Y>**, then it is equal to <**Z>** after the execution.
+If we denote the value of the memory (before the execution) at address `<X>` with `<Y>`, then it is equal to `<Z>` after the execution.
 
-> Unobvious aspect of the above notation is hidden in the declaration of <x>. The issue comes from the fact that our semantics are verified not with the source code but with the corresponding bytecode of the contract. It means that we cannot refer directly to variables (**balanceOf**, **totalSupply**) but we need to provide the storage address(or key in ethereum storage Merkle Patricia trie if you will) that keeps the data (here we refer to low-level implementation of EVM). This is somewhat complicated (especially for maps) and the details can be found [[here]](https://github.com/dapphub/klab/blob/master/acts.md#storage) . For our purposes it is sufficient to know that element of index **i** in a map **balanceOf** in our contract is kept in the Merkle tree at position **hash(0 + i)** which is denoted as **#hashedLocation(“Solidity”, 0, i)** in language K (that is underneath ACT). **0 **comes from **balanceOf** being the very first variable declaration in the contract**. **At this point you might be a bit lost since in the spec file you can see for example **#Token.balances[To]** that seems to refer directly to the variable **balanceOf**. This is however only an illusion since in the file [klab/examples/token/src/storage.md](https://github.com/dapphub/klab/blob/master/examples/token/src/storage.md) 
-</x>> you see a macro that translates this expression into to actual address. This is written in K language. We will dig into K in future posts.
+> Unobvious aspect of the above notation is hidden in the declaration of `<x>`. The issue comes from the fact that our semantics are verified not with the source code but with the corresponding bytecode of the contract. It means that we cannot refer directly to variables (**balanceOf**, **totalSupply**) but we need to provide the storage address(or key in ethereum storage Merkle Patricia trie if you will) that keeps the data (here we refer to low-level implementation of EVM). This is somewhat complicated (especially for maps) and the details can be found [[here]](https://github.com/dapphub/klab/blob/master/acts.md#storage) . For our purposes it is sufficient to know that element of index **i** in a map **balanceOf** in our contract is kept in the Merkle tree at position **hash(0 + i)** which is denoted as **#hashedLocation("Solidity", 0, i)** in language K (that is underneath ACT). **0 **comes from **balanceOf** being the very first variable declaration in the contract**. **At this point you might be a bit lost since in the spec file you can see for example **#Token.balances[To]** that seems to refer directly to the variable **balanceOf**. This is however only an illusion since in the file [klab/examples/token/src/storage.md](https://github.com/dapphub/klab/blob/master/examples/token/src/storage.md) you see a macro that translates this expression into to actual address. This is written in K language. We will dig into K in future posts.
 Finally, the** intended semantics described in the spec file** might be in informally expressed as follows:
 
 > The behaviour of **transfer(address To, uint Value)** when the address of the caller is equal to **To** is undefined. So we assume that **CALLER_ID** is always different from **To**. Then, if either **(balanceOf[To] + Value)** or **(balanceOf[CALLER_ID]-Value)** falls out of range of uint256, the function finishes wit **REVERT**. Finally, if both above expressions are in range of uint256, then the value of **balanceOf[CALLER_ID]** decreases by **Value**, and **balances[To]** increases by **Value**.
-Let’s check (automatically!) if the above semantics is corresponding to the actual code. We need to:
+Let's check (automatically!) if the above semantics is corresponding to the actual code. We need to:
 
 1. Compile the source file into the bytecode. The result is already here: [klab/examples/token/dapp/out/token.sol.json]
 If you wish to repeat this step by yourself, remember to compile with the flags:

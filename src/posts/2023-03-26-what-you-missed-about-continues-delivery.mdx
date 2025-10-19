@@ -8,16 +8,16 @@ heroImage: "/images/posts/1*xU-ktnRiwc-RvW1SnnpNFg.png"
 
 The focus of this blog post is on the crucial element of modern software delivery — continuous delivery (CD). In my experience, the larger perspective of CD can be easily overlooked amidst scrum ceremonies and docker containers. This is particularly prevalent among smaller enterprises and startups.
 
-Let’s explore essential practices for continuous delivery (CD) on different platforms.
+Let's explore essential practices for continuous delivery (CD) on different platforms.
 
-- We’ll begin with web and cloud, which may not offer groundbreaking insights for CD practitioners, but it serves as an excellent warm-up before delving into more intricate platforms.
-- Then, we’ll tackle mobile and desktop environments, including iOS, Android, and native desktop apps, which pose significant challenges for implementing CD.
-- Next, we’ll examine some extraordinary applications of CD practices in Elon Musk’s companies, such as Tesla and SpaceX, for a more inspiring and aspirational perspective.
-- Finally, stay tuned for an upcoming blog post, in which I’ll discuss my experience with continuous delivery in the blockchain space.
+- We'll begin with web and cloud, which may not offer groundbreaking insights for CD practitioners, but it serves as an excellent warm-up before delving into more intricate platforms.
+- Then, we'll tackle mobile and desktop environments, including iOS, Android, and native desktop apps, which pose significant challenges for implementing CD.
+- Next, we'll examine some extraordinary applications of CD practices in Elon Musk's companies, such as Tesla and SpaceX, for a more inspiring and aspirational perspective.
+- Finally, stay tuned for an upcoming blog post, in which I'll discuss my experience with continuous delivery in the blockchain space.
 
 Continuous delivery (CD) is most easily applied to web and cloud-based systems. The process typically begins with implementing continuous integration (CI), which involves building a new version of the system with each pull request using a CI server. This includes building the whole project with an entourage of various tests, linters, and checks to ensure the system is functioning correctly.
 
-There are a few practices that accompany this:* trunk development*, *automated testing*,* testing environments *and* automatic deployment*. Let’s examine them one by one.
+There are a few practices that accompany this:* trunk development*, *automated testing*,* testing environments *and* automatic deployment*. Let's examine them one by one.
 
 #### Trunk development
 In trunk development, teams merge all pull requests (PRs) directly into the main branch on a daily basis, instead of long-lived branches that exist for days, weeks, or even months.
@@ -48,7 +48,7 @@ if you prefer), a frontend and backend can be deployed after each commit for eve
 offers a self-hosted solution or a skilled devops engineer can also set up the necessary infrastructure fairly quickly.
 
 #### Automatic Deployment: Push on green
-When you have confidence in your automatic tests and the comfort of a branch preview, you can consider using automatic deployment strategies such as “push on green”. With “push on green,” each commit to the main branch that passes automatic checks will automatically be deployed to production. It can be beneficial to establish a cadence and schedule deployments to occur at regular intervals, such as once an hour, day, or other specified time period.
+When you have confidence in your automatic tests and the comfort of a branch preview, you can consider using automatic deployment strategies such as "push on green". With "push on green," each commit to the main branch that passes automatic checks will automatically be deployed to production. It can be beneficial to establish a cadence and schedule deployments to occur at regular intervals, such as once an hour, day, or other specified time period.
 
 This ensures that there is only one version of the software in production, and any changes made will be reflected in production swiftly.
 
@@ -74,9 +74,9 @@ Frequent deployments create a fast feedback loop, which, when used effectively, 
 
 - Firstly, it can make your **users happier** by providing them with frequent updates, bug fixes, and faster turnaround times.
 - Secondly, it can make the job of the **product team** easier by providing live feedback from the working software, both on the branch preview and from users on production. A wider group of stakeholders can easily track progress.
-- Lastly, frequent deployments can have a positive impact on the **team’s performance and morale**. As a wise friend of mine always says, “There is nothing better for an engineer’s morale than shipping.”
+- Lastly, frequent deployments can have a positive impact on the **team's performance and morale**. As a wise friend of mine always says, "There is nothing better for an engineer's morale than shipping."
 
-Now, it is all relatively simple and easy on the web. Let’s see what we can do on other platforms.
+Now, it is all relatively simple and easy on the web. Let's see what we can do on other platforms.
 
 ![](/images/posts/1*Wlhlxpyc_IT1eWVHRi6fxw.png)
 
@@ -129,7 +129,7 @@ Here is an insight from a code push practitioner. There are two options availabl
 
 The IMMEDIATE strategy updates the app as soon as the JS bundle is downloaded. While this ensures that users always have the latest version, it may interrupt any process that the user is currently engaged in, which can be leveraged in case of emergency updates.
 
-The ON_APP_RESUME strategy is more cautious, downloading the JS bundle in the background and waiting for the app to go to the background or be restarted before updating. However, this approach can still be ineffective for changes that pertain to early stages of the user flow, such as onboarding, since users are unlikely to restart the app and begin the process anew. Therefore it is recommended to refrain from utilizing code push to implement modifications that pertain to crucial flows’ initial stages, such as onboarding.
+The ON_APP_RESUME strategy is more cautious, downloading the JS bundle in the background and waiting for the app to go to the background or be restarted before updating. However, this approach can still be ineffective for changes that pertain to early stages of the user flow, such as onboarding, since users are unlikely to restart the app and begin the process anew. Therefore it is recommended to refrain from utilizing code push to implement modifications that pertain to crucial flows' initial stages, such as onboarding.
 
 #### Desktops and TVs
 Note that the techniques and technologies discussed in this context are not limited to mobile devices but can be applied to other platforms as well. For example, the Chrome team pioneered these techniques for desktop platforms, and today, all modern browsers seamlessly download and update to the latest version every few days. Similarly, applications on TV sets may also follow a similar approach, though these days, they are primarily web applications.
@@ -138,19 +138,19 @@ Note that the techniques and technologies discussed in this context are not limi
 When dealing with high complexity and a large number of devices at stake, it may be wise to adopt a less aggressive deployment cycle. Rather than updating after every single commit, the new version could be rolled out on a weekly basis. During this time, the current version can remain on the devices of early adopters.
 
 #### That is a lot of work!
-It seems like a complex setup and… It kind of is. However, it is a fundamental investment into team productivity and it will pay off. Like most infrastructural investments, it should not be done all at once, but step by step. It is worth considering spending 10% — 20% of team time and resources to continuously improve the process over time, starting where the benefits for the team productivity and business are the biggest and keep addressing the biggest pains, moving forward. Thankfully you don’t have to do all the heavy lifting yourself. If you want to get serious about CD on mobile, you might want to take a look at services like [bitrise.io]
+It seems like a complex setup and… It kind of is. However, it is a fundamental investment into team productivity and it will pay off. Like most infrastructural investments, it should not be done all at once, but step by step. It is worth considering spending 10% — 20% of team time and resources to continuously improve the process over time, starting where the benefits for the team productivity and business are the biggest and keep addressing the biggest pains, moving forward. Thankfully you don't have to do all the heavy lifting yourself. If you want to get serious about CD on mobile, you might want to take a look at services like [bitrise.io]
 or [appcenter.ms](https://appcenter.ms/) .
 
-Now if you think Mobile is challenging, let’s move to yet another platform — cars and space rockets!
+Now if you think Mobile is challenging, let's move to yet another platform — cars and space rockets!
 
-One could say — continuous delivery is fine toy for web and mobile, but not for real, serious applications managing hardware worth billions of dollars and where people’s lives are at stake. To counter that belief, let’s review some known facts about Tesla and SpaceX, known to develop life-critical software. We can recognize the same continuous delivery principles, which are not very different from what we’ve discussed so far, but pushed further than anywhere else I am aware of.
+One could say — continuous delivery is fine toy for web and mobile, but not for real, serious applications managing hardware worth billions of dollars and where people's lives are at stake. To counter that belief, let's review some known facts about Tesla and SpaceX, known to develop life-critical software. We can recognize the same continuous delivery principles, which are not very different from what we've discussed so far, but pushed further than anywhere else I am aware of.
 
-Advanced automatic testing, over the air updates and incremental rollout are a hallmark of Elon’s companies software practices. Let’s start with cars.
+Advanced automatic testing, over the air updates and incremental rollout are a hallmark of Elon's companies software practices. Let's start with cars.
 
 #### Tesla
-Tesla cars are famous for their over-the-air software upgrades, which includes new functionalities, user interface improvements and auto-pilot updates. We know a lot about the autopilot, in particular from investors’ day Tesla holds.
+Tesla cars are famous for their over-the-air software upgrades, which includes new functionalities, user interface improvements and auto-pilot updates. We know a lot about the autopilot, in particular from investors' day Tesla holds.
 
-We know, for example, that any new version of the autopilot (i.e., the neural network that drives a car) needs to go through an automatic test suite that emulates real-life situations. With a real HD stream of data coming from all the cameras and all other sensors. Each test emulates a few seconds of a drive. Tests include virtual environment and real life scenarios extracted from real situations downloaded from cars on the roads that were problematic in the past. This way, the autopilot avoids regressions. The test suite is ever growing and running after each “merge”, so I suspect requires significant investments.
+We know, for example, that any new version of the autopilot (i.e., the neural network that drives a car) needs to go through an automatic test suite that emulates real-life situations. With a real HD stream of data coming from all the cameras and all other sensors. Each test emulates a few seconds of a drive. Tests include virtual environment and real life scenarios extracted from real situations downloaded from cars on the roads that were problematic in the past. This way, the autopilot avoids regressions. The test suite is ever growing and running after each "merge", so I suspect requires significant investments.
 
 We also know that Tesla builds their own hardware for both car and data centers to speed up the network learning and in turn accelerate the deployment cycle. They are both billion-dollars projects.
 
@@ -170,13 +170,13 @@ Another fact worth noting is that Tesla employs telemetry to determine the usage
 
 To effectively build software for rockets, spaceships and satellites, SpaceX first and foremost built advanced physics simulators, which allow it to test behavior of hardware during simulated maneuvers.
 
-In particular, Falcon rockets are known to have a “testbed” that consist of hardware mock of engines, griffins and *all other *rocket devices and sensors. The whole flight is simulated before the over-the-air-update to the rocket is performed. SpaceX is known to do software upgrades up to the last hours before the flight.
+In particular, Falcon rockets are known to have a "testbed" that consist of hardware mock of engines, griffins and *all other *rocket devices and sensors. The whole flight is simulated before the over-the-air-update to the rocket is performed. SpaceX is known to do software upgrades up to the last hours before the flight.
 
 Starlink satellites is my favorite example of *incremental roll-out *usage*. *Each new version is first deployed to a single satellite, to ensure proper functioning, and only later deployed to the entire fleet.
 
 Seeing how serious these companies are about speed of software delivery makes me inspired and think we could do better as an industry.
 
-The foundation of modern continuous delivery revolves around familiar principles such as deploying early and frequently, along with a substantial focus on testing and failsafe measures to ensure secure and confident deployment. However, putting these principles into practice can be challenging. Hopefully, this information inspires those who desire to enhance their team’s processes.
+The foundation of modern continuous delivery revolves around familiar principles such as deploying early and frequently, along with a substantial focus on testing and failsafe measures to ensure secure and confident deployment. However, putting these principles into practice can be challenging. Hopefully, this information inspires those who desire to enhance their team's processes.
 
 Keep an eye out for our upcoming blog post on continuous delivery in blockchain.
 
