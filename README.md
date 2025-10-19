@@ -4,7 +4,7 @@ A Medium-style blog built with Astro and MDX, featuring blog posts about blockch
 
 ## Features
 
-- 📝 **57 Blog Posts** - All posts from MDX files with frontmatter support
+- 📝 **52 Blog Posts** - All posts from MDX files with frontmatter support
 - 📄 **Pagination** - 20 posts per page with easy navigation
 - 📱 **Responsive Design** - Mobile-first design following Medium's aesthetic
 - 🔗 **Social Sharing** - Share to X (Twitter), Facebook, LinkedIn, or copy link
@@ -34,7 +34,7 @@ A Medium-style blog built with Astro and MDX, featuring blog posts about blockch
 │   │   ├── index.astro   # Home page
 │   │   ├── page/         # Pagination routes
 │   │   └── posts/        # Blog post routes
-│   ├── posts/            # MDX blog posts (69 files)
+│   ├── posts/            # MDX blog posts
 │   └── utils/            # Utility functions
 │       └── posts.ts      # Post parsing, sorting, pagination
 └── astro.config.mjs      # Astro configuration

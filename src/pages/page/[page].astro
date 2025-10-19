@@ -29,6 +29,7 @@ const { posts, currentPage, totalPages, hasNextPage, hasPrevPage } = paginatePos
           date={post.frontmatter.date}
           heroImage={post.frontmatter.heroImage}
           url={post.url}
+          excerpt={post.excerpt}
         />
       ))}
     </div>

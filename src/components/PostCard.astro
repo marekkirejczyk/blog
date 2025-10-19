@@ -1,28 +1,30 @@
 ---
 import { formatDate } from '../utils/posts';
+import ShareButton from './ShareButton.astro';
 
 export interface Props {
   title: string;
   date: string;
   heroImage: string;
   url: string;
+  excerpt: string;
 }
 
-const { title, date, heroImage, url } = Astro.props;
+const { title, date, heroImage, url, excerpt } = Astro.props;
 const formattedDate = formatDate(date);
-const displayImage = heroImage === 'Unknown image' ? '/images/placeholder.png' : heroImage;
+const displayImage = heroImage === 'Unknown image' ? '/images/placeholder.svg' : heroImage;
 ---
 
 <article class="post-card">
   <a href={url} class="post-link">
-
     <div class="post-image">
       <img src={displayImage} alt={title} />
     </div>
-
     
     <div class="post-content">
       <h2 class="post-title">{title}</h2>
+      
+      <p class="post-excerpt">{excerpt}</p>
       
       <div class="post-meta">
         <div class="author">
@@ -41,6 +43,10 @@ const displayImage = heroImage === 'Unknown image' ? '/images/placeholder.png' :
       </div>
     </div>
   </a>
+  
+  <div class="post-actions" onclick="event.stopPropagation();">
+    <ShareButton title={title} url={url} />
+  </div>
 </article>
 
 <style>
@@ -81,7 +87,7 @@ const displayImage = heroImage === 'Unknown image' ? '/images/placeholder.png' :
     font-size: 28px;
     font-weight: 700;
     line-height: 1.3;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     color: #000000;
   }
 
@@ -89,10 +95,23 @@ const displayImage = heroImage === 'Unknown image' ? '/images/placeholder.png' :
     color: #0066cc;
   }
 
+  .post-excerpt {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #666666;
+    margin-bottom: 16px;
+  }
+
   .post-meta {
     display: flex;
     align-items: center;
     gap: 16px;
+  }
+
+  .post-actions {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #f5f5f5;
   }
 
   .author {
@@ -137,6 +156,10 @@ const displayImage = heroImage === 'Unknown image' ? '/images/placeholder.png' :
 
     .post-title {
       font-size: 22px;
+    }
+
+    .post-excerpt {
+      font-size: 15px;
     }
 
     .author-avatar {
