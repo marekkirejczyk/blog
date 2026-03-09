@@ -1,0 +1,155 @@
+---
+title: "Preventing billion-dollar hacks"
+date: "2022-03-31"
+description: "This is the first in a series of blog posts about the process for rapid dapp development on blockchain:
+Part 1: Security — Preventing…"
+heroImage: "https://cdn-images-1.medium.com/max/800/1*3US2VvpS0PrTmJso7z6vhg.jpeg"
+---
+
+This is the first in a **series** of blog posts about the process for rapid dapp development on blockchain:**
+Part 1**: Security — Preventing billion-dollar hacks**
+Part 2**: Releasing — Continuous delivery on the blockchain (coming soon)**
+Part 3**: Team scaling — Agile blockchain development at scale (coming soon)
+
+### A billion-dollar question
+
+Major hacks happen in blockchain all the time. And yet, every time the news reaches us, it sparks fiery debates in our community over again.  
+This leaves blockchain engineering teams with one important question:
+
+> How to prevent a multimillion-dollar hack in the first place?
+
+#### Fundamental questions
+
+Faced with this exact question, we designed a process to reduce the probability of a hack to the lowest possible. We were heavily inspired by other top teams in the industry, but also added some significant improvements.
+
+We started by asking a few fundamental questions, like:
+
+-   How to reduce the risk to fractional?
+-   What are the essential tools we can use to build a security process?
+-   How can we combine them to achieve the best outcome?
+-   How to measure our performance?
+
+We will answer them in this post. Let’s start with the tools and later we’ll look into the process.
+
+### Tools
+
+What are the essential tools for security, aside from hiring top engineers and exhaustive testing? We all know about bug bounties and external audits. Most are aware of formal verification and phasing as well.
+
+![](https://cdn-images-1.medium.com/max/800/1*67uAkbUmGDiXTOfsGR028w.jpeg)
+
+Is there anything else?
+
+There is. Here are some less mentioned practices: _defect injection_, which can be used in combination with _benchmarking_ and _capture-recapture_, _incremental roll-out_ and splitting security responsibilities between the _red team_ and the _blue team_.
+
+#### **🧮 Formal verification**
+
+For those who are not familiar, here is a perhaps oversimplified explanation. Formal verification is a process of writing a formal specification/formal specifications which can be then automatically verified.
+
+Unlike tests, formal specifications allow us to make general statements.   
+With **tests** you can say:
+
+> If I **transfer** **5 tokens** to another person, then the beneficiary will **get 5 tokens**.
+
+With a **formal specification** you can say:
+
+> If I transfer **any non-negative amount of tokens** to another person, then the beneficiary’s account **balance will increase by the exact same amount**.
+
+And it will take care of all edge cases like underflows, overflows, sending to yourself, etc
+
+The tools got better over time and now, with [Certora](https://www.certora.com/), we can run a verification after each commit. Before this, verification of somewhat complex code used to take hours or days.
+
+#### 🐞 **Defects injecting**
+
+A great, often overlooked technique to measure the quality of your security process is to inject defects and see how many of them will pass through the security process.
+
+A great **source of defects is the code review** process — instead of fixing bugs, we often commit them to a repository. The decision on whether to fix a bug or pass it through is done on a per case basis.
+
+To make sure all defects get fixed, we make sure they all land in a **hidden registry**. The registry is kept secret from auditors and the _red team_.   
+It does requires a bit of discipline to ensure it is always up-to-date.
+
+Each defect is described and the **description is hashed**. We publish hashes, so that once the defect is found, it can be clearly stated if it was injected or not.
+
+#### **🏆 Benchmarking**
+
+Once the audit phase is done, it is easy to compare methods against each other and figure out which methods have a potential to improve, simply by looking at how many defects were found by each method.
+
+For example:
+
+> Imagine a situation where no (significant) bugs are found.   
+> Did the team avoid making any bugs?   
+> Or did the auditors do a poor job?   
+> With injected bugs it is pretty easy to assess.
+
+#### **🕸 Capture — recapture**
+
+Capture recapture is a simple statistical method that allows to estimate the amount of defects that remained undetected.
+
+> In principle, if all methods found the same defect, the chances are that the majority were captured. If, on the other hand, all of them found different defects, there is a high probability there are some left unfound.
+
+In practice it requires a bit of statistic. The method comes from ecology where it is used to estimate an animal population’s size. Take results with a grain of salt, however high estimation on undetected bugs should be clear indicator to do additional audits.
+
+#### **🎢 Incremental roll-out**
+
+Finally, rollout to production plays a crucial role in security. We avoid upgrading smart contracts as much as possible. Instead, we deploy new versions of smart contracts (i.e. new pools and portfolios) and allow money to pour slowly into them while the bug bounty is already running.
+
+An incremental roll-out also means an **incremental phase-out**. To avoid maintaining a big number of pools and huge codebase, we want to make sure that old pools are phased out and slowly taken over by new pools.
+
+#### **👮‍♂️ Red team**
+
+Internally, we created a security team inspired by the “_red team_ — _blue team_” practice. The red team’s job is to find defects in the smart contract code. Their main tool for the job is formal verification. As they try to write automatic proofs of correctness of the code, this often leads to finding subtle bugs that would be difficult to find with naked eye.
+
+Red team is involved in the design phase as well. Therefore the boundary of the _red team_ is a little blurry here.
+
+#### 📖 **Transparency**
+
+Below is an image with a diagram showing the results of different methods on our first full iteration of this process at TrueFi. We will also publish detailed post soon, with much more down-to-earth perspective than this one. For transparency, we will keep publishing blog posts after each iteration.
+
+![](https://cdn-images-1.medium.com/max/800/1*QlwbHYjmsM-Q9o6NbdpCRQ.jpeg)
+
+### The process
+
+Now we can explore how all the different techniques combine into our process. First, take a look at the illustration below to get the general idea and follow with description for each phase.
+
+![](https://cdn-images-1.medium.com/max/800/1*-trf_U9uKjI-lwK06WjvKA.jpeg)
+
+#### 👨‍💻 Phase 1: Development
+
+We start with development of smart contracts and if we encounter defects in the process, we keep them in the code, but add them into a **secret registry**. Also formal verification team gets a head start writing formal specification.
+
+#### 🔎 Phase 2: Audit
+
+In this phase:
+
+1.  We **publish the source code** in a separate repository, but don’t reveal tests or specifications, as it might hint at injected defects.
+2.  The security team is working full speed ahead on **formal specifications**
+3.  **Two external audits** are being performed
+4.  We set up a **“small” bug bounty** on Gitcoin and we pay for every found bug. If the bug was injected, the payout is small, but if it wasn’t, then the payout is significant.
+
+#### 🏭 Phase 3: Review
+
+In this phase we review results:
+
+1.  **Benchmark** four methods (two audits, formal verification, bug bounty)
+2.  Perform **capture-recapture** calculations
+3.  Based on above, we **generate improvements** in our process and in collaboration with external parties.
+4.  **We fix the bugs** from secret repository and wait for a re-audit results.
+5.  We **publish** **tests and specifications** in a public repository
+
+And if we are confident, we can proceed to the next step.
+
+#### 🏭 Phase 4: Production
+
+Finally, we deploy contracts to production and the money slowly starts getting into contracts. We publish a [**“big”** **bug bounty**](https://immunefi.com/bounty/truefi/) on Immunify, with a $100k reward for a critical bug, which we plan to increase over time to $1mln per critical bug.
+
+### 📅 Scheduling
+
+The process requires certain discipline, not only to keep the defect registry secret and always up-to-date, but also in regard to scheduling.   
+We are currently releasing smart contracts every two months. The code includes 2–3 sub products (i.e new pools, governance update, etc).
+
+Ideally, both audits start and finish at the same or at least at a similar time. Which is challenging as they need to be scheduled months in advance and usually auditors want to start with a precision of a single day.
+
+Hence a lot of effort goes into planning and getting things done within a given time window and sticking to it.
+
+### Summary
+
+The process which I described gives us high level confidence in the code and helps us sleep at night. However, security is an ongoing challenge and we strive for perfection by improving both the process and our skills. We will keep you updated.

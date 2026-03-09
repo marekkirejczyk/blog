@@ -1,0 +1,177 @@
+---
+title: "Formal Verification for n00bs -Part 4: Understanding K language"
+date: "2019-04-04"
+description: "This is the fourth post of a series Formal Verification for n00bs:
+Part 1: The K ecosystem
+Part 2: Proving the correctness of a token
+Part…"
+heroImage: "https://cdn-images-1.medium.com/max/800/1*V3h684cLP98nDAALIbHJeg.jpeg"
+---
+
+This is the fourth post of a series Formal Verification for n00bs:  
+[Part 1: The K ecosystem](/blog/formal-verification-for-n00bs-part-1)  
+[Part 2: Proving the correctness of a token  
+](/blog/formal-verification-for-n00bs-part-2-proving-the-correctness-of-a-token)[Part 3: A try to prevent classic hack with KLab](/blog/formal-verification-for-n00bs-part-3-an-attempt-to-prevent-classic-hack-with-klab)  
+Part 4: Understanding K language
+
+In this post, we will try to explain how high-level semantics for EVM functions are described directly in K. Please recall that so far all considered semantics were written in ACT (see [part2](/blog/formal-verification-for-n00bs-part-2-proving-the-correctness-of-a-token) and [part3](/blog/formal-verification-for-n00bs-part-3-an-attempt-to-prevent-classic-hack-with-klab)), a DSL language (provided by KLAB) that generates semantics in K. The prover itself works with K, so understanding the basics of K should give you a better understanding of the whole process and help in aware working.
+
+> For more details: the ecosystem is described in [part1](/blog/formal-verification-for-n00bs-part-1)
+
+### Example
+
+Once again let’s look at the simple ERC20 like token implementation in Solidity:
+
+We have already ([part2](/blog/formal-verification-for-n00bs-part-2-proving-the-correctness-of-a-token)) prepared high-level semantics for **transfer** function (in ACT):
+
+This time we want to go one step deeper and have a look at generated K specification (in real two K specs are generated — one for the case when header **iff** is true and second when it is false. We will deal only with the first case). The K source is here:
+
+It looks somewhat complex at first, so let’s go through it step by step.
+
+### An overview
+
+> Reminder: Semantics written in K refer to the EVM byte code of considerate contract, not to its Solidity source code.
+
+The byte code itself is a part of K specification, what you can observe in lines 23, 24 and 69. That comes with pros and cons:  
+😄A proof is resistant to the potential compiler of Solidity bugs  
+😒 Writing specifications in K requires knowledge of the EVM.
+
+### Intended semantics
+
+Let us recall the intended semantics (details were deliberated [here](/blog/formal-verification-for-n00bs-part-2-proving-the-correctness-of-a-token)) of the considerate function:
+
+_The behavior of (in this specific case)_ **_transfer(address To, uint Value):_** _If we assume that_ **_CALLER\_ID_** _is different from_ **_To_** _and, if both_ **_(balanceOf\[To\] + Value)_** _and_ **_(balanceOf\[CALLER\_ID\]-Value)_** _are in range of uint256, then the value of_ **_balanceOf\[CALLER\_ID\]_** _decreases by_ **_Value_**_, and_ **_balances\[To\]_** _increases by_ **_Value._**
+
+Well, above we have a few lines, while the according to semantics in K consists of 101 lines. This is mainly because (in K) we need to write the specification in the form:
+
+> If at some point an EVM starts its run in a state that fulfills assumptions A, then it must finish in a state that fulfills statements S.
+
+Note that we have to precisely describe all details of assumptions A in terms of the exact state of EVM.
+
+EVM state is a combination of many variables, exhausting all aspects of EVM execution:
+
+-   current transaction details(_gasPrice_, origin)
+-   execution (_localMemory_, memoryUsed, _callDepth_, pc, …)
+-   block parameters (_coinbase_, _difficulty_, _timestamp_, etc)
+-   what is called network environment i.e. global ethereum state (list of accounts and their balances, storages, and bytecodes)
+
+We don’t care about most of them most of the time, yet we have to fill all of them each time. This is why our spec is so large.
+
+### Syntax explained
+
+As you can see the description of the EVM state is described in XML-style notation. So, we have fields like <callStack>, <callData>,<gas>, <storage> and others. The whole structure is defined by KEVM, which is EVM description in K.
+
+We will give you a brief digest to understand standard specifications (for more details you can look [here](https://github.com/kframework/evm-semantics)).
+
+-   The specification starts with a preamble: here we state general settings. Example from our case is the following:
+
+Then, we have an **<ethereum>** field with two subfields: **<evm>** and **<network>**.
+
+#### <EVM>
+
+The field **<evm>** describes the state of the current running call. It has many subfields. We omit the description of all of them and just give a few examples (you can skip analyzing this list during the first reading):  
+\* **<output>**, describes the output of the called function;**
+\* <program>**, description of the code, given as a series of OpCodes;**
+\* <programBytes>**, bytecode of the program (this is basically the same as the above but in a different format);**
+\* <id>**, the address of the owner of the contract;**
+\* <caller>**, the address of the current caller;**
+\* <callData>**, description of data of the call (name of the functions and values of arguments);**
+\* <wordStack>**, the stack of functions call for the current run;**
+\* <callStack>**, another stack, keeping track of calls between contracts;**
+\* <localMem>**, map of local memory;**
+\* <pc>**, the current program counter (place in the code to be executed)**
+\* <gas>**, amount of gas left for the current run;**
+\* <log>**, list of log entries of the current run;  
+(Better understanding of these fields will give analyze of the semantics of our spec, which will follow in the next section.)
+
+### **<network>**
+
+-   The field **<network>** describes global Ethereum state. The most important subfield here is the field **<accounts>**, consisting of a list of **<account>** fields.
+-   **<account>** is a field describing a particular account of the system (many of such can be defined in the field **<accounts>**). Each of them have the following subfields:  
+    \* **<acctID>** — address of the account;  
+    \* **<balance>** — available funds of the account;  
+    \* **<code>** — code of the account (if it is a contract);  
+    \* **<storage>** — storage (memory that is persistent between different calls) of the account;  
+    \* **<nonce>**  
+    Usually, only one account is defined — the one that calls considered function. I.e. in our case we have:
+
+#### Value of a field
+
+All fields in our spec are filled with statements describing their values. We can have there either:
+
+-   **\_** (any value),
+-   a variable (i.e. **“CALLER\_ID”**)
+-   a fixed value (i.e. **“1”**) or an expression narrowing set of values of the field in the state, by given mask  
+    i.e.**“#abiCallData(“transfer”, #address(ABI\_To), #uint256(ABI\_Value))”**.
+
+The above states that in the state of EVM, we must have an ABI call. In our case such that:
+
+-   the name of the function must be **“transfer”**;
+-   the second argument is unrestricted unless it is an _address_ (and if you want to refer to it, it is named as **ABI\_To**);
+-   the third argument is unrestricted unless it is uint256 (and if you want to refer to it, it is named as **ABI\_Value**);
+
+#### Two states?
+
+Before we proceed further we want to point out one comment:
+
+We have already said that to provide high-level semantics in K, one must describe two states — before and after the execution. However, a fast glance at the K specification gives the impression that only one state is described. This is because of simplified notation that allows describing both states at once. Here, crucial for the syntax is the notation **“=>”**. Let’s define its meaning by example:
+
+The above line states that in the state before the execution, the field <statusCode> can be anything (“**\_”** stand for “anything”), but after the execution, it must be EVMC\_SUCCESS.
+
+### Our example
+
+So, according to the above, what we really specify in our K file, informally is more like (for your convenience the description is interspersed with code snippets):
+
+#### Informal description of K specification
+
+_IF at some point an EVM is in a state such that:_
+
+-   the byte code of a contract is the following: “0x60660604052600…..”;
+
+-   the ABI call to be called is an array of 68 bytes such that: the first four bytes are the prefix of hash value of function signature (keccak256(“transfer(address,unit256)”), the next 32 bytes are representation of address **To** and the last 32 bytes translate into the value of **Value;**  
+    \[REMARK: in our spec this is realized in the field <callData> (line 27) by macros #abiCallData, #address and #uint256 that are parts of a [supplementary module](https://github.com/kframework/evm-semantics/blob/master/edsl.md) of KEVM\]
+
+-   the caller’s address is **CALLER\_ID**;
+
+-   the value of storage at position **hash(CALLER\_ID ++ “0”)** is equal to **FromBal;** \[Remark: the locations of storage in EVM are somewhat complicated. In above ++ stands for byte-array concatenation, the uint “0” is used because the mapping balanceOf is the very first in the source file so it has index 0. Details can be found [here](https://jellopaper.org/edsl/?highlight=storage#hashed-location-for-storage). In our spec this is realized in the field <storage> (line 70) by macros #Token and #hashedLocation\]
+
+-   the value of storage at position **hash(To ++ “0”)** is equal to **ToBal;**
+-   the depth of call stack is equal to **VCallValue;**
+
+-   the Gas limit is equal to **VGas**;
+
+-   **VCallValue** is equal to 0; **VGas** is not smaller than 3000000;
+
+-   both **FromBal-Value** and **ToBal+Value** fit the range of uint256;
+
+-   **CALLER\_ID** is not equal **To**;
+
+-   …
+
+_THEN: If the execution halts, the status code of EVM is always EVMC\_SUCCESS. The resulting state of EVM MUST fulfill:_
+
+-   the value of storage at position **hash(CALLER\_ID ++ “0”)** is equal to **FromBal-Value;**
+-   the value of storage at position **hash(To ++ “0”)** is equal to **ToBal+Value;**
+
+#### Remarks
+
+The above (informal) description of the specification is long, despite that anyway it is slightly simplified! However, the main observation is that the specification is large because the **whole state of EVM** must be described. On the other hand — the largest part of the specification is not really specific but just describes the standard setting.
+
+### “requires” at the very end
+
+As you can see in the K source file, after the description of the states there is a keyword **requires** (line 81) followed by a few logical statements about variables used in the description of the states. This is the place in the specification where various assumptions can be stated: usually in the state-description part of the spec, we just name variables, but the actual assumptions about the state **before** execution are made here, in the **requires** section.
+
+**REMARK**: Besides “**requires**” section, you can also add “**ensures**” section, where you can add statements about the state **after** the execution. In our case, it was not needed, since the statement about storage is already covered by the field **<storage>** (line 70–71) of the state description. Find **“=>”** in the description and try to think out what is declared here (also: the above informal description should help you).
+
+### Running the verification
+
+To run the verification, one must install [KEVM](https://github.com/kframework/evm-semantics) and run **kprove**. Details are [here](https://github.com/kframework/evm-semantics).
+
+### What next?
+
+Until now we have seen formal specifications written in ACT (see [part2](/blog/formal-verification-for-n00bs-part-2-proving-the-correctness-of-a-token) and [part3](/blog/formal-verification-for-n00bs-part-3-an-attempt-to-prevent-classic-hack-with-klab)) and directly in K (this post). The first is very promising but has a long way to go. On the other hand — K is very technical and too many details need to be stated. Something in the middle is eDSL — another simple language to generate K statements, but with the following features:
+
+-   anything you can state in K, is also possible to state in eDSL (in real, eDSL is more like a tool simplifying the process of writing directly in K, by providing useful macros and template mechanisms);
+-   the description is much shorter than generated spec in K.
+
+So: next time we will focus on eDSL. Stay tuned!

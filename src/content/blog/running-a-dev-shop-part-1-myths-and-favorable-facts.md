@@ -1,0 +1,144 @@
+---
+title: "Running a dev shop — Part 1: Myths and favorable facts"
+date: "2022-08-29"
+description: "This is the first part of a series on running a dev shop. See the overview of the planned posts below."
+heroImage: "https://cdn-images-1.medium.com/max/800/1*zt1t_zS3PDjIZoNwyacUJw.jpeg"
+---
+
+This is the first part of a series on running a dev shop. See the overview of the planned posts below.
+
+**🎮 Part 1: Myths and favorable facts** 🥾 [Part 2: Bootstrapping and specialisation](/blog/running-a-dev-shop-part-2-bootstrapping-and-specialization)  
+🎤 [Part 3: Talent pipeline and employee life cycle](/blog/running-a-dev-shop-part-3-talent-pipeline-and-employee-life-cycle)  
+📣 [Part 4: Attracting customers](/blog/running-a-dev-shop-part-4-attracting-customers)  
+📈 [Part 5: Growth](/blog/running-a-dev-shop-part-5-growth-and-structure)
+
+### Part 1: Running a dev shop - Myths and favorable facts
+
+It’s been over a decade now since I set out on my journey of running _software service companies_ (also referred to as **dev houses** or **software houses**).I’ve been lucky to exit two of them and learn the craft of navigating such a company.
+
+What I noticed about it is that it’s a highly mitologised and indeterminate market, lacking the agreed set of good practices. I find my personal experience to differ from common wisdom and boilerplate phrases.
+
+> With this post I would like to iterate over some of the controversial myths and related facts, and start a broader discussion on good and bad practices.
+
+#### 🚀 Myth 1: Start-ups don’t hire dev houses
+
+It used to be commonly assumed that startups didn’t hire dev shops. Sam _Altman_, the president of the world’s best known startup accelerator — [Y Combinator](https://en.wikipedia.org/wiki/Y_Combinator), spoke about it on several occasions. And then in 2020, we got to work on the core product of a project initiated by the very same Sam Altman, and with himself on the supervisory board, while teams from other companies were working on other parts of the system. And it wasn’t a one-time thing. At [Ethworks](https://ethworks.io/), the company I co-founded, we ran many projects where we assembled the backbone of our customers’ technology. Same as many other friendly software service companies I know. Surely, something must have changed.
+
+Here is my take:
+
+> Driven by global software engineering talent shortage and pressure to scale faster, start-ups and scale-ups are more eager than ever to hire or even buy entire dev shops.
+
+#### 💰 Myth 2: Dev house struggle to create clear value proposition — it is just body leasing
+
+Oh yeah, good dev shops are becoming more than just body leasing.
+
+Good dev shops foster the intrinsic value — something that start-ups and scale-ups don’t often have time to do, as they are always on the run to the next round. A good dev shop will set up _employee acquisition pipelines_ to hunt for talent, then _train it_ and _retain it_. They will build an _engineering culture_, modern continuous delivery-focused processes, and the like. They will be active in their technological communities, building open-source projects, and establishing and promoting good practices.
+
+Most importantly,
+
+> as technology evolves and becomes more fragmented, there is more and more space for new dev shops that seek to provide customers with value and highly specialised services.
+
+#### 🚪Myth 3: Software house is hard to exit
+
+It was once believed that dev shops were low-margin, unrewarding businesses that serious founders would not touch. The exits used to be rare, unlikely, and not very attractive, at best. Even the term ‘acqui-hire’ carries some negative connotations.
+
+_That reality seems to be different now_.
+
+The week I announced my second acquisition in the fall of 2021, two other Polish software companies announced their acquisitions as well. Each of them was presumably a multimillion-dollar deal. Soon, friendly start-up founders started reaching out to me seeking advice on how to acquire a dev shop, as they were looking to buy one in an attempt to scale their engineering efforts.
+
+These are just some examples of a much wider global market that is hungry for acquisition and dev shops with intrinsic value are a valuable catch.
+
+> That being said, it is worth remembering that your average web & mobile is not as attractive as a highly specialized one. So again and again the name of the game is gonna be — specialize in something people want and find hard to get.
+
+**📈 Myth 4: The need to scale**
+
+Many times in the past I heard that the only way to make serious money in the service business is to scale. And while scaling is always a viable option to increase revenue (and profit), you can make a considerable profit with a small or medium company hiring a dozen to a few dozen employees. Here again, we find that by focusing on building unique value globally, you can produce margins with a fairly small or medium size company.
+
+Moreover, scaling is hard, and to be successful, it requires you to combine multiple cost-intensive efforts in parallel, like building different departments:
+
+-   marketing,
+-   HR
+-   sales,
+
+while restructuring company, building middle management and evolving company culture. All at once.
+
+> As a result, companies of around 100 people often find themself less profitable than highly optimized companies of around 40 people.
+
+At the risk of sounding repetitive: the key to high profitability at small scale is to be among the best people in the world in a fairly narrow specialization.
+
+Specialization makes scaling much easier, with much better defined marketing channels, clear value proposition for customers and employees.
+
+Now that we bust some of the myths, let’s look at some favorable facts.
+
+#### 🏡 Fact 1: Dev shop is not a … a start-up
+
+Many dev shops CEOs I talk to use the Silicon Valley jargon. There is always this next trendy book from the CEO of a multibillion dollar start-up, on scaling, on product, on markets, on technology or company culture. And we all read them. Here is the buzz killer.
+
+A dev shop is not a start-up.
+
+The observations, learnings and practices of fast-scaling product companies don’t match the realities of the service business. With different goals, customers and constraints, they vary in strategies, structures and practices.
+
+In fact, in terms of strategy, sales, marketing and day-to-day operations, a dev shop is much closer to professional service companies, like consulting companies, legal companies or even … restaurants.
+
+Yet different enough to deserve its own set of standards and best practices. With this write-up, I’d like to open a discourse aiming to establish one.
+
+#### 🍴Fact 2: Dev shop is more like … a restaurant
+
+There are (un)surprisingly many similarities between the software business and other service industries, e.g. restaurants. Let’s look into one interesting example.
+
+Several years ago, I stumbled upon an article written by a New York restaurant investor Gary Sernovitz: [“The Thrill of Losing Money by Investing in a Manhattan Restaurant”](https://www.newyorker.com/business/currency/the-thrill-of-losing-money-by-investing-in-a-manhattan-restaurant). The author shared how he invested in a restaurant that ended up struggling to make a reasonable return.
+
+Probing into the matter, Gary discovered that the vast majority of NY food businesses are working on low, one-digit margins, due to low-entry barriers on a market that is close-to-perfect competition.
+
+I couldn’t help thinking how it resembled the dev shop market — also here, any fairly talented developer with little to no investment can start a company operating on the global market.
+
+**How does a restaurant go about a close-to-perfect competition market?**  
+Well, it struggles. It turns out that the majority of restaurants in NY are making a profit no bigger than 1–2%, which, as the author of the article points out, is less than the credit card commission they have to pay.
+
+**How does a dev shop go about a close-to-perfect competition market?**   
+Well, no golden eggs here either… The founders earn no more than the top employees, and a loss of a single client or a key employee leads to a crisis in the company. Such is the reality of the majority of small software service companies. I experienced it myself with the first company I co-founded.
+
+The article, however, seeks to offer a remedy. It seems that **highly profitable restaurants have a competitive advantage that comprises several factors**:
+
+-   a unique cuisine;
+-   a popular location;
+-   access to the supreme food supply chain, and…
+-   a celebrity chef.
+
+In the sea of not so profitable restaurants, there are a few high-margin ones, usually run by the restaurateur’s family members, who possess a unique skill set passed down from generation to generation.
+
+This clearly implies that there is a certain defined skill which accounts for a highly profitable restaurant. And by the same token, I believe, there exists a skill required to run a highly profitable dev shop. What would be the factors then?
+
+**A high-margin dev shop builds its competitive advantage by means of:**
+
+-   a unique specialisation,
+-   an engineering culture,
+-   a talent acquisition pipeline,
+-   a marketing strategy that leverages specialisation
+
+Those key elements combine into a great dev shop strategy.
+
+#### ⬆️ Fact 3: Strategy is more than tactics
+
+Another common practice I encounter on multiple occasions when talking to dev shop owners is focusing on the tactical level but skipping out on the strategic level of running a dev shop. The discourse tends to center around the sales team structure, marketing techniques or hiring head of delivery or head of growth. But almost never would I hear people talk about shifting specialization and how they want to outperform competition by bringing more value to the customer. While both the strategic and the tactical level are important, one can hardly outperform poor strategy with tactical excellence. On the other hand, a great strategy can easily make up for average tactics.   
+High-level strategy is what this blog series is about.
+
+#### 🏆 The opportunity
+
+Despite all the challenges of running a dev shop, which I acknowledge exist, a software service business constitutes a source of great opportunities. Here are some favorable variables to consider:
+
+-   It isn’t capital-intensive. In fact, anyone with decent skills in programming can start a business without any fund-raising whatsoever,
+-   No strings attached — no investors on the board, with early profitability, the money goes straight into the founder’s pocket.
+-   It is a very predictable business, contrary to the popular startup VC model, which promises big bucks in the future, but carries a huge risk of failure, and the success is unlikely.
+
+To put it simply:
+
+> “A dev shop is a great way to make the first (tens of) millions, but not the first billion.”
+
+How to seize an opportunity presented by running a dev house?  
+Read in the next blog post in the series:  
+[Running a dev shop — part 2: Bootstrapping and specialization](/blog/running-a-dev-shop-part-2-bootstrapping-and-specialization)
+
+### _Thank you for reading!_
+
+_

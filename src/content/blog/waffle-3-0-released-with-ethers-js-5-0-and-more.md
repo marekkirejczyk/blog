@@ -1,0 +1,65 @@
+---
+title: "🧇 Waffle 3.0 released! With ethers.js 5.0 and more!"
+date: "2020-06-13"
+description: "We‘re glad to announce that we’ve just released Waffle 3.0 with support for ethers.js 5.0 and much more."
+heroImage: "https://cdn-images-1.medium.com/max/800/1*wn8o0ts9U8Tydi9dnCUCXg.jpeg"
+---
+
+We‘re glad to announce that we’ve just released Waffle 3.0 with support for ethers.js 5.0 and much more.
+
+We‘re especially happy that we have managed to release it on the same day 📅 as the long awaited ethers version 5!
+
+### Advancements 🚀
+
+In recent weeks, we’ve put a lot of effort pushing Waffle forward to make it the most advanced and the best smart contracts testing framework.
+
+We’ve added a lot of new functionalities, most of which were available in Waffle 2.5 as experimental:
+
+-   Mocking smart contracts ([blog post](/blog/mocking-solidity-smart-contracts-with-waffle), [docs](https://ethereum-waffle.readthedocs.io/en/latest/mock-contract.html), [example](https://github.com/EthWorks/Waffle/tree/master/examples/mock-contracts))
+-   Testing the effects of a call ([blog post](/blog/new-waffle-matcher-expect-to-be-calledoncontract), [docs](https://ethereum-waffle.readthedocs.io/en/latest/matchers.html#called-on-contract), [example](https://github.com/EthWorks/Waffle/tree/master/examples/called-on-contract))
+-   Add support for testing with ENS (blog post coming, [docs](https://ethereum-waffle.readthedocs.io/en/latest/ens.html))
+-   Support for Vyper compilation ([docs](https://ethereum-waffle.readthedocs.io/en/latest/compilation.html#using-dockerized-vyper))
+-   Flattening ([doc](https://ethereum-waffle.readthedocs.io/en/latest/getting-started.html#flattener))
+-   New cleaner and simpler configuration ([doc](https://ethereum-waffle.readthedocs.io/en/latest/configuration.html#configuration-file))
+
+Moreover, we’ve:
+
+-   [updated documentation](https://ethereum-waffle.readthedocs.io/en/latest/) 📝
+-   added [examples](https://github.com/EthWorks/Waffle/tree/master/examples) 🪀
+-   refreshed our [website](https://getwaffle.io/) 🌎.
+
+### Waffle 3.0 and breaking changes 💔
+
+And, as a final effort in this batch of work, we‘re releasing Waffle 3.0.
+
+Releasing a new major version is a great occasion to make breaking changes and improve on some early design decisions that we made. Some of them made API inconsistent, others make it hard to extend.
+
+Below is a list of the key breaking changes:
+
+-   Remove `createMockProvider()` in favour of `new MockProvider()`
+-   Remove `getWallets()` in favour of `provider.getWallets()`
+-   Remove experimental warnings from features introduced in 2.5
+-   Fixtures have swapped arguments order,  
+    before: `fixtureFunction(provider, wallets)`,   
+    after: `fixtureFunction(wallets, provider)`
+-   Full migration guide is [**available here**](https://ethereum-waffle.readthedocs.io/en/latest/migration-guides.html#migration-from-waffle-2-5-to-waffle-3-0-0).
+
+### Acknowledgements 🙏
+
+I would like give thanks to all the great people who have been involved in developing recent advancements:
+
+-   [@pedrouid](https://twitter.com/pedrouid) from [WalletConnect](https://walletconnect.org/) who did most of the heavy lifting of migration to Ethers.js version 5.0
+-   [@ricmoo](https://twitter.com/ricmoo) from ethers.js who helped us in the toughest moments of the migration
+-   [@b\_asselstine](https://twitter.com/b_asselstine) from [PoolTogether](https://www.pooltogether.com/) who introduced mocking for overloaded functions
+-   Developers in [Ethworks](https://ethworks.io/) team:@[PSzlachciak](https://twitter.com/PSzlachciak), [@VladStarostenko](https://github.com/VladStarostenko), @[rzadp](https://github.com/rzadp), @[Jozwiaczek](https://github.com/Jozwiaczek), @[msieczko](https://github.com/msieczko), @[vanruch](https://github.com/vanruch) who worked hard to deliver all the new features listed above
+-   Last but by no means least— [Nomic Labs](https://nomiclabs.io/) team and [Ethereum foundation](https://ethereum.org/foundation/) for appreciating our efforts and giving us a grant to develop Waffle further
+
+And most importantly, we would like to say thank you to all of our users!
+
+[Over 250 projects](https://github.com/EthWorks/Waffle/network/dependents?package_id=UGFja2FnZS0xMTU1ODUyNzY%3D) are using Waffle! 🎉🎉🎉
+
+Thank you!
+
+We are [Ethworks](https://ethworks.io/). A truly remarkable team for your blockchain project.
+
+Find us on [Twitter](https://twitter.com/ethworks), [Dribbble](https://dribbble.com/ethworks) and [GitHub](https://github.com/ethworks).
