@@ -17,9 +17,12 @@ const posts = (await getCollection('blog')).sort(
       return (
         <article class="post-item">
           <a href={`/blog/${post.id.replace(/\.md$/, '')}/`}>
-            <time datetime={post.data.date.toISOString()}>{formattedDate}</time>
-            <h2>{post.data.title}</h2>
-            {post.data.description && <p>{post.data.description}</p>}
+            {post.data.heroImage && <img class="post-cover" src={post.data.heroImage} alt="" />}
+            <div class="post-text">
+              <time datetime={post.data.date.toISOString()}>{formattedDate}</time>
+              <h2>{post.data.title}</h2>
+              {post.data.description && <p>{post.data.description}</p>}
+            </div>
           </a>
         </article>
       );
@@ -38,7 +41,22 @@ const posts = (await getCollection('blog')).sort(
 
   .post-item a {
     text-decoration: none;
-    display: block;
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+  }
+
+  .post-cover {
+    width: 200px;
+    height: 134px;
+    object-fit: cover;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+
+  .post-text {
+    flex: 1;
+    min-width: 0;
   }
 
   .post-item a:hover h2 {

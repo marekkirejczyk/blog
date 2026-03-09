@@ -4,3 +4,4 @@ dist/
 .DS_Store
 src/pages/index.astro
 src/import/
+.claude/
