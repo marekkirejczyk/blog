@@ -1,6 +1,6 @@
 # zkmarek.com
 
-Personal blog by Marek Kirejczyk. Static site built with [Astro](https://astro.build), served from a Hetzner dedicated server.
+zkMarek blog. Static site built with [Astro](https://astro.build), served from a Hetzner dedicated server.
 
 Live at **https://zkmarek.com**
 
@@ -18,8 +18,10 @@ npm run preview    # preview build locally
 Deploys via rsync to a Hetzner server (`arbiter.zkmarek.com`) as the `deploy` user (non-root).
 
 ```bash
-npm run deploy     # build + rsync to production
+npm run deploy     # build + rsync to production (manual)
 ```
+
+Every push to `main` also triggers automatic deployment via GitHub Actions.
 
 ### Server setup
 
@@ -27,6 +29,7 @@ npm run deploy     # build + rsync to production
 - **Nginx** serves static files from `/var/www/static`
 - **SSL** via Let's Encrypt (managed by Certbot)
 - **Deploy user** owns `/var/www/static`, SSH access with `~/.ssh/id_ed25519`
+- **CI/CD**: GitHub Actions deploys on push to `main` (SSH key stored in `DEPLOY_SSH_KEY` secret)
 
 ## Project structure
 
