@@ -1,0 +1,67 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+<BaseLayout title="Marek Kirejczyk">
+  <section class="post-list">
+    {posts.map((post) => {
+      const formattedDate = post.data.date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      });
+      return (
+        <article class="post-item">
+          <a href={`/blog/${post.id.replace(/\.md$/, '')}/`}>
+            <time datetime={post.data.date.toISOString()}>{formattedDate}</time>
+            <h2>{post.data.title}</h2>
+            {post.data.description && <p>{post.data.description}</p>}
+          </a>
+        </article>
+      );
+    })}
+  </section>
+</BaseLayout>
+
+<style>
+  .post-list {
+    padding: 1rem 0;
+  }
+
+  .post-item {
+    margin-bottom: 2.5rem;
+  }
+
+  .post-item a {
+    text-decoration: none;
+    display: block;
+  }
+
+  .post-item a:hover h2 {
+    color: #555;
+  }
+
+  .post-item time {
+    font-size: 0.85rem;
+    color: #999;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  }
+
+  .post-item h2 {
+    font-size: 1.5rem;
+    margin-top: 0.25rem;
+    letter-spacing: -0.01em;
+    transition: color 0.15s;
+  }
+
+  .post-item p {
+    color: #555;
+    font-size: 0.95rem;
+    margin-top: 0.25rem;
+    line-height: 1.5;
+  }
+</style>
