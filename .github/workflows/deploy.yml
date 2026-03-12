@@ -14,9 +14,9 @@ jobs:
         with:
           node-version: 22
 
-      - run: npm ci
+      - run: npm ci --workspace=blog
 
-      - run: npm run build
+      - run: npm run build --workspace=blog
 
       - name: Deploy to server
         run: |
@@ -24,4 +24,4 @@ jobs:
           echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan arbiter.zkmarek.com >> ~/.ssh/known_hosts 2>/dev/null
-          rsync -avz --delete -e 'ssh -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes' dist/ deploy@arbiter.zkmarek.com:/var/www/static/
+          rsync -avz --delete -e 'ssh -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes' blog/dist/ deploy@arbiter.zkmarek.com:/var/www/static/

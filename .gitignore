@@ -2,6 +2,6 @@ node_modules/
 dist/
 .astro/
 .DS_Store
-src/pages/index.astro
-import/
+blog/src/pages/index.astro
+blog/import/
 .claude/

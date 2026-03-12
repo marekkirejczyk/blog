@@ -1,8 +1,7 @@
 ---
 title: "Bubble burst shenanigans"
 date: "2021-02-07"
-description: "Disclaimer:
-This blog post is not financial advice, past events are not indicators of future performance. Don’t trust me or any of the…"
+description: "People’s memory is short-term and to me it seems many are doing irrational things with their crypto as the bubble progresses. But then, what is rational behaviour in bubble times?"
 heroImage: "https://cdn-images-1.medium.com/max/800/0*vwVFlgZoa8ToyBoc"
 ---
 

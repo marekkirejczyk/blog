@@ -1,0 +1,17 @@
+{
+  "name": "blog-claude",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "deploy": "astro build && rsync -avz --delete -e 'ssh -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes' dist/ deploy@arbiter.zkmarek.com:/var/www/static/"
+  },
+  "dependencies": {
+    "astro": "^5.7.0"
+  },
+  "devDependencies": {
+    "turndown": "^7.2.2"
+  }
+}

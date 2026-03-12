@@ -1,16 +1,23 @@
 # zkmarek.com
 
-zkMarek blog. Static site built with [Astro](https://astro.build), served from a Hetzner dedicated server.
+zkMarek blog and comment system. Monorepo with npm workspaces.
 
 Live at **https://zkmarek.com**
 
-## Development
+## Structure
+
+```
+blog/              # Astro static site
+comments/          # Comment service (coming soon)
+```
+
+## Blog Development
 
 ```bash
-npm install        # install dependencies
-npm run dev        # start dev server at localhost:4321
-npm run build      # build static site to dist/
-npm run preview    # preview build locally
+npm install                        # install all workspaces
+npm run dev --workspace=blog       # start dev server at localhost:4321
+npm run build --workspace=blog     # build static site to blog/dist/
+npm run preview --workspace=blog   # preview build locally
 ```
 
 ## Deployment
@@ -18,7 +25,7 @@ npm run preview    # preview build locally
 Deploys via rsync to a Hetzner server (`arbiter.zkmarek.com`) as the `deploy` user (non-root).
 
 ```bash
-npm run deploy     # build + rsync to production (manual)
+npm run deploy --workspace=blog    # build + rsync to production (manual)
 ```
 
 Every push to `main` also triggers automatic deployment via GitHub Actions.
@@ -31,22 +38,23 @@ Every push to `main` also triggers automatic deployment via GitHub Actions.
 - **Deploy user** owns `/var/www/static`, SSH access with `~/.ssh/id_ed25519`
 - **CI/CD**: GitHub Actions deploys on push to `main` (SSH key stored in `DEPLOY_SSH_KEY` secret)
 
-## Project structure
+## Blog project structure
 
 ```
-src/
-  content/blog/    # markdown posts (content collection)
-  layouts/         # BaseLayout, BlogPost
-  pages/           # index + blog/[...slug]
-  styles/          # global CSS
-public/images/     # static assets (cover images, etc.)
-import/            # Medium HTML exports (source data, not deployed)
-scripts/           # conversion scripts
+blog/
+  src/
+    content/blog/    # markdown posts (content collection)
+    layouts/         # BaseLayout, BlogPost
+    pages/           # index + blog/[...slug]
+    styles/          # global CSS
+  public/images/     # static assets (cover images, etc.)
+  import/            # Medium HTML exports (source data, not deployed)
+  scripts/           # conversion scripts
 ```
 
 ## Adding a post
 
-Create a markdown file in `src/content/blog/`:
+Create a markdown file in `blog/src/content/blog/`:
 
 ```markdown
 ---
@@ -59,4 +67,4 @@ heroImage: "/images/my-cover.svg"
 Post content here.
 ```
 
-Then `npm run deploy` to publish.
+Then `npm run deploy --workspace=blog` to publish.
