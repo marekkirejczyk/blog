@@ -147,7 +147,7 @@ export function testPageRoute() {
                 '<div class="comment-meta"><strong>' +
                 esc(c.author_name) +
                 "</strong> &middot; " +
-                new Date(c.created_at + "Z").toLocaleDateString() +
+                c.created_at.toLocaleDateString() +
                 "</div>" +
                 '<div class="comment-body">' +
                 esc(c.body) +

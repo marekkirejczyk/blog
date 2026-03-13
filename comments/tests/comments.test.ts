@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { initDb, upsertUser, type User } from "../src/db.js";
+import { initDb, upsertUser, type User } from "../src/db/index.js";
 import { createApp } from "../src/app.js";
 import type Database from "better-sqlite3";
 import type { MiddlewareHandler } from "hono";

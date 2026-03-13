@@ -4,7 +4,7 @@ import {
   createComment,
   deleteComment,
   getCommentById,
-} from "../db.js";
+} from "../db/index.js";
 import type { AppEnv, RouteContext } from "../types.js";
 import { validateSlug, validateCommentBody } from "../validation.js";
 

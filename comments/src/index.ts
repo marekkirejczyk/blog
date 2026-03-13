@@ -1,5 +1,5 @@
 import { serve } from "@hono/node-server";
-import { initDb, upsertUser } from "./db.js";
+import { initDb, upsertUser } from "./db/index.js";
 import { createApp } from "./app.js";
 
 const DATABASE_PATH = process.env.DATABASE_PATH ?? "./data/comments.db";
