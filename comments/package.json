@@ -1,0 +1,22 @@
+{
+  "name": "comments",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "start": "node --import tsx src/index.ts",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "hono": "^4",
+    "@hono/node-server": "^1",
+    "better-sqlite3": "^11"
+  },
+  "devDependencies": {
+    "vitest": "^3",
+    "tsx": "^4",
+    "@types/better-sqlite3": "^7",
+    "typescript": "^5"
+  }
+}
