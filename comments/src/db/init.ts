@@ -25,11 +25,16 @@ CREATE TABLE IF NOT EXISTS comments (
 
 CREATE INDEX IF NOT EXISTS idx_comments_slug ON comments(slug, created_at);
 CREATE INDEX IF NOT EXISTS idx_comments_parent ON comments(parent_id);
-`;
 
-export function parseDate(value: string): Date {
-  return new Date(value + "Z");
-}
+CREATE TABLE IF NOT EXISTS sessions (
+  id         TEXT PRIMARY KEY,
+  user_id    INTEGER NOT NULL REFERENCES users(id),
+  created_at TEXT DEFAULT (datetime('now')),
+  expires_at TEXT NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_sessions_user ON sessions(user_id);
+`;
 
 export function initDb(path: string = ":memory:"): Database.Database {
   const db = new Database(path);

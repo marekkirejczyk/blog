@@ -1,15 +1,10 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import type Database from "better-sqlite3";
 import { initDb } from "../../src/db/init.js";
-import { upsertUser } from "../../src/db/users.js";
+import { upsertUser, getUserById } from "../../src/db/users.js";
 
 function objectContaining(obj: Record<string, unknown>) {
   return expect.objectContaining(obj);
-}
-
-function expectRecentDate(date: Date, withinMs = 5000) {
-  expect(date).toBeInstanceOf(Date);
-  expect(Math.abs(date.getTime() - Date.now())).toBeLessThan(withinMs);
 }
 
 let db: Database.Database;
@@ -29,7 +24,7 @@ describe("upsertUser", () => {
       avatar_url: "https://avatar.url",
       is_admin: 0,
     }));
-    expectRecentDate(user.created_at);
+    expect(user.created_at).toBeAround(Date.now());
   });
 
   it("updates name, email, avatar on conflict", () => {
@@ -54,5 +49,25 @@ describe("upsertUser", () => {
       email: null,
       avatar_url: null,
     }));
+  });
+});
+
+describe("getUserById", () => {
+  it("returns user by id", () => {
+    const created = upsertUser(db, "github", "42", "Alice", "alice@test.com", "https://avatar.url");
+    const found = getUserById(db, created.id);
+    expect(found).toEqual(objectContaining({
+      id: created.id,
+      provider: "github",
+      provider_id: "42",
+      name: "Alice",
+      email: "alice@test.com",
+      avatar_url: "https://avatar.url",
+    }));
+    expect(found!.created_at).toBeAround(Date.now());
+  });
+
+  it("returns undefined for non-existent id", () => {
+    expect(getUserById(db, 99999)).toBeUndefined();
   });
 });

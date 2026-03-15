@@ -13,10 +13,7 @@ function objectContaining(obj: Record<string, unknown>) {
   return expect.objectContaining(obj);
 }
 
-function expectRecentDate(date: Date, withinMs = 5000) {
-  expect(date).toBeInstanceOf(Date);
-  expect(Math.abs(date.getTime() - Date.now())).toBeLessThan(withinMs);
-}
+
 
 let db: Database.Database;
 let alice: User;
@@ -39,7 +36,7 @@ describe("createComment", () => {
       author_name: "Alice",
       author_avatar: "https://alice.png",
     }));
-    expectRecentDate(comment.created_at);
+    expect(comment.created_at).toBeAround(Date.now());
   });
 
   it("creates a reply with parent_id", () => {
@@ -97,7 +94,7 @@ describe("getCommentById", () => {
     deleteComment(db, comment.id, alice.id, false);
     const found = getCommentById(db, comment.id);
     expect(found).toBeDefined();
-    expectRecentDate(found!.deleted_at!);
+    expect(found!.deleted_at!).toBeAround(Date.now());
   });
 });
 

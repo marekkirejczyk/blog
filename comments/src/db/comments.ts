@@ -1,5 +1,5 @@
 import type Database from "better-sqlite3";
-import { parseDate } from "./init.js";
+import { parseDate } from "../utils/dates.js";
 
 export interface Comment {
   id: number;

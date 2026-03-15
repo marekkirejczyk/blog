@@ -1,35 +1,19 @@
 import { serve } from "@hono/node-server";
-import { initDb, upsertUser } from "./db/index.js";
-import { createApp } from "./app.js";
-
-const DATABASE_PATH = process.env.DATABASE_PATH ?? "./data/comments.db";
-const PORT = parseInt(process.env.PORT ?? "3001", 10);
-
-// Ensure data directory exists
 import { mkdirSync } from "fs";
 import { dirname } from "path";
-mkdirSync(dirname(DATABASE_PATH), { recursive: true });
+import { initDb } from "./db/index.js";
+import { createApp } from "./app.js";
+import { loadConfig } from "./config.js";
 
-const db = initDb(DATABASE_PATH);
+const config = loadConfig();
 
-// In dev mode, auto-create a test user so the test page works without OAuth
-const testUser = upsertUser(db, "test", "1", "Test User", null, null);
+// Ensure data directory exists
+mkdirSync(dirname(config.databasePath), { recursive: true });
 
-const app = createApp(db, {
-  corsOrigin: "*", // permissive in dev
-  authMiddleware: async (c, next) => {
-    // Stub: auto-authenticate as test user in dev
-    c.set("user", {
-      id: testUser.id,
-      name: testUser.name,
-      avatar_url: testUser.avatar_url,
-      is_admin: false,
-    });
-    await next();
-  },
-});
+const db = initDb(config.databasePath);
+const app = createApp(db, config);
 
-serve({ fetch: app.fetch, port: PORT }, (info) => {
+serve({ fetch: app.fetch, port: config.port }, (info) => {
   console.log(`Comment server running at http://localhost:${info.port}`);
   console.log(`Test page: http://localhost:${info.port}/test`);
 });

@@ -1,5 +1,5 @@
 import type Database from "better-sqlite3";
-import { parseDate } from "./init.js";
+import { parseDate } from "../utils/dates.js";
 
 export interface User {
   id: number;
@@ -40,4 +40,15 @@ export function upsertUser(
     .get(provider, providerId) as RawUser;
 
   return { ...row, created_at: parseDate(row.created_at) };
+}
+
+export function getUserById(
+  db: Database.Database,
+  id: number
+): User | undefined {
+  const row = db
+    .prepare(`SELECT * FROM users WHERE id = ?`)
+    .get(id) as RawUser | undefined;
+
+  return row ? { ...row, created_at: parseDate(row.created_at) } : undefined;
 }

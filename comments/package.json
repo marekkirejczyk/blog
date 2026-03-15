@@ -9,14 +9,15 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "hono": "^4",
     "@hono/node-server": "^1",
-    "better-sqlite3": "^11"
+    "arctic": "^3.7.0",
+    "better-sqlite3": "^11",
+    "hono": "^4"
   },
   "devDependencies": {
-    "vitest": "^3",
-    "tsx": "^4",
     "@types/better-sqlite3": "^7",
-    "typescript": "^5"
+    "tsx": "^4",
+    "typescript": "^5",
+    "vitest": "^3"
   }
 }

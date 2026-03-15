@@ -1,5 +1,6 @@
-export { initDb, parseDate } from "./init.js";
-export { type User, upsertUser } from "./users.js";
+export { initDb } from "./init.js";
+export { parseDate, formatDate } from "../utils/dates.js";
+export { type User, upsertUser, getUserById } from "./users.js";
 export {
   type Comment,
   type CommentWithReplies,
@@ -8,3 +9,11 @@ export {
   getCommentById,
   deleteComment,
 } from "./comments.js";
+export {
+  type Session,
+  type SessionWithUser,
+  createSession,
+  getSessionWithUser,
+  deleteSession,
+  deleteExpiredSessions,
+} from "./sessions.js";

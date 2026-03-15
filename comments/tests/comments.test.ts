@@ -1,8 +1,11 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { initDb, upsertUser, type User } from "../src/db/index.js";
-import { createApp } from "../src/app.js";
+import { createTestApp } from "../src/app.js";
+import { loadConfig } from "../src/config.js";
 import type Database from "better-sqlite3";
 import type { MiddlewareHandler } from "hono";
+
+const testConfig = loadConfig({});
 
 let db: Database.Database;
 let testUser: User;
@@ -21,8 +24,7 @@ function mockAuth(user: User): MiddlewareHandler {
 }
 
 function authedApp(user?: User) {
-  return createApp(db, {
-    corsOrigin: "*",
+  return createTestApp(db, testConfig, {
     authMiddleware: user ? mockAuth(user) : undefined,
   });
 }
