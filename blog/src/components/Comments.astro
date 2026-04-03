@@ -70,6 +70,7 @@ const { slug, apiBase = defaultApiBase } = Astro.props;
             ? '<img src="' + esc(currentUser.avatar_url) + '" class="avatar" alt="" />'
             : '') +
           '<span>' + esc(currentUser.name) + '</span>' +
+          (currentUser.is_admin ? '<span class="admin-badge">admin</span>' : '') +
           '</span>' +
           '<a id="logout-btn" class="auth-link">Logout</a>';
         document.getElementById('logout-btn')!.addEventListener('click', handleLogout);
@@ -226,6 +227,15 @@ const { slug, apiBase = defaultApiBase } = Astro.props;
   #auth-bar :global(.auth-link:hover) {
     text-decoration-color: #1a1a1a;
     color: #1a1a1a;
+  }
+
+  #auth-bar :global(.admin-badge) {
+    font-size: 0.7rem;
+    color: #856404;
+    background: #fff3cd;
+    padding: 0.1rem 0.4rem;
+    border-radius: 3px;
+    margin-left: 0.25rem;
   }
 
   #auth-bar :global(.login-btn) {

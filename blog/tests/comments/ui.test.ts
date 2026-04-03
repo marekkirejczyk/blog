@@ -93,7 +93,7 @@ describe("renderComment", () => {
   });
 
   it("renders reply button when logged in as another user", () => {
-    const user: User = { id: 99, name: "Bob", avatar_url: null };
+    const user: User = { id: 99, name: "Bob", avatar_url: null, is_admin: false };
     expect(renderComment(baseComment, user)).toBe(
       '<div class="comment">' +
         '<div class="comment-meta">' +
@@ -110,8 +110,26 @@ describe("renderComment", () => {
   });
 
   it("renders reply and delete buttons for own comment", () => {
-    const user: User = { id: 42, name: "Alice", avatar_url: null };
+    const user: User = { id: 42, name: "Alice", avatar_url: null, is_admin: false };
     expect(renderComment(baseComment, user)).toBe(
+      '<div class="comment">' +
+        '<div class="comment-meta">' +
+          '<img src="https://example.com/avatar.png" class="avatar" alt="" />' +
+          "<strong>Alice</strong>" +
+          '<span class="comment-time">&middot; just now</span>' +
+        "</div>" +
+        '<div class="comment-body">Hello world</div>' +
+        '<div class="comment-actions">' +
+          '<a class="reply-btn" data-id="1" data-name="Alice">Reply</a>' +
+          '<a class="delete-btn" data-id="1">Delete</a>' +
+        "</div>" +
+      "</div>"
+    );
+  });
+
+  it("renders delete button for admin on other user's comment", () => {
+    const admin: User = { id: 99, name: "Admin", avatar_url: null, is_admin: true };
+    expect(renderComment(baseComment, admin)).toBe(
       '<div class="comment">' +
         '<div class="comment-meta">' +
           '<img src="https://example.com/avatar.png" class="avatar" alt="" />' +

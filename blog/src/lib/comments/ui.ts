@@ -12,6 +12,7 @@ export interface User {
   id: number;
   name: string;
   avatar_url: string | null;
+  is_admin: boolean;
 }
 
 export function esc(s: string): string {
@@ -39,6 +40,7 @@ export function timeAgo(dateStr: string): string {
 export function renderComment(c: Comment, currentUser: User | null): string {
   const replies = c.replies ? c.replies.map((r) => renderComment(r, currentUser)).join("") : "";
   const isOwn = currentUser !== null && currentUser.id === c.user_id;
+  const canDelete = currentUser !== null && (isOwn || currentUser.is_admin);
   const initial = (c.author_name || "?").charAt(0).toUpperCase();
   const avatar = c.author_avatar
     ? '<img src="' + esc(c.author_avatar) + '" class="avatar" alt="" />'
@@ -62,7 +64,7 @@ export function renderComment(c: Comment, currentUser: User | null): string {
     (currentUser
       ? '<a class="reply-btn" data-id="' + c.id + '" data-name="' + esc(c.author_name) + '">Reply</a>'
       : "") +
-    (isOwn ? '<a class="delete-btn" data-id="' + c.id + '">Delete</a>' : "") +
+    (canDelete ? '<a class="delete-btn" data-id="' + c.id + '">Delete</a>' : "") +
     "</div>" +
     (replies ? '<div class="replies">' + replies + "</div>" : "") +
     "</div>"
