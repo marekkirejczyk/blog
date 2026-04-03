@@ -1,0 +1,16 @@
+[Unit]
+Description=Comments API
+After=network.target
+
+[Service]
+Type=simple
+User=deploy
+WorkingDirectory=/var/www/comments
+ExecStart=/usr/bin/node --import tsx src/index.ts
+Restart=on-failure
+RestartSec=5
+Environment=NODE_ENV=production
+EnvironmentFile=/var/www/comments/.env
+
+[Install]
+WantedBy=multi-user.target

@@ -18,10 +18,22 @@ jobs:
       - run: npm test
       - run: npm run build --workspace=blog
 
-      - name: Deploy to server
+      - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan arbiter.zkmarek.com >> ~/.ssh/known_hosts 2>/dev/null
-          rsync -avz --delete -e 'ssh -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes' blog/dist/ deploy@arbiter.zkmarek.com:/var/www/static/
+
+      - name: Deploy blog
+        run: |
+          rsync -avz --delete -e 'ssh -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes' \
+            blog/dist/ deploy@arbiter.zkmarek.com:/var/www/static/
+
+      - name: Deploy comments service
+        run: |
+          rsync -avz --delete --exclude='data/' --exclude='.env' --exclude='node_modules/' \
+            -e 'ssh -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes' \
+            comments/ deploy@arbiter.zkmarek.com:/var/www/comments/
+          ssh -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes deploy@arbiter.zkmarek.com \
+            "cd /var/www/comments && npm ci --omit=dev && sudo systemctl restart comments"

@@ -34,10 +34,47 @@ Every push to `main` also triggers automatic deployment via GitHub Actions.
 ### Server setup
 
 - **Host**: `arbiter.zkmarek.com` (Hetzner, DNS-only via Cloudflare — no proxy)
-- **Nginx** serves static files from `/var/www/static`
+- **Nginx** serves static files from `/var/www/static`, proxies `comments.zkmarek.com` to port 3001
 - **SSL** via Let's Encrypt (managed by Certbot)
-- **Deploy user** owns `/var/www/static`, SSH access with `~/.ssh/id_ed25519`
-- **CI/CD**: GitHub Actions deploys on push to `main` (SSH key stored in `DEPLOY_SSH_KEY` secret)
+- **Deploy user** owns `/var/www/static` and `/var/www/comments`, SSH access with `~/.ssh/id_ed25519`
+- **CI/CD**: GitHub Actions deploys both blog and comments on push to `main` (SSH key stored in `DEPLOY_SSH_KEY` secret)
+
+### Comments service server setup
+
+First-time setup on the server (requires SSH access):
+
+```bash
+# 1. DNS: Add A record for comments.zkmarek.com → server IP (Cloudflare, DNS-only)
+
+# 2. Create directory
+sudo mkdir -p /var/www/comments/data
+sudo chown -R deploy:deploy /var/www/comments
+
+# 3. Install nginx config
+sudo cp /var/www/comments/deploy/comments.nginx.conf /etc/nginx/sites-available/comments
+sudo ln -s /etc/nginx/sites-available/comments /etc/nginx/sites-enabled/
+sudo nginx -t && sudo systemctl reload nginx
+
+# 4. SSL certificate
+sudo certbot --nginx -d comments.zkmarek.com
+
+# 5. Create .env with OAuth secrets (see deploy/comments.env.example)
+nano /var/www/comments/.env
+
+# 6. Install and start systemd service
+sudo cp /var/www/comments/deploy/comments.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable --now comments
+
+# 7. Allow deploy user to restart service without password
+echo "deploy ALL=(ALL) NOPASSWD: /bin/systemctl restart comments" | sudo tee /etc/sudoers.d/comments
+```
+
+After this, every push to `main` automatically deploys both blog and comments. Manual deploy:
+
+```bash
+./deploy/deploy-comments.sh
+```
 
 ## Blog project structure
 
