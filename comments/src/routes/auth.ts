@@ -18,6 +18,7 @@ interface AuthRoutesOptions {
 
 const STATE_COOKIE = "oauth_state";
 const VERIFIER_COOKIE = "oauth_verifier";
+const REDIRECT_COOKIE = "oauth_redirect";
 const COOKIE_MAX_AGE_SECONDS = 600; // 10 minutes for OAuth flow
 const DAYS_TO_SECONDS = 24 * 60 * 60;
 
@@ -50,6 +51,11 @@ function handleLogin(
   };
 
   setCookie(ctx, STATE_COOKIE, state, cookieOptions);
+
+  const redirectUrl = ctx.req.query("redirect");
+  if (redirectUrl) {
+    setCookie(ctx, REDIRECT_COOKIE, redirectUrl, cookieOptions);
+  }
 
   let url: URL;
   if (instance.usesPKCE) {
@@ -92,8 +98,10 @@ async function handleCallback(
   }
 
   // Clear OAuth cookies
+  const redirectUrl = getCookie(ctx, REDIRECT_COOKIE);
   deleteCookie(ctx, STATE_COOKIE, { path: "/" });
   deleteCookie(ctx, VERIFIER_COOKIE, { path: "/" });
+  deleteCookie(ctx, REDIRECT_COOKIE, { path: "/" });
 
   let tokens;
   if (instance.usesPKCE) {
@@ -135,7 +143,7 @@ async function handleCallback(
     maxAge: sessionDurationDays * DAYS_TO_SECONDS,
   });
 
-  return ctx.redirect(blogUrl);
+  return ctx.redirect(redirectUrl || blogUrl);
 }
 
 function handleMe(ctx: RouteContext) {
@@ -157,8 +165,7 @@ function handleProviders(
   ctx: RouteContext,
   providers: Map<ProviderName, ProviderInstance>
 ) {
-  const available = Array.from(providers.keys());
-  return ctx.json({ providers: available });
+  return ctx.json({ providers: Array.from(providers.keys()) });
 }
 
 export function authRoutes(options: AuthRoutesOptions) {

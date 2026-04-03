@@ -1,14 +1,16 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+import Comments from '../components/Comments.astro';
 
 interface Props {
   title: string;
   date: Date;
+  slug: string;
   description?: string;
   heroImage?: string;
 }
 
-const { title, date, description, heroImage } = Astro.props;
+const { title, date, slug, description, heroImage } = Astro.props;
 
 const formattedDate = date.toLocaleDateString('en-US', {
   year: 'numeric',
@@ -28,6 +30,7 @@ const formattedDate = date.toLocaleDateString('en-US', {
       <slot />
     </div>
   </article>
+  <Comments slug={slug} />
   <script>
     document.querySelectorAll('.post-content a').forEach(a => {
       if (a.hostname !== window.location.hostname) {

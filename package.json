@@ -1,5 +1,8 @@
 {
   "name": "zkmarek",
   "private": true,
-  "workspaces": ["blog", "comments"]
+  "workspaces": ["blog", "comments"],
+  "scripts": {
+    "test": "npm test --workspaces"
+  }
 }

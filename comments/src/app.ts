@@ -9,6 +9,7 @@ import { sessionMiddleware } from "./middleware/session.js";
 import type { AppEnv } from "./types.js";
 import type { Configuration } from "./config.js";
 import { createProviders, type ProviderName, type ProviderInstance } from "./auth/providers.js";
+import { devAuthRoutes } from "./routes/dev-auth.js";
 
 function createBaseApp(db: Database.Database, config: Configuration): Hono<AppEnv> {
   const app = new Hono<AppEnv>();
@@ -45,6 +46,7 @@ function mountRoutes(
       sessionDurationDays: config.sessionDurationDays,
     })
   );
+
   app.route("/", commentRoutes());
   app.route("/", testPageRoute());
   app.get("/health", (c) => c.json({ ok: true }));
@@ -54,6 +56,30 @@ export function createApp(db: Database.Database, config: Configuration) {
   const app = createBaseApp(db, config);
   app.use("*", sessionMiddleware());
   mountRoutes(app, config, createProviders(config));
+  return app;
+}
+
+export function createDevApp(db: Database.Database, config: Configuration) {
+  const app = createBaseApp(db, config);
+  app.use("*", sessionMiddleware());
+
+  const providers = createProviders(config);
+
+  // Dev-specific: override providers list to include "dev"
+  app.get("/auth/providers", (c) =>
+    c.json({ providers: [...Array.from(providers.keys()), "dev"] })
+  );
+
+  // Dev auth routes must be mounted before parameterized auth routes
+  app.route(
+    "/",
+    devAuthRoutes({
+      blogUrl: config.blogUrl,
+      sessionDurationDays: config.sessionDurationDays,
+    })
+  );
+
+  mountRoutes(app, config, providers);
   return app;
 }
 

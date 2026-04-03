@@ -31,7 +31,7 @@ const production: Configuration = {
 const development: Configuration = {
   port: 3001,
   databasePath: "./data/comments.db",
-  corsOrigin: "*",
+  corsOrigin: "http://localhost:4321",
   blogUrl: "http://localhost:4321",
   oauthCallbackBase: "http://localhost:3001",
   secureCookies: false,

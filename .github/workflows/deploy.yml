@@ -14,8 +14,8 @@ jobs:
         with:
           node-version: 22
 
-      - run: npm ci --workspace=blog
-
+      - run: npm ci
+      - run: npm test
       - run: npm run build --workspace=blog
 
       - name: Deploy to server
