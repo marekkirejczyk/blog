@@ -97,15 +97,17 @@ async function handleCallback(
     return ctx.json({ error: "Invalid OAuth state" }, 400);
   }
 
-  // Clear OAuth cookies
+  // Read cookies before clearing them
   const redirectUrl = getCookie(ctx, REDIRECT_COOKIE);
+  const codeVerifier = getCookie(ctx, VERIFIER_COOKIE);
+
+  // Clear OAuth cookies
   deleteCookie(ctx, STATE_COOKIE, { path: "/" });
   deleteCookie(ctx, VERIFIER_COOKIE, { path: "/" });
   deleteCookie(ctx, REDIRECT_COOKIE, { path: "/" });
 
   let tokens;
   if (instance.usesPKCE) {
-    const codeVerifier = getCookie(ctx, VERIFIER_COOKIE);
     if (!codeVerifier) {
       return ctx.json({ error: "Missing code verifier" }, 400);
     }
@@ -130,7 +132,8 @@ async function handleCallback(
     userInfo.providerId,
     userInfo.name,
     userInfo.email,
-    userInfo.avatarUrl
+    userInfo.avatarUrl,
+    userInfo.profileUrl
   );
 
   const session = createSession(db, user.id, sessionDurationDays);

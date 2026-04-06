@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS users (
   name        TEXT NOT NULL,
   email       TEXT,
   avatar_url  TEXT,
+  profile_url TEXT,
   is_admin    INTEGER DEFAULT 0,
   created_at  TEXT DEFAULT (datetime('now')),
   UNIQUE(provider, provider_id)

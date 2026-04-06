@@ -1,8 +1,13 @@
+import { marked } from "marked";
+
+marked.setOptions({ breaks: true, gfm: true, async: false });
+
 export interface Comment {
   id: number;
   body: string;
   author_name: string;
   author_avatar: string | null;
+  author_profile_url: string | null;
   user_id: number;
   created_at: string;
   replies?: Comment[];
@@ -22,6 +27,12 @@ export function esc(s: string): string {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
+}
+
+function renderMarkdown(text: string): string {
+  // Escape HTML first to prevent XSS, then parse markdown
+  const escaped = esc(text);
+  return (marked.parse(escaped) as string).trim();
 }
 
 export function timeAgo(dateStr: string): string {
@@ -50,15 +61,15 @@ export function renderComment(c: Comment, currentUser: User | null): string {
     '<div class="comment">' +
     '<div class="comment-meta">' +
     avatar +
-    "<strong>" +
-    esc(c.author_name) +
-    "</strong>" +
+    (c.author_profile_url
+      ? '<a href="' + esc(c.author_profile_url) + '" target="_blank" rel="noopener noreferrer" class="comment-author"><strong>' + esc(c.author_name) + "</strong></a>"
+      : "<strong>" + esc(c.author_name) + "</strong>") +
     '<span class="comment-time">&middot; ' +
     timeAgo(c.created_at) +
     "</span>" +
     "</div>" +
     '<div class="comment-body">' +
-    esc(c.body) +
+    renderMarkdown(c.body) +
     "</div>" +
     '<div class="comment-actions">' +
     (currentUser

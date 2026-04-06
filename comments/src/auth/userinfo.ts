@@ -5,6 +5,7 @@ export interface UserInfo {
   name: string;
   email: string | null;
   avatarUrl: string | null;
+  profileUrl: string | null;
 }
 
 async function fetchJson(url: string, accessToken: string): Promise<unknown> {
@@ -40,6 +41,7 @@ async function fetchGitHubUserInfo(accessToken: string): Promise<UserInfo> {
     name: profile.name ?? profile.login,
     email,
     avatarUrl: profile.avatar_url,
+    profileUrl: `https://github.com/${profile.login}`,
   };
 }
 
@@ -59,6 +61,7 @@ async function fetchGoogleUserInfo(accessToken: string): Promise<UserInfo> {
     name: profile.name,
     email: profile.email,
     avatarUrl: profile.picture,
+    profileUrl: null,
   };
 }
 
@@ -78,6 +81,7 @@ async function fetchFacebookUserInfo(accessToken: string): Promise<UserInfo> {
     name: profile.name,
     email: profile.email ?? null,
     avatarUrl: profile.picture?.data?.url ?? null,
+    profileUrl: null,
   };
 }
 
@@ -97,6 +101,7 @@ async function fetchLinkedInUserInfo(accessToken: string): Promise<UserInfo> {
     name: profile.name,
     email: profile.email,
     avatarUrl: profile.picture,
+    profileUrl: null,
   };
 }
 
@@ -118,6 +123,7 @@ async function fetchXUserInfo(accessToken: string): Promise<UserInfo> {
     name: response.data.name,
     email: null, // X does not provide email via standard OAuth
     avatarUrl: response.data.profile_image_url ?? null,
+    profileUrl: `https://x.com/${response.data.username}`,
   };
 }
 

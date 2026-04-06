@@ -12,11 +12,11 @@
     "@hono/node-server": "^1",
     "arctic": "^3.7.0",
     "better-sqlite3": "^11",
-    "hono": "^4"
+    "hono": "^4",
+    "tsx": "^4"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7",
-    "tsx": "^4",
     "typescript": "^5",
     "vitest": "^3"
   }

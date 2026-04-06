@@ -32,6 +32,7 @@ describe("fetchUserInfo", () => {
       name: "Alice",
       email: "alice@github.com",
       avatarUrl: "https://avatars.githubusercontent.com/u/12345",
+      profileUrl: "https://github.com/alice",
     });
   });
 
@@ -47,6 +48,7 @@ describe("fetchUserInfo", () => {
       name: "alice", // falls back to login when name is null
       email: "primary@github.com",
       avatarUrl: "https://avatar.url",
+      profileUrl: "https://github.com/alice",
     });
   });
 
@@ -64,6 +66,7 @@ describe("fetchUserInfo", () => {
       name: "Bob Smith",
       email: "bob@gmail.com",
       avatarUrl: "https://lh3.googleusercontent.com/photo",
+      profileUrl: null,
     });
   });
 
@@ -81,6 +84,7 @@ describe("fetchUserInfo", () => {
       name: "Carol",
       email: "carol@facebook.com",
       avatarUrl: "https://graph.facebook.com/photo",
+      profileUrl: null,
     });
   });
 
@@ -93,6 +97,7 @@ describe("fetchUserInfo", () => {
       name: "Carol",
       email: null,
       avatarUrl: null,
+      profileUrl: null,
     });
   });
 
@@ -110,6 +115,7 @@ describe("fetchUserInfo", () => {
       name: "Dave",
       email: "dave@linkedin.com",
       avatarUrl: "https://media.licdn.com/photo",
+      profileUrl: null,
     });
   });
 
@@ -129,6 +135,7 @@ describe("fetchUserInfo", () => {
       name: "Eve",
       email: null, // X does not provide email
       avatarUrl: "https://pbs.twimg.com/photo",
+      profileUrl: "https://x.com/eve_x",
     });
   });
 

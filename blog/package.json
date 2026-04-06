@@ -11,7 +11,8 @@
     "deploy": "astro build && rsync -avz --delete -e 'ssh -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes' dist/ deploy@arbiter.zkmarek.com:/var/www/static/"
   },
   "dependencies": {
-    "astro": "^5.7.0"
+    "astro": "^5.7.0",
+    "marked": "^17.0.6"
   },
   "devDependencies": {
     "turndown": "^7.2.2",

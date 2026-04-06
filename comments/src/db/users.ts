@@ -8,6 +8,7 @@ export interface User {
   name: string;
   email: string | null;
   avatar_url: string | null;
+  profile_url: string | null;
   is_admin: number;
   created_at: Date;
 }
@@ -22,16 +23,18 @@ export function upsertUser(
   providerId: string,
   name: string,
   email?: string | null,
-  avatarUrl?: string | null
+  avatarUrl?: string | null,
+  profileUrl?: string | null
 ): User {
   db.prepare(
-    `INSERT INTO users (provider, provider_id, name, email, avatar_url)
-     VALUES (?, ?, ?, ?, ?)
+    `INSERT INTO users (provider, provider_id, name, email, avatar_url, profile_url)
+     VALUES (?, ?, ?, ?, ?, ?)
      ON CONFLICT(provider, provider_id) DO UPDATE SET
        name = excluded.name,
        email = excluded.email,
-       avatar_url = excluded.avatar_url`
-  ).run(provider, providerId, name, email ?? null, avatarUrl ?? null);
+       avatar_url = excluded.avatar_url,
+       profile_url = excluded.profile_url`
+  ).run(provider, providerId, name, email ?? null, avatarUrl ?? null, profileUrl ?? null);
 
   const row = db
     .prepare(

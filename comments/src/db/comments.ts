@@ -11,6 +11,7 @@ export interface Comment {
   deleted_at: Date | null;
   author_name: string;
   author_avatar: string | null;
+  author_profile_url: string | null;
 }
 
 export interface CommentWithReplies extends Comment {
@@ -37,7 +38,7 @@ export function getCommentsBySlug(
   const rows = db
     .prepare(
       `SELECT c.id, c.slug, c.user_id, c.parent_id, c.body, c.created_at,
-              u.name as author_name, u.avatar_url as author_avatar
+              u.name as author_name, u.avatar_url as author_avatar, u.profile_url as author_profile_url
        FROM comments c
        JOIN users u ON c.user_id = u.id
        WHERE c.slug = ? AND c.deleted_at IS NULL
@@ -83,7 +84,7 @@ export function createComment(
   const row = db
     .prepare(
       `SELECT c.id, c.slug, c.user_id, c.parent_id, c.body, c.created_at,
-              u.name as author_name, u.avatar_url as author_avatar
+              u.name as author_name, u.avatar_url as author_avatar, u.profile_url as author_profile_url
        FROM comments c
        JOIN users u ON c.user_id = u.id
        WHERE c.id = ?`
@@ -100,7 +101,7 @@ export function getCommentById(
   const row = db
     .prepare(
       `SELECT c.id, c.slug, c.user_id, c.parent_id, c.body, c.created_at, c.deleted_at,
-              u.name as author_name, u.avatar_url as author_avatar
+              u.name as author_name, u.avatar_url as author_avatar, u.profile_url as author_profile_url
        FROM comments c
        JOIN users u ON c.user_id = u.id
        WHERE c.id = ?`
@@ -122,4 +123,52 @@ export function deleteComment(
 
   db.prepare(`UPDATE comments SET deleted_at = datetime('now') WHERE id = ?`).run(id);
   return "deleted";
+}
+
+export function createImportedComment(
+  db: Database.Database,
+  slug: string,
+  userId: number,
+  body: string,
+  createdAt: string,
+  parentId?: number
+): Comment {
+  const result = db
+    .prepare(
+      `INSERT INTO comments (slug, user_id, body, parent_id, created_at)
+       VALUES (?, ?, ?, ?, ?)`
+    )
+    .run(slug, userId, body, parentId ?? null, createdAt);
+
+  const row = db
+    .prepare(
+      `SELECT c.id, c.slug, c.user_id, c.parent_id, c.body, c.created_at,
+              u.name as author_name, u.avatar_url as author_avatar, u.profile_url as author_profile_url
+       FROM comments c
+       JOIN users u ON c.user_id = u.id
+       WHERE c.id = ?`
+    )
+    .get(result.lastInsertRowid) as RawComment;
+
+  return parseComment(row);
+}
+
+export function findImportedComment(
+  db: Database.Database,
+  slug: string,
+  userId: number,
+  createdAt: string,
+  body: string
+): Comment | undefined {
+  const row = db
+    .prepare(
+      `SELECT c.id, c.slug, c.user_id, c.parent_id, c.body, c.created_at, c.deleted_at,
+              u.name as author_name, u.avatar_url as author_avatar, u.profile_url as author_profile_url
+       FROM comments c
+       JOIN users u ON c.user_id = u.id
+       WHERE c.slug = ? AND c.user_id = ? AND c.created_at = ? AND c.body = ?`
+    )
+    .get(slug, userId, createdAt, body) as RawComment | undefined;
+
+  return row ? parseComment(row) : undefined;
 }

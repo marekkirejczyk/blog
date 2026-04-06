@@ -365,6 +365,15 @@ const { slug, apiBase = defaultApiBase } = Astro.props;
     font-weight: 600;
   }
 
+  #comments-list :global(.comment-author) {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  #comments-list :global(.comment-author:hover strong) {
+    text-decoration: underline;
+  }
+
   #comments-list :global(.comment-time) {
     color: #999;
   }
@@ -396,7 +405,59 @@ const { slug, apiBase = defaultApiBase } = Astro.props;
   #comments-list :global(.comment-body) {
     margin: 0.25rem 0 0.5rem;
     line-height: 1.6;
-    white-space: pre-wrap;
+  }
+
+  #comments-list :global(.comment-body p) {
+    margin: 0 0 0.5em;
+  }
+
+  #comments-list :global(.comment-body p:last-child) {
+    margin-bottom: 0;
+  }
+
+  #comments-list :global(.comment-body a) {
+    color: #1a73e8;
+    text-decoration: underline;
+    text-decoration-color: #a8c7fa;
+    text-underline-offset: 2px;
+    transition: text-decoration-color 0.15s;
+  }
+
+  #comments-list :global(.comment-body a:hover) {
+    text-decoration-color: #1a73e8;
+  }
+
+  #comments-list :global(.comment-body code) {
+    background: #f5f5f5;
+    padding: 0.1em 0.3em;
+    border-radius: 3px;
+    font-size: 0.9em;
+  }
+
+  #comments-list :global(.comment-body pre) {
+    background: #f5f5f5;
+    padding: 0.75em 1em;
+    border-radius: 4px;
+    overflow-x: auto;
+    margin: 0.5em 0;
+  }
+
+  #comments-list :global(.comment-body pre code) {
+    background: none;
+    padding: 0;
+  }
+
+  #comments-list :global(.comment-body blockquote) {
+    border-left: 3px solid #e0e0e0;
+    margin: 0.5em 0;
+    padding: 0.25em 0 0.25em 1em;
+    color: #555;
+  }
+
+  #comments-list :global(.comment-body ul),
+  #comments-list :global(.comment-body ol) {
+    margin: 0.5em 0;
+    padding-left: 1.5em;
   }
 
   /* Actions */

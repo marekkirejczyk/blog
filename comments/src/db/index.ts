@@ -6,6 +6,8 @@ export {
   type CommentWithReplies,
   getCommentsBySlug,
   createComment,
+  createImportedComment,
+  findImportedComment,
   getCommentById,
   deleteComment,
 } from "./comments.js";
