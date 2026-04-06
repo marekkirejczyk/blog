@@ -92,7 +92,7 @@ const { slug, apiBase = defaultApiBase } = Astro.props;
           const label = p.charAt(0).toUpperCase() + p.slice(1);
           return '<a href="' + apiBase + '/auth/' + p + '?redirect=' + encodeURIComponent(currentPage) + '" class="login-btn login-' + p + '">' + label + '</a>';
         }).join(' ');
-        authBar.innerHTML = '<span>Sign in with </span>' + buttons;
+        authBar.innerHTML = '<span>Sign in with </span>' + buttons + '<span class="privacy-note">By signing in, you agree to our <a href="/privacy/">Privacy Policy</a>.</span>';
       } else {
         authBar.innerHTML = '<span class="status">Comments require login (no providers configured)</span>';
       }
@@ -252,6 +252,26 @@ const { slug, apiBase = defaultApiBase } = Astro.props;
   #auth-bar :global(.login-btn:hover) {
     border-color: #1a1a1a;
     background: #fafafa;
+  }
+
+  #auth-bar :global(.privacy-note) {
+    display: block;
+    width: 100%;
+    font-size: 0.78rem;
+    color: #999;
+    margin-top: 0.25rem;
+  }
+
+  #auth-bar :global(.privacy-note a) {
+    color: #999;
+    text-decoration: underline;
+    text-decoration-color: #ccc;
+    text-underline-offset: 2px;
+  }
+
+  #auth-bar :global(.privacy-note a:hover) {
+    color: #666;
+    text-decoration-color: #666;
   }
 
   /* Compose */

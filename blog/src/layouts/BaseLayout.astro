@@ -34,7 +34,9 @@ const { title, description = 'Blog by Marek Kirejczyk' } = Astro.props;
       <slot />
     </main>
     <footer class="site-footer">
-      <p>&copy; {new Date().getFullYear()} zkMarek · <a href="/delete-my-data/">Delete my data</a></p>
+      <p>&copy; {new Date().getFullYear()} zkMarek · 
+      <a href="/privacy/" class="footer-link">Privacy Policy</a> ·
+      <a href="/delete-my-data/" class="footer-link">Delete my data</a>
     </footer>
   </body>
 </html>
@@ -91,5 +93,19 @@ const { title, description = 'Blog by Marek Kirejczyk' } = Astro.props;
     border-top: 1px solid #eee;
     font-size: 0.85rem;
     color: #999;
+  }
+
+  .footer-link {
+    color: #999;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.15s;
+  }
+
+  .footer-link:hover {
+    color: #666;
+    text-decoration: underline;
+    text-decoration-color: #999;
+    text-underline-offset: 2px;
   }
 </style>

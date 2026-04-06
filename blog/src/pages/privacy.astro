@@ -1,0 +1,106 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Privacy Policy — zkMarek">
+  <article class="privacy">
+    <h1>Privacy Policy</h1>
+    <p class="updated">Last updated: April 6, 2026</p>
+
+    <p>This blog is a personal website run by zkMarek. This policy explains what data is collected when you use the comment system and how it is handled.</p>
+
+    <h2>What data is collected</h2>
+    <p>If you sign in to leave a comment, the following information is received from your authentication provider:</p>
+    <ul>
+      <li><strong>Name</strong> — your display name</li>
+      <li><strong>Email address</strong> — if provided by your provider (X/Twitter does not share email)</li>
+      <li><strong>Avatar</strong> — your profile picture URL</li>
+      <li><strong>Profile URL</strong> — link to your profile (GitHub and X/Twitter only)</li>
+      <li><strong>Provider ID</strong> — a unique identifier from the provider, used to recognize returning users</li>
+    </ul>
+
+    <h2>Authentication providers</h2>
+    <p>You can sign in with any of the following services. Each provider shares different data:</p>
+    <ul>
+      <li><strong>GitHub</strong> — name, email, avatar, profile URL</li>
+      <li><strong>Google</strong> — name, email, avatar</li>
+      <li><strong>Facebook</strong> — name, email (if available), avatar</li>
+      <li><strong>LinkedIn</strong> — name, email, avatar</li>
+      <li><strong>X (Twitter)</strong> — name, avatar, profile URL (no email)</li>
+    </ul>
+    <p>By signing in through any of these providers, you authorize the provider to share the above information with this site. Please refer to each provider's own privacy policy for details on how they handle your data.</p>
+
+    <h2>How your data is used</h2>
+    <p>Your data is used solely to:</p>
+    <ul>
+      <li>Authenticate you and maintain your session</li>
+      <li>Display your name and avatar next to your comments</li>
+      <li>Link to your profile (where available)</li>
+    </ul>
+    <p>Your data is <strong>not</strong> sold, shared with third parties, or used for advertising or analytics.</p>
+
+    <h2>Cookies and sessions</h2>
+    <p>A single session cookie is used to keep you signed in. Sessions expire after 30 days. No analytics cookies or third-party tracking scripts are used on this site.</p>
+
+    <h2>Data storage</h2>
+    <p>All data is stored in a SQL database on the server. Comments you post are publicly visible along with your name and avatar.</p>
+
+    <h2>Deleting your data</h2>
+    <p>You can delete your own comments at any time while signed in. Deleted comments are soft-deleted — the comment text is removed but a placeholder remains to preserve thread structure.</p>
+    <p>To request full deletion of your account and all associated data, contact <a href="mailto:hello@zkmarek.com">hello@zkmarek.com</a>.</p>
+
+    <h2>Contact</h2>
+    <p>For any questions about this privacy policy, reach out at <a href="mailto:hello@zkmarek.com">hello@zkmarek.com</a>.</p>
+  </article>
+</BaseLayout>
+
+<style>
+  .privacy {
+    padding: 1rem 0 2rem;
+  }
+
+  .privacy h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .privacy .updated {
+    font-size: 0.85rem;
+    color: #999;
+    margin-bottom: 2rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  }
+
+  .privacy h2 {
+    font-size: 1.2rem;
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .privacy p {
+    line-height: 1.7;
+    margin-bottom: 0.75rem;
+    color: #333;
+  }
+
+  .privacy ul {
+    margin: 0.5rem 0 1rem 1.5rem;
+    line-height: 1.7;
+    color: #333;
+  }
+
+  .privacy li {
+    margin-bottom: 0.25rem;
+  }
+
+  .privacy a {
+    color: #1a1a1a;
+    text-decoration: underline;
+    text-decoration-color: #ccc;
+    text-underline-offset: 2px;
+    transition: text-decoration-color 0.15s;
+  }
+
+  .privacy a:hover {
+    text-decoration-color: #1a1a1a;
+  }
+</style>
