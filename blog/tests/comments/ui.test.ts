@@ -71,7 +71,7 @@ describe("renderComment", () => {
           "<strong>Alice</strong>" +
           '<span class="comment-time">&middot; just now</span>' +
         "</div>" +
-        '<div class="comment-body">Hello world</div>' +
+        '<div class="comment-body"><p>Hello world</p></div>' +
         '<div class="comment-actions"></div>' +
       "</div>"
     );
@@ -86,7 +86,7 @@ describe("renderComment", () => {
           "<strong>Alice</strong>" +
           '<span class="comment-time">&middot; just now</span>' +
         "</div>" +
-        '<div class="comment-body">Hello world</div>' +
+        '<div class="comment-body"><p>Hello world</p></div>' +
         '<div class="comment-actions"></div>' +
       "</div>"
     );
@@ -101,7 +101,7 @@ describe("renderComment", () => {
           "<strong>Alice</strong>" +
           '<span class="comment-time">&middot; just now</span>' +
         "</div>" +
-        '<div class="comment-body">Hello world</div>' +
+        '<div class="comment-body"><p>Hello world</p></div>' +
         '<div class="comment-actions">' +
           '<a class="reply-btn" data-id="1" data-name="Alice">Reply</a>' +
         "</div>" +
@@ -118,7 +118,7 @@ describe("renderComment", () => {
           "<strong>Alice</strong>" +
           '<span class="comment-time">&middot; just now</span>' +
         "</div>" +
-        '<div class="comment-body">Hello world</div>' +
+        '<div class="comment-body"><p>Hello world</p></div>' +
         '<div class="comment-actions">' +
           '<a class="reply-btn" data-id="1" data-name="Alice">Reply</a>' +
           '<a class="delete-btn" data-id="1">Delete</a>' +
@@ -136,7 +136,7 @@ describe("renderComment", () => {
           "<strong>Alice</strong>" +
           '<span class="comment-time">&middot; just now</span>' +
         "</div>" +
-        '<div class="comment-body">Hello world</div>' +
+        '<div class="comment-body"><p>Hello world</p></div>' +
         '<div class="comment-actions">' +
           '<a class="reply-btn" data-id="1" data-name="Alice">Reply</a>' +
           '<a class="delete-btn" data-id="1">Delete</a>' +
@@ -162,7 +162,7 @@ describe("renderComment", () => {
           "<strong>Alice</strong>" +
           '<span class="comment-time">&middot; just now</span>' +
         "</div>" +
-        '<div class="comment-body">Hello world</div>' +
+        '<div class="comment-body"><p>Hello world</p></div>' +
         '<div class="comment-actions"></div>' +
         '<div class="replies">' +
           '<div class="comment">' +
@@ -171,7 +171,7 @@ describe("renderComment", () => {
               "<strong>Bob</strong>" +
               '<span class="comment-time">&middot; just now</span>' +
             "</div>" +
-            '<div class="comment-body">Reply here</div>' +
+            '<div class="comment-body"><p>Reply here</p></div>' +
             '<div class="comment-actions"></div>' +
           "</div>" +
         "</div>" +
@@ -192,7 +192,7 @@ describe("renderComment", () => {
           "<strong>&lt;b&gt;hacker&lt;/b&gt;</strong>" +
           '<span class="comment-time">&middot; just now</span>' +
         "</div>" +
-        '<div class="comment-body">&lt;script&gt;xss&lt;/script&gt;</div>' +
+        '<div class="comment-body"><p>&lt;script&gt;xss&lt;/script&gt;</p></div>' +
         '<div class="comment-actions"></div>' +
       "</div>"
     );
