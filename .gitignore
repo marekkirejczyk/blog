@@ -6,3 +6,4 @@ blog/src/pages/index.astro
 blog/import/
 comments/data/
 .claude/
+.env

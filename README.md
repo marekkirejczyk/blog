@@ -61,6 +61,9 @@ sudo certbot --nginx -d comments.zkmarek.com
 # 5. Create .env with OAuth secrets (see deploy/comments.env.example)
 nano /var/www/comments/.env
 
+# 5. Or copy files from local folder
+scp ./comments/.env deploy@arbiter.zkmarek.com:/var/www/comments/.env
+
 # 6. Install and start systemd service
 sudo cp /var/www/comments/deploy/comments.service /etc/systemd/system/
 sudo systemctl daemon-reload
