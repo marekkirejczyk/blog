@@ -3,6 +3,8 @@
   "private": true,
   "workspaces": ["blog", "comments"],
   "scripts": {
+    "dev": "trap 'kill 0' EXIT; npm run dev --workspace=blog & npm run dev --workspace=comments & wait",
+    "build": "npm run build --workspace=blog",
     "test": "npm test --workspaces"
   }
 }
