@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
+    "dev": "tsx watch --env-file-if-exists=.env src/index.ts",
     "start": "node --import tsx src/index.ts",
     "test": "vitest run",
     "test:watch": "vitest"
@@ -13,6 +13,8 @@
     "arctic": "^3.7.0",
     "better-sqlite3": "^11",
     "hono": "^4",
+    "marked": "^17.0.6",
+    "resend": "^6.10.0",
     "tsx": "^4"
   },
   "devDependencies": {
