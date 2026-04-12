@@ -1,0 +1,121 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="About — zkMarek" description="About Marek Kirejczyk — software engineer, entrepreneur, and open-source contributor">
+  <article class="about">
+    <img src="/images/avatar.png" alt="Marek Kirejczyk" class="about-avatar" />
+    <h1>About me</h1>
+    <p>
+      I'm Marek Kirejczyk — a software engineer, entrepreneur, and open-source contributor based in Warsaw.
+      I started programming when I was ten years old and have been building software and companies ever since.
+    </p>
+
+    <h2>What I'm working on</h2>
+    <p>
+      I'm co-founder and CTO at <a href="https://vlayer.xyz" target="_blank" rel="noopener noreferrer">vlayer Labs</a>,
+      where we're building infrastructure for zero-knowledge proofs and verifiable computation.
+    </p>
+
+    <h2>El Passion</h2>
+    <p>
+      In 2012 I became co-owner and CTO of <a href="https://www.elpassion.com" target="_blank" rel="noopener noreferrer">El Passion</a>,
+      an agile software house in Warsaw. We grew the company over the years and eventually reached a successful exit.
+    </p>
+
+    <h2>Ethworks &amp; open source</h2>
+    <p>
+      I founded Ethworks — a blockchain development shop that worked with leading organizations including
+      the Bitcoin and Ethereum foundations. During this time I created two open-source projects
+      that became widely adopted in the Ethereum ecosystem:
+    </p>
+    <ul>
+      <li><strong>Waffle</strong> — an Ethereum smart contract testing library, used in dependencies of over 100k projects</li>
+      <li><strong>useDApp</strong> — a framework for rapid dApp development</li>
+    </ul>
+    <p>Ethworks was also successfully sold.</p>
+
+    <h2>Sabbatical &amp; zkMarek</h2>
+    <p>
+      After selling Ethworks, I took a sabbatical to dive deep into cryptography — with a focus on
+      zero-knowledge proofs. During this time I created the
+      <a href="https://www.youtube.com/@zkmarek" target="_blank" rel="noopener noreferrer">zkMarek YouTube channel</a>,
+      producing 3Blue1Brown-style videos explaining cryptographic concepts. What started as a small
+      learning project gathered over 1,000 subscribers in about a year.
+    </p>
+
+    <h2>Speaking &amp; community</h2>
+    <p>
+      I gave a TEDx talk titled "Will blockchain change everything or nothing?" at TEDxLazarskiUniversity
+      and have spoken at conferences including Consensus and Infoshare.
+      I co-organize <a href="https://x.com/zkmarek" target="_blank" rel="noopener noreferrer">zkWarsaw</a>
+      and co-organized Ethereum Meetup Poland.
+    </p>
+
+    <h2>Writing</h2>
+    <p>
+      On this blog I write about software development, blockchain tooling, formal verification,
+      engineering management, continuous delivery, and occasionally about ADHD and how it shapes the way I work.
+    </p>
+
+    <h2>Get in touch</h2>
+    <p>
+      You can find me on
+      <a href="https://github.com/marekkirejczyk" target="_blank" rel="noopener noreferrer">GitHub</a>,
+      <a href="https://www.linkedin.com/in/kirejczyk/" target="_blank" rel="noopener noreferrer">LinkedIn</a>, or
+      <a href="https://x.com/zkmarek" target="_blank" rel="noopener noreferrer">X</a>.
+    </p>
+  </article>
+</BaseLayout>
+
+<style>
+  .about {
+    padding: 1rem 0 2rem;
+  }
+
+  .about-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1.5rem;
+  }
+
+  .about h1 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .about h2 {
+    font-size: 1.2rem;
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .about p {
+    line-height: 1.7;
+    margin-bottom: 0.75rem;
+    color: #333;
+  }
+
+  .about ul {
+    margin: 0.5rem 0 1rem 1.5rem;
+    line-height: 1.7;
+    color: #333;
+  }
+
+  .about li {
+    margin-bottom: 0.25rem;
+  }
+
+  .about a {
+    color: #1a1a1a;
+    text-decoration: underline;
+    text-decoration-color: #ccc;
+    text-underline-offset: 2px;
+    transition: text-decoration-color 0.15s;
+  }
+
+  .about a:hover {
+    text-decoration-color: #1a1a1a;
+  }
+</style>
