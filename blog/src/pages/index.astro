@@ -5,81 +5,146 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
+
+const currentYear = new Date().getFullYear();
+const shortDate = (d: Date) =>
+  d.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: d.getFullYear() !== currentYear ? 'numeric' : undefined,
+  });
 ---
-<BaseLayout title="Marek Kirejczyk">
-  <section class="post-list">
-    {posts.map((post) => {
-      const formattedDate = post.data.date.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      });
-      return (
-        <article class="post-item">
-          <a href={`/blog/${post.id.replace(/\.md$/, '')}/`}>
-            {post.data.heroImage && <img class="post-cover" src={post.data.heroImage} alt="" />}
-            <div class="post-text">
-              <time datetime={post.data.date.toISOString()}>{formattedDate}</time>
-              <h2>{post.data.title}</h2>
-              {post.data.description && <p>{post.data.description}</p>}
+<BaseLayout title="zkmarek">
+  <section class="post-list" aria-label="Posts">
+    {posts.map((post) => (
+      <article class="post-card">
+        <a class="post-card__link" href={`/blog/${post.id.replace(/\.md$/, '')}/`}>
+          <div class="post-card__text">
+            <h2 class="post-card__title">{post.data.title}</h2>
+            {post.data.description && (
+              <p class="post-card__excerpt">{post.data.description}</p>
+            )}
+            <div class="post-card__meta">
+              <time datetime={post.data.date.toISOString()}>{shortDate(post.data.date)}</time>
             </div>
-          </a>
-        </article>
-      );
-    })}
+          </div>
+          {post.data.heroImage && (
+            <div class="post-card__cover-wrap">
+              <img class="post-card__cover" src={post.data.heroImage} alt="" loading="lazy" />
+            </div>
+          )}
+        </a>
+      </article>
+    ))}
   </section>
 </BaseLayout>
 
 <style>
   .post-list {
-    padding: 1rem 0;
+    max-width: var(--content-max);
+    margin: 0 auto;
+    padding: 24px 0;
   }
 
-  .post-item {
-    margin-bottom: 2.5rem;
+  .post-card {
+    border-bottom: 1px solid var(--color-border);
   }
 
-  .post-item a {
-    text-decoration: none;
+  .post-card:last-child {
+    border-bottom: 0;
+  }
+
+  .post-card__link {
     display: flex;
-    gap: 1.25rem;
+    gap: 40px;
     align-items: flex-start;
+    padding: 20px 0;
   }
 
-  .post-cover {
-    width: 200px;
-    height: 134px;
-    object-fit: cover;
-    border-radius: 4px;
-    flex-shrink: 0;
-  }
-
-  .post-text {
-    flex: 1;
+  .post-card__text {
+    flex: 1 0 0;
     min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
   }
 
-  .post-item a:hover h2 {
-    color: #555;
-  }
-
-  .post-item time {
-    font-size: 0.85rem;
-    color: #999;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-  }
-
-  .post-item h2 {
-    font-size: 1.5rem;
-    margin-top: 0.25rem;
-    letter-spacing: -0.01em;
+  .post-card__title {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 1.25;
+    letter-spacing: -0.22px;
+    color: var(--color-text-strong);
     transition: color 0.15s;
   }
 
-  .post-item p {
-    color: #555;
-    font-size: 0.95rem;
-    margin-top: 0.25rem;
-    line-height: 1.5;
+  .post-card__link:hover .post-card__title {
+    color: var(--color-text-muted);
+  }
+
+  .post-card__excerpt {
+    font-size: 15px;
+    line-height: 1.4;
+    color: var(--color-text-muted);
+  }
+
+  .post-card__meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-top: 4px;
+    font-size: 13px;
+    color: var(--color-text-muted);
+  }
+
+  .post-card__cover-wrap {
+    flex-shrink: 0;
+    width: 240px;
+    height: 160px;
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    background: var(--color-placeholder);
+  }
+
+  .post-card__cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Tablet: keep side-by-side, tighter gap */
+  @media (max-width: 1023px) {
+    .post-list {
+      padding: 16px 0;
+    }
+    .post-card__link {
+      gap: 24px;
+    }
+    .post-card__cover-wrap {
+      width: 200px;
+      height: 134px;
+    }
+  }
+
+  /* Mobile: stack cover on top, full-width, then text */
+  @media (max-width: 640px) {
+    .post-card__link {
+      flex-direction: column;
+      gap: 16px;
+      padding: 24px 0;
+    }
+    .post-card__cover-wrap {
+      order: -1;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 10;
+    }
+    .post-card__title {
+      font-size: 20px;
+    }
+    .post-card__excerpt {
+      font-size: 14.5px;
+    }
   }
 </style>
