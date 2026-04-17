@@ -13,6 +13,11 @@ const shortDate = (d: Date) =>
     day: 'numeric',
     year: d.getFullYear() !== currentYear ? 'numeric' : undefined,
   });
+
+const readMinutes = (body: string | undefined) => {
+  const words = body?.trim().split(/\s+/).length ?? 0;
+  return Math.max(1, Math.round(words / 225));
+};
 ---
 <BaseLayout title="zkmarek">
   <section class="post-list" aria-label="Posts">
@@ -31,6 +36,8 @@ const shortDate = (d: Date) =>
             )}
             <div class="post-card__meta">
               <time datetime={post.data.date.toISOString()}>{shortDate(post.data.date)}</time>
+              <span class="post-card__meta-sep">·</span>
+              <span>{readMinutes(post.body)} min read</span>
             </div>
           </div>
           {post.data.heroImage && (
@@ -118,6 +125,10 @@ const shortDate = (d: Date) =>
     padding-top: 4px;
     font-size: 13px;
     color: var(--color-text-muted);
+  }
+
+  .post-card__meta-sep {
+    color: var(--color-text-faint);
   }
 
   .post-card__cover-wrap {
