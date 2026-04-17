@@ -17,11 +17,6 @@ const { slug, apiBase = defaultApiBase } = Astro.props;
   </div>
 
   <div id="compose" class="compose" style="display: none;">
-    <div id="reply-info" class="reply-info" style="display: none;">
-      Replying to <span id="reply-parent-name"></span>
-      <span class="sep">·</span>
-      <a id="cancel-reply">cancel</a>
-    </div>
     <textarea id="comment-body" placeholder="Write a comment…"></textarea>
     <button id="post-btn" class="btn-post">Post Comment</button>
   </div>
@@ -50,17 +45,13 @@ const { slug, apiBase = defaultApiBase } = Astro.props;
   const apiBase = section.getAttribute('data-api-base')!;
 
   let currentUser: User | null = null;
-  let replyTo: number | null = null;
 
   const authBar = document.getElementById('auth-bar')!;
   const compose = document.getElementById('compose')! as HTMLElement;
   const commentsList = document.getElementById('comments-list')!;
   const bodyInput = document.getElementById('comment-body')! as HTMLTextAreaElement;
-  const replyInfo = document.getElementById('reply-info')! as HTMLElement;
-  const replyParentName = document.getElementById('reply-parent-name')!;
 
-  document.getElementById('post-btn')!.addEventListener('click', handlePostComment);
-  document.getElementById('cancel-reply')!.addEventListener('click', cancelReply);
+  document.getElementById('post-btn')!.addEventListener('click', () => postTopLevelComment());
 
   async function checkAuth() {
     try {
@@ -125,7 +116,7 @@ const { slug, apiBase = defaultApiBase } = Astro.props;
     await apiLogout(apiBase);
     currentUser = null;
     compose.style.display = 'none';
-    cancelReply();
+    closeInlineReply();
     showLoginButtons();
   }
 
@@ -147,7 +138,7 @@ const { slug, apiBase = defaultApiBase } = Astro.props;
     commentsList.querySelectorAll('.reply-btn').forEach(function(btn) {
       const el = btn as HTMLElement;
       el.addEventListener('click', function() {
-        startReply(parseInt(el.dataset.id!), el.dataset.name!);
+        openInlineReply(parseInt(el.dataset.id!), el.dataset.name!, el);
       });
     });
     commentsList.querySelectorAll('.delete-btn').forEach(function(btn) {
@@ -158,26 +149,65 @@ const { slug, apiBase = defaultApiBase } = Astro.props;
     });
   }
 
-  function startReply(id: number, name: string) {
-    replyTo = id;
-    replyParentName.textContent = name;
-    replyInfo.style.display = 'block';
-    bodyInput.focus();
+  function closeInlineReply() {
+    document.querySelector('#comments-list .reply-form')?.remove();
   }
 
-  function cancelReply() {
-    replyTo = null;
-    replyInfo.style.display = 'none';
+  function openInlineReply(parentId: number, parentName: string, replyBtn: HTMLElement) {
+    if (!currentUser) return;
+    closeInlineReply();
+
+    const comment = replyBtn.closest('.comment') as HTMLElement | null;
+    const actions = replyBtn.closest('.comment-actions') as HTMLElement | null;
+    if (!comment || !actions) return;
+
+    const avatarHtml = currentUser.avatar_url
+      ? '<img src="' + esc(currentUser.avatar_url) + '" class="avatar" alt="" />'
+      : '<span class="avatar-placeholder">' + esc((currentUser.name || '?').charAt(0).toUpperCase()) + '</span>';
+
+    const form = document.createElement('div');
+    form.className = 'reply-form';
+    form.innerHTML =
+      '<div class="reply-info">' +
+        'Replying to <strong>' + esc(parentName) + '</strong>' +
+        '<span class="sep">·</span>' +
+        '<a class="cancel-reply">cancel</a>' +
+      '</div>' +
+      '<div class="reply-user">' + avatarHtml + '<span class="user-name">' + esc(currentUser.name) + '</span></div>' +
+      '<textarea class="reply-body" placeholder="Write a comment…"></textarea>' +
+      '<div class="reply-actions">' +
+        '<button type="button" class="btn-cancel">Cancel</button>' +
+        '<button type="button" class="btn-post">Post Reply</button>' +
+      '</div>';
+
+    actions.after(form);
+
+    const textarea = form.querySelector('.reply-body') as HTMLTextAreaElement;
+    form.querySelector('.cancel-reply')!.addEventListener('click', closeInlineReply);
+    form.querySelector('.btn-cancel')!.addEventListener('click', closeInlineReply);
+    form.querySelector('.btn-post')!.addEventListener('click', () => postReply(parentId, textarea));
+
+    textarea.focus();
   }
 
-  async function handlePostComment() {
+  async function postTopLevelComment() {
     const body = bodyInput.value.trim();
     if (!body) return;
-
     try {
-      await apiPostComment(apiBase, slug, body, replyTo ?? undefined);
+      await apiPostComment(apiBase, slug, body);
       bodyInput.value = '';
-      cancelReply();
+      loadComments();
+    } catch (e) {
+      alert('Error: ' + (e instanceof Error ? e.message : 'Could not post comment.'));
+    }
+  }
+
+  async function postReply(parentId: number, textarea: HTMLTextAreaElement) {
+    const body = textarea.value.trim();
+    if (!body) return;
+    try {
+      await apiPostComment(apiBase, slug, body, parentId);
+      closeInlineReply();
       loadComments();
     } catch (e) {
       alert('Error: ' + (e instanceof Error ? e.message : 'Could not post comment.'));
@@ -368,23 +398,33 @@ const { slug, apiBase = defaultApiBase } = Astro.props;
     margin-bottom: 8px;
   }
 
-  .reply-info {
-    font-size: 13px;
-    color: var(--color-text-muted);
-    margin-bottom: 8px;
+  /* Inline reply form injected under a comment */
+  #comments-list :global(.reply-form) {
+    margin: 12px 0 8px;
+    padding: 14px 16px;
+    background: var(--color-surface-muted);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
 
-  .reply-info :global(#reply-parent-name) {
+  #comments-list :global(.reply-form .reply-info) {
+    font-size: 13px;
+    color: var(--color-text-muted);
+  }
+
+  #comments-list :global(.reply-form .reply-info strong) {
     font-weight: 600;
     color: var(--color-text);
   }
 
-  .reply-info .sep {
+  #comments-list :global(.reply-form .reply-info .sep) {
     color: var(--color-text-faint);
     margin: 0 6px;
   }
 
-  #cancel-reply {
+  #comments-list :global(.reply-form .cancel-reply) {
     color: var(--color-text-muted);
     cursor: pointer;
     text-decoration: underline;
@@ -392,12 +432,68 @@ const { slug, apiBase = defaultApiBase } = Astro.props;
     text-underline-offset: 2px;
   }
 
-  #cancel-reply:hover {
+  #comments-list :global(.reply-form .cancel-reply:hover) {
     color: var(--color-text);
     text-decoration-color: var(--color-text);
   }
 
-  textarea {
+  #comments-list :global(.reply-form .reply-user) {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  #comments-list :global(.reply-form .reply-user .user-name) {
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--color-text);
+  }
+
+  #comments-list :global(.reply-form .reply-body) {
+    margin-bottom: 0;
+  }
+
+  #comments-list :global(.reply-form .reply-actions) {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  #comments-list :global(.reply-form .btn-cancel) {
+    background: var(--color-surface);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    padding: 12px 20px;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 500;
+    transition: border-color 0.15s;
+  }
+
+  #comments-list :global(.reply-form .btn-cancel:hover) {
+    border-color: var(--color-text);
+  }
+
+  #comments-list :global(.reply-form .btn-post) {
+    background: var(--color-accent);
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.15s;
+  }
+
+  #comments-list :global(.reply-form .btn-post:hover) {
+    background: var(--color-accent-hover);
+  }
+
+  .comments-section :global(textarea) {
     display: block;
     width: 100%;
     min-height: 110px;
@@ -414,11 +510,11 @@ const { slug, apiBase = defaultApiBase } = Astro.props;
     transition: border-color 0.15s;
   }
 
-  textarea::placeholder {
+  .comments-section :global(textarea::placeholder) {
     color: var(--color-text-faint);
   }
 
-  textarea:focus {
+  .comments-section :global(textarea:focus) {
     outline: none;
     border-color: var(--color-text);
   }
