@@ -61,6 +61,21 @@ function handleDevLoginForm(ctx: RouteContext) {
             border-radius: 3px;
             margin-bottom: 1rem;
           }
+          .checkbox-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+          }
+          .checkbox-row input {
+            width: auto;
+            margin: 0;
+          }
+          .checkbox-row label {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #1a1a1a;
+          }
         </style>
       </head>
       <body>
@@ -73,6 +88,10 @@ function handleDevLoginForm(ctx: RouteContext) {
           <input type="text" id="name" name="name" value="Dev User" required />
           <label for="email">Email</label>
           <input type="email" id="email" name="email" value="dev@localhost" required />
+          <div class="checkbox-row">
+            <input type="checkbox" id="is_admin" name="is_admin" value="1" />
+            <label for="is_admin">Sign in as admin</label>
+          </div>
           <button type="submit">Sign in</button>
         </form>
       </body>
@@ -88,11 +107,13 @@ async function handleDevLogin(
   const name = String(body.name || "Dev User");
   const email = String(body.email || "dev@localhost");
   const redirect = String(body.redirect || "");
+  const isAdmin = body.is_admin === "1";
 
   const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random&size=64`;
 
   const db = ctx.get("db");
   const user = upsertUser(db, "dev", email, name, email, avatarUrl);
+  db.prepare("UPDATE users SET is_admin = ? WHERE id = ?").run(isAdmin ? 1 : 0, user.id);
   const session = createSession(db, user.id, sessionDurationDays);
 
   const DAYS_TO_SECONDS = 24 * 60 * 60;
