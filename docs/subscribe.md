@@ -63,7 +63,7 @@ Response (new subscriber): `201`
 
 Response (already confirmed): `200`
 ```json
-{ "message": "You are already subscribed." }
+{ "alreadySubscribed": true, "message": "You're already on the list." }
 ```
 
 ### GET /subscribe/confirm?token=:token
@@ -185,7 +185,7 @@ Two implementations:
 
 - `insertSubscriber(db, email)` — upsert with `ON CONFLICT`, generates UUID tokens
 - `confirmSubscriber(db, token)` → `"confirmed" | "already_confirmed" | "not_found"`
-- `unsubscribe(db, token)` → `"unsubscribed" | "not_found"`
+- `unsubscribe(db, token)` → `{ status: "unsubscribed", email } | { status: "not_found" }`
 - `getUnnotifiedSubscribers(db, slug)` — confirmed subscribers not yet notified for this slug
 - `recordNotification(db, slug, subscriberId)` — inserts a `notifications_sent` row
 - `getNotificationHistory(db, slug)` → `Array<{ sent_at: Date, count: number }>`
