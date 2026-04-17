@@ -3,6 +3,7 @@ title: "useDApp 1.0 Released!"
 date: "2022-04-14"
 description: "Multichain support, WalletConnect new docs and more!"
 heroImage: "https://cdn-images-1.medium.com/max/800/1*TS8vLpFSgBa8bqPeUgMVEQ.png"
+tags: ["Usedapp", "React", "Ethereum", "Blockchain"]
 ---
 
 ### Multichain support, WalletConnect new docs and more!

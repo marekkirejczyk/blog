@@ -3,6 +3,7 @@ title: "New Waffle matcher: expect().to.be.calledOnContract()"
 date: "2020-06-03"
 description: "Perhaps you read my previous post about mocking smart contracts. Now, if you did, you may probably agree that writing tests is still a…"
 heroImage: "https://cdn-images-1.medium.com/max/800/1*SEuHGmexw_2zxqiAC05u_A.png"
+tags: ["Testing", "Solidity", "Waffle", "Ethereum", "Smart Contracts"]
 ---
 
 Perhaps you read my previous post about [_mocking smart contracts_](/blog/mocking-solidity-smart-contracts-with-waffle)_._ Now, if you did, you may probably agree that writing tests is still a challange. One of the fundamental reasons is that we approach them as if they were integration tests rather than unit tests.

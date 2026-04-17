@@ -3,6 +3,7 @@ title: "Hype Driven Development"
 date: "2016-11-23"
 description: "Software development teams often make decisions about software architecture or technological stack based on inaccurate opinions, social…"
 heroImage: "https://cdn-images-1.medium.com/max/1200/1*fNwlGLy68kcwyQX9jWj21g.jpeg"
+tags: ["Hype Driven Development", "Software Development", "Learning", "Tech", "Startup"]
 ---
 
 Software development teams often make decisions about software architecture or technological stack based on inaccurate opinions, social media, and in general on what is considered to be “hot”, rather than solid research and any serious consideration of expected impact on their projects. I call this trend Hype Driven Development, perceive it harmful and advocate for a more professional approach I call “Solid Software Engineering”. Learn more about how it works and find out what you can do instead.

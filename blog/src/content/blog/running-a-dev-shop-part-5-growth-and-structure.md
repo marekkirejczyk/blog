@@ -3,6 +3,7 @@ title: "Running a dev shop — part 5: Growth and structure"
 date: "2023-03-02"
 description: "This is the fifth and the last part of a series on running a dev shop. See the overview of the posts below."
 heroImage: "https://cdn-images-1.medium.com/max/800/0*nextyIz_fcvxAvqt"
+tags: ["Devhouse", "Software House", "Growth", "Company Structure"]
 ---
 
 This is the fifth and the last part of a series on running a dev shop. See the overview of the posts below.

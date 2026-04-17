@@ -3,6 +3,7 @@ title: "Running a dev shop — part 2: Bootstrapping and specialization"
 date: "2022-09-06"
 description: "This is the second part of a series on running a dev shop. See the overview of the posts below."
 heroImage: "https://cdn-images-1.medium.com/max/800/1*X0UpYmJ4wb5ID0vZsIVozQ.jpeg"
+tags: ["Dev House", "Software House", "Agency", "Software Development"]
 ---
 
 This is the second part of a series on running a dev shop. See the overview of the posts below.

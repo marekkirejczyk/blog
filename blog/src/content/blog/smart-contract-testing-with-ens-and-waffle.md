@@ -3,6 +3,7 @@ title: "Smart contract testing with ENS and Waffle"
 date: "2020-08-05"
 description: "With hundreds of applications using ENS, Ethereum-based decentralised naming system, we can all agree that it has become a widely…"
 heroImage: "https://cdn-images-1.medium.com/max/800/1*PtLY0_AI0WnAjMXPXKYDew.png"
+tags: ["Smart Contracts", "Testing", "Ethereum"]
 ---
 
 With hundreds of applications using ENS, an Ethereum-based decentralised naming system, we can all agree that it has become a widely recognised standard in the blockchain space.

@@ -3,6 +3,7 @@ title: "Our little secret superpower: Unification"
 date: "2020-07-22"
 description: "With the need for highly-skilled professionals, developing software has always been an expensive and slow process. With growing complexity…"
 heroImage: "https://cdn-images-1.medium.com/max/800/1*lfjyQrh_Wv8JQNscAq1dfA@2x.png"
+tags: ["Typescript", "Software Architecture", "Software Engineering"]
 ---
 
 With the need for highly-skilled professionals, developing software has always been an expensive and slow process. With the growing complexity, it seems to be getting worse and worse.

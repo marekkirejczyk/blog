@@ -6,6 +6,7 @@ description: "This is the second post of our series on new useDApp features:
 2. Deep dive into custom hooks and testing
 3. Coming…"
 heroImage: "https://cdn-images-1.medium.com/max/800/1*NWfZfV39AhiUvhbny30S2g.png"
+tags: ["Testing", "Ethereum", "Dapps", "Usedapp"]
 ---
 
 This is the second post of our series on new useDApp features:  

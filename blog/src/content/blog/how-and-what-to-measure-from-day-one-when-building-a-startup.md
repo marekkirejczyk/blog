@@ -3,6 +3,7 @@ title: "How and What to Measure from Day One when Building a Startup"
 date: "2017-04-12"
 description: "One of the biggest challenges at the initial stages is to keep the whole team focused on one common goal. Showing promising results of…"
 heroImage: "https://cdn-images-1.medium.com/max/2560/0*LIKhKVF8ZINrW7p6."
+tags: ["Startup", "Lean Startup", "Engagement", "Tech", "Learning"]
 ---
 
 O**ne of the biggest challenges at the initial stages is to keep the whole team focused on one common goal. Showing promising results of their effort can be very motivational. But how to conduct research that shows it?**

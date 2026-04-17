@@ -3,6 +3,7 @@ title: "UniLogin Beta 4: Easier than ever with new providerAPI"
 date: "2020-02-14"
 description: "Note: We recently changed the name from Universal Login to Unilogin (link to the announcement here)."
 heroImage: "https://cdn-images-1.medium.com/max/800/1*sWw6ONmAK_qj12w7eDrp4A.png"
+tags: ["Unilogin", "Universal Login", "Ethereum", "Onboarding"]
 ---
 
 _Note: We recently changed the name from Universal Login to Unilogin (link to the announcement_ [_here_](https://medium.com/universal-ethereum/universal-login-is-now-unilogin-eb4683efadfc)_)._

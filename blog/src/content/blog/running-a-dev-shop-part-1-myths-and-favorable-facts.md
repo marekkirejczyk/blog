@@ -3,6 +3,7 @@ title: "Running a dev shop — Part 1: Myths and favorable facts"
 date: "2022-08-29"
 description: "This is the first part of a series on running a dev shop. See the overview of the planned posts below."
 heroImage: "https://cdn-images-1.medium.com/max/800/1*zt1t_zS3PDjIZoNwyacUJw.jpeg"
+tags: ["Software House", "Devhouse", "Consultancy", "Software Development"]
 ---
 
 This is the first part of a series on running a dev shop. See the overview of the planned posts below.

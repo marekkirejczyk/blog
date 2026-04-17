@@ -21,6 +21,11 @@ const shortDate = (d: Date) =>
         <a class="post-card__link" href={`/blog/${post.id.replace(/\.md$/, '')}/`}>
           <div class="post-card__text">
             <h2 class="post-card__title">{post.data.title}</h2>
+            {post.data.tags && post.data.tags.length > 0 && (
+              <div class="post-card__tags">
+                {post.data.tags.map((tag) => <span class="post-card__tag">{tag}</span>)}
+              </div>
+            )}
             {post.data.description && (
               <p class="post-card__excerpt">{post.data.description}</p>
             )}
@@ -81,6 +86,23 @@ const shortDate = (d: Date) =>
 
   .post-card__link:hover .post-card__title {
     color: var(--color-text-muted);
+  }
+
+  .post-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-top: 8px;
+  }
+
+  .post-card__tag {
+    background: var(--color-surface-muted);
+    color: var(--color-text-secondary);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: var(--radius-pill);
+    white-space: nowrap;
   }
 
   .post-card__excerpt {

@@ -3,6 +3,7 @@ title: "Smart Contracts testing still sucks, how want to make it better"
 date: "2020-04-29"
 description: "Despite these challenging times, we remain very optimistic about the future of Ethereum ecosystem. Earlier this year, when ETH price…"
 heroImage: "https://cdn-images-1.medium.com/max/1200/1*tyr3NElqUbauWHzfKJ0c4w.jpeg"
+tags: ["Ethereum", "Solidity", "Testing", "Mocking", "Waffle"]
 ---
 
 Despite these challenging times, we remain very optimistic about the future of Ethereum ecosystem. Earlier this year, when ETH price crashed, MakerDAO challenges arose. More recently, dForce protocol and Hegic have been hacked. And yet, we perceive it as a healthy part of ecosystem growth. As it is being tested, new problems arise and they need to be solved. Yet another important step in a long journey to a wide adoption.

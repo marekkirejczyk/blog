@@ -3,6 +3,7 @@ title: "The Secret of High-Performing Developers"
 date: "2017-06-29"
 description: "High performers"
 heroImage: "https://cdn-images-1.medium.com/max/2560/1*4bmz0F8pGQ_Rc_GK3QAveA.png"
+tags: ["Programming", "Personal Development", "Tech", "Learning", "Coding"]
 ---
 
 *Illustration by Sonia Budner*

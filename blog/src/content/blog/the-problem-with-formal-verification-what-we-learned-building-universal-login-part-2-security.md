@@ -3,6 +3,7 @@ title: "The Problem with Formal Verification (What We Learned Building Universal
 date: "2020-02-03"
 description: "This is the second blog post in a series “What We Learned Building Universal Login”:"
 heroImage: "https://cdn-images-1.medium.com/max/1200/1*hnOxSPce9XNdN1qW1AWucQ.png"
+tags: ["Blockchain", "Dapps", "Ethereum", "Cryptocurrency", "Sso"]
 ---
 
 This is the second blog post in a series “What We Learned Building Universal Login”:

@@ -3,6 +3,7 @@ title: "Learning AI coding is no longer optional. But it’s not vibe coding."
 date: "2025-08-24"
 description: "This is the first post in a series on AI-assisted coding. See the overview of the series below:"
 heroImage: "https://cdn-images-1.medium.com/max/800/1*nngI6rf5B3CKY7W_NLt7dQ.png"
+tags: ["Vibe Coding", "AI"]
 ---
 
 This is the first post in a series on AI-assisted coding. See the overview of the series below:

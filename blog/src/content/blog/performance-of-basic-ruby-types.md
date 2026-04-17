@@ -3,6 +3,7 @@ title: "Performance of basic Ruby types"
 date: "2016-10-26"
 description: "Modern computers are extremely fast machines, what leaves us — software engineers — with no excuses to write slow programs. One of the…"
 heroImage: "https://cdn-images-1.medium.com/max/800/1*f8cX7cIsdaJssbUPv8Wlng.jpeg"
+tags: ["Programming", "Ruby", "Performance", "Learning", "Tech"]
 ---
 
 Modern computers are extremely fast machines, what leaves us — software engineers — with no excuses to write slow programs. One of the essentials for writing performant software is being conscious about performance of the basic operations. Let’s take a closer look at the performance characteristics of basic Ruby types: Integer, Array, Hash and String.

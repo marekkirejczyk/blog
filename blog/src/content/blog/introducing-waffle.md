@@ -3,6 +3,7 @@ title: "Introducing Waffle"
 date: "2018-11-19"
 description: "If you care about the quality of your software, you care about tests. You care about syntax and speed. We find a good testing framework is…"
 heroImage: "https://cdn-images-1.medium.com/max/800/1*ibIslpTHApZbM41npK01xA.png"
+tags: ["Ethereum", "Solidity", "Testing", "Unit Testing", "Truffle"]
 ---
 
 If you care about the quality of your software, you care about tests. If you care about tests, you care about syntax and speed. We find a good testing framework is essential for creating quality software. Which brings us to smart contracts.

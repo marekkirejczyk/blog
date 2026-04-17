@@ -1,0 +1,300 @@
+{
+  "how-to-prioritize-development-projects-with-kanban": [
+    "Kanban",
+    "Agile",
+    "Agile Development"
+  ],
+  "zero-bug-tolerance-improve-software-quality-with-one-simple-practice": [
+    "Agile Development",
+    "Kanban",
+    "Agile",
+    "Bugs"
+  ],
+  "pair-programming-demystified": [
+    "Agile",
+    "Pair Programming",
+    "Tech",
+    "Education",
+    "Startup"
+  ],
+  "pair-programming-demystified-2016-01-10": [
+    "Programming",
+    "Software Development",
+    "Pair Programming"
+  ],
+  "performance-of-basic-ruby-types": [
+    "Programming",
+    "Ruby",
+    "Performance",
+    "Learning",
+    "Tech"
+  ],
+  "hype-driven-development": [
+    "Hype Driven Development",
+    "Software Development",
+    "Learning",
+    "Tech",
+    "Startup"
+  ],
+  "hype-driven-development-part-2-the-phenomenon": [
+    "Tech",
+    "Twitter",
+    "Programming",
+    "Reddit",
+    "Software Development"
+  ],
+  "how-and-what-to-measure-from-day-one-when-building-a-startup": [
+    "Startup",
+    "Lean Startup",
+    "Engagement",
+    "Tech",
+    "Learning"
+  ],
+  "the-secret-of-high-performing-developers": [
+    "Programming",
+    "Personal Development",
+    "Tech",
+    "Learning",
+    "Coding"
+  ],
+  "spificator-a-usability-pattern-for-dapps": null,
+  "testing-contracts-that-use-ens-with-ensbuilder": [
+    "Ethereum",
+    "Solidity",
+    "Testing"
+  ],
+  "introducing-waffle": [
+    "Ethereum",
+    "Solidity",
+    "Testing",
+    "Unit Testing",
+    "Truffle"
+  ],
+  "waffle-2-0-released": [
+    "JavaScript",
+    "Solidity",
+    "Waffle",
+    "Truffle"
+  ],
+  "formal-verification-for-n00bs-part-1": [
+    "Ethereum",
+    "Kvm",
+    "Formal Verification",
+    "Solidity",
+    "Smart Contracts"
+  ],
+  "formal-verification-for-n00bs-part-2-proving-the-correctness-of-a-token": [
+    "Ethereum",
+    "Klab",
+    "Formal Verification",
+    "Solidity",
+    "Evm"
+  ],
+  "formal-verification-for-n00bs-part-3-an-attempt-to-prevent-classic-hack-with-klab": [
+    "Ethereum",
+    "Formal Verification",
+    "Solidity",
+    "Evm",
+    "Act"
+  ],
+  "formal-verification-for-n00bs-part-4-understanding-k-language": [
+    "Ethereum",
+    "Formal Verification",
+    "Evm",
+    "Act"
+  ],
+  "what-we-learned-building-universal-login-part-1-the-problem": [
+    "Ethereum",
+    "Universal Login",
+    "Onboarding",
+    "User Experience",
+    "Dapps"
+  ],
+  "universal-login-beta-3-gnosis-safe-support-more": [
+    "Ethereum",
+    "Blockchain",
+    "Dapps",
+    "Sso",
+    "Cryptocurrency"
+  ],
+  "the-problem-with-formal-verification-what-we-learned-building-universal-login-part-2-security": [
+    "Blockchain",
+    "Dapps",
+    "Ethereum",
+    "Cryptocurrency",
+    "Sso"
+  ],
+  "unilogin-beta-4-easier-than-ever-with-new-providerapi": [
+    "Unilogin",
+    "Universal Login",
+    "Ethereum",
+    "Onboarding"
+  ],
+  "smart-contracts-testing-still-sucks-how-want-to-make-it-better": [
+    "Ethereum",
+    "Solidity",
+    "Testing",
+    "Mocking",
+    "Waffle"
+  ],
+  "mocking-solidity-smart-contracts-with-waffle": [
+    "Solidity",
+    "Smart Contracts",
+    "Ethereum",
+    "Mock",
+    "Mocking"
+  ],
+  "new-waffle-matcher-expect-to-be-calledoncontract": [
+    "Testing",
+    "Solidity",
+    "Waffle",
+    "Ethereum",
+    "Smart Contracts"
+  ],
+  "waffle-3-0-released-with-ethers-js-5-0-and-more": [
+    "Waffle",
+    "Testing",
+    "Solidity",
+    "Ethereum"
+  ],
+  "unilogin-and-the-quest-for-a-better-txn-fees-ux": [
+    "Blockchain",
+    "Ethereum",
+    "UX",
+    "Cryptocurrency",
+    "Dapps"
+  ],
+  "our-little-secret-superpower-unification": [
+    "Typescript",
+    "Software Architecture",
+    "Software Engineering"
+  ],
+  "smart-contract-testing-with-ens-and-waffle": [
+    "Smart Contracts",
+    "Testing",
+    "Ethereum"
+  ],
+  "introducing-waffle-support-for-jest-experimental": [
+    "Waffle",
+    "Solidity",
+    "Smart Contracts",
+    "Ethereum",
+    "Blockchain"
+  ],
+  "pragmatic-smart-contracting-tdd-pairing-waffle-buidler": [
+    "Solidity",
+    "Smart Contracts",
+    "Test Driven Development",
+    "Pair Programming",
+    "Ethereum"
+  ],
+  "your-clutch-award-is-lame-but-you-re-gonna-share-it-anyway": [
+    "Clutch",
+    "Awards",
+    "Blockchain",
+    "Ethereum"
+  ],
+  "introducing-restless-validations-for-ts-ethereum-and-express-js": [
+    "Validation",
+    "JavaScript",
+    "Typescript",
+    "Expressjs",
+    "Ethereum"
+  ],
+  "bubble-burst-shenanigans": [
+    "Bitcoin",
+    "Ethereum",
+    "Bubble",
+    "Investing",
+    "Speculation"
+  ],
+  "introducing-usedapp-framework-for-rapid-dapp-development": [
+    "React",
+    "Ethereum",
+    "Dapps",
+    "Solidity",
+    "Framwork"
+  ],
+  "usedapp-deep-dive-into-custom-hooks-and-testing": [
+    "Testing",
+    "Ethereum",
+    "Dapps",
+    "Usedapp"
+  ],
+  "introducing-truefi-engineering": [
+    "Waffle",
+    "Usedapp",
+    "Engineering",
+    "Blockchain",
+    "Truefi"
+  ],
+  "usedapp-update-22": [
+    "Usedapp",
+    "Dapps",
+    "Ethereum",
+    "Blockchain",
+    "React"
+  ],
+  "preventing-billion-dollar-hacks": [
+    "Security",
+    "Hacks",
+    "Blockchain",
+    "Rect"
+  ],
+  "usedapp-1-0-released": [
+    "Usedapp",
+    "React",
+    "Ethereum",
+    "Blockchain"
+  ],
+  "running-a-dev-shop-part-1-myths-and-favorable-facts": [
+    "Software House",
+    "Devhouse",
+    "Consultancy",
+    "Software Development"
+  ],
+  "running-a-dev-shop-part-2-bootstrapping-and-specialization": [
+    "Dev House",
+    "Software House",
+    "Agency",
+    "Software Development"
+  ],
+  "running-a-dev-shop-part-3-talent-pipeline-and-employee-life-cycle": [
+    "Software House",
+    "Hiring",
+    "Pipeline"
+  ],
+  "running-a-dev-shop-part-4-attracting-customers": [
+    "Software House",
+    "Marketing",
+    "Lead Generation",
+    "Leads",
+    "Marketing Strategies"
+  ],
+  "running-a-dev-shop-part-5-growth-and-structure": [
+    "Devhouse",
+    "Software House",
+    "Growth",
+    "Company Structure"
+  ],
+  "what-you-missed-about-continues-delivery": [
+    "Agile",
+    "DevOps",
+    "Continuous Delivery",
+    "Continuous Integration"
+  ],
+  "five-reasons-why-i-change-my-focus-to-cryptography": [
+    "Zero Knowledge Proofs",
+    "Cryptography",
+    "Quantum Computing"
+  ],
+  "the-joy-and-pain-of-living-with-adhd": [
+    "Adhd",
+    "Attention Deficit",
+    "Hyperactivity"
+  ],
+  "learning-ai-coding-is-no-longer-optional-but-it-s-not-vibe-coding": [
+    "Vibe Coding",
+    "AI"
+  ]
+}

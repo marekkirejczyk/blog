@@ -3,6 +3,7 @@ title: "The joy and pain of living with ADHD"
 date: "2023-09-13"
 description: "Entering adulthood with ADHD was not easy for me. Consider the inability to remember a simple thing or focus on a single topic for more…"
 heroImage: "https://cdn-images-1.medium.com/max/800/1*t_vrje_8qV0cGhAiXPsASg.png"
+tags: ["Adhd", "Attention Deficit", "Hyperactivity"]
 ---
 
 *The joy and pain of living with ADHD*

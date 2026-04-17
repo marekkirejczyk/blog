@@ -3,6 +3,7 @@ title: "Introducing Restless: Validations for TS, Ethereum and Express.js"
 date: "2021-01-14"
 description: "Validations are … everywhere"
 heroImage: "https://cdn-images-1.medium.com/max/1200/1*uA54CgI3xdYAYgnz__Arig.png"
+tags: ["Validation", "JavaScript", "Typescript", "Expressjs", "Ethereum"]
 ---
 
 Data validations and sanitization are ubiquitous throughout all kinds of programming. From web to mobile, from back-end to front-end, and of course, in the blockchain space, where a single injection can carry devastating results.

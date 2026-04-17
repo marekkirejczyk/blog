@@ -3,6 +3,7 @@ title: "Testing contracts that use ENS with ENSBuilder"
 date: "2018-09-28"
 description: "When it comes to testing contracts and functionality that uses Ethereum Naming System (ENS), it is a bit tricky. It is difficult to test in…"
 heroImage: "https://cdn-images-1.medium.com/max/800/1*tX6TatfVqjtOHuMDm0kakA.png"
+tags: ["Ethereum", "Solidity", "Testing"]
 ---
 
 > When it comes to testing contracts and functionality that uses [Ethereum Naming System](https://ens.domains/) (ENS), it is a bit tricky. It is difficult to test in isolation from ENS, and it is hard to stub ENS.

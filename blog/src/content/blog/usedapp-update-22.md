@@ -3,6 +3,7 @@ title: "useDApp update ‘22"
 date: "2022-02-17"
 description: "useDApp is on fire 🔥🔥🔥"
 heroImage: "https://cdn-images-1.medium.com/max/800/1*qpJjsIGJo08mzbhNfCWk1A.png"
+tags: ["Usedapp", "Dapps", "Ethereum", "Blockchain", "React"]
 ---
 
 When we were [not looking](/blog/introducing-truefi-engineering), useDApp became a very popular framework for front-end development on Ethereum (and other EVM blockchains), with 1000+ public projects using the framework and a great community of contributors and some respected projects using it on production.

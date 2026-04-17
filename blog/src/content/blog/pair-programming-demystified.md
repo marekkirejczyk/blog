@@ -2,6 +2,7 @@
 title: "Pair Programming demystified!"
 date: "2015-12-29"
 heroImage: "https://cdn-images-1.medium.com/max/800/0*vwktgSPc1VQRLB_r.png"
+tags: ["Agile", "Pair Programming", "Tech", "Education", "Startup"]
 ---
 
 ![](https://cdn-images-1.medium.com/max/1200/1*3NsQB0zAwmg5eawPlyhyyw.png)

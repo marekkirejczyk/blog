@@ -8,10 +8,11 @@ interface Props {
   slug: string;
   description?: string;
   heroImage?: string;
+  tags?: string[];
   readMinutes: number;
 }
 
-const { title, date, slug, description, heroImage, readMinutes } = Astro.props;
+const { title, date, slug, description, heroImage, tags, readMinutes } = Astro.props;
 
 const currentYear = new Date().getFullYear();
 const formattedDate = date.toLocaleDateString('en-US', {
@@ -24,11 +25,11 @@ const formattedDate = date.toLocaleDateString('en-US', {
   <article class="post">
     <a class="post__back" href="/">&larr; Back to all posts</a>
 
-    {/* Tags row — hidden until tags are in the content schema
-    <div class="post__tags">
-      <span class="post__tag">Tag</span>
-    </div>
-    */}
+    {tags && tags.length > 0 && (
+      <div class="post__tags">
+        {tags.map((tag) => <span class="post__tag">{tag}</span>)}
+      </div>
+    )}
 
     <h1 class="post__title">{title}</h1>
 

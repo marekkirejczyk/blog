@@ -3,6 +3,7 @@ title: "Introducing  useDApp - framework for rapid DApp development"
 date: "2021-03-23"
 description: "🐅 DApp - a new animal in the jungle"
 heroImage: "https://cdn-images-1.medium.com/max/800/1*fEPkJS_jJp3cb9rU92uS3A.png"
+tags: ["React", "Ethereum", "Dapps", "Solidity", "Framwork"]
 ---
 
 This is the first post of our series on new useDApp features:  

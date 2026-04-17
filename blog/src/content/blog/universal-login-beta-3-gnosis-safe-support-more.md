@@ -3,6 +3,7 @@ title: "Universal Login Beta 3: Gnosis Safe Support &amp; More"
 date: "2020-01-28"
 description: "Long-awaited Universal Login Beta 3 has landed, with a major announcement: we are now supporting Gnosis Safe contracts!"
 heroImage: "https://cdn-images-1.medium.com/max/1200/1*ZZvdDU8-MwbcnR0bepV7HA.png"
+tags: ["Ethereum", "Blockchain", "Dapps", "Sso", "Cryptocurrency"]
 ---
 
 Long-awaited Universal Login Beta 3 has landed, with a major announcement: we are now supporting Gnosis Safe contracts!

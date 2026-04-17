@@ -2,6 +2,7 @@
 title: "Zero Bug Tolerance: Improve software quality with one simple practice"
 date: "2014-02-21"
 heroImage: "https://cdn-images-1.medium.com/max/800/1*57xOzCZS2IDbPmGLtSb8Ug.jpeg"
+tags: ["Agile Development", "Kanban", "Agile", "Bugs"]
 ---
 
 Did you ever work on a software project full of bugs? It’s a nightmare to go to current build of an app and see that many features just don’t work.

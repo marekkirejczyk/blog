@@ -3,6 +3,7 @@ title: "🦄 UniLogin and the Quest for a Better Txn Fees UX"
 date: "2020-06-22"
 description: "Transaction fees remain one of the main usability challenges for Ethereum and blockchains in general. There are a few different problems…"
 heroImage: "https://cdn-images-1.medium.com/max/1200/1*EXSqTOTYimOoM45OTp1kGQ.png"
+tags: ["Blockchain", "Ethereum", "UX", "Cryptocurrency", "Dapps"]
 ---
 
 Transaction fees remain one of the main usability challenges for Ethereum and blockchains in general. There are a few different problems with them.

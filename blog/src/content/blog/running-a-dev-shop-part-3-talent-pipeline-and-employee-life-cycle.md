@@ -3,6 +3,7 @@ title: "Running a dev shop — part 3: Talent pipeline and employee life cyc
 date: "2022-11-03"
 description: "This is the third part of a series on running a dev shop. See the overview of the planned posts below."
 heroImage: "https://cdn-images-1.medium.com/max/800/1*zwJONp0rKamRiUzudAybjQ.png"
+tags: ["Software House", "Hiring", "Pipeline"]
 ---
 
 This is the third part of a series on running a dev shop. See the overview of the planned posts below.

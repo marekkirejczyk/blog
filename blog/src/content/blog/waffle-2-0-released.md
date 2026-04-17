@@ -3,6 +3,7 @@ title: "Waffle 2.0 released"
 date: "2019-01-23"
 description: "After weeks of hard work, I am glad to announce the release of Waffle version 2.0, with a dozen new functionalities."
 heroImage: "https://cdn-images-1.medium.com/max/800/1*TC0x5SrhD-5fzSdBupd8ow.png"
+tags: ["JavaScript", "Solidity", "Waffle", "Truffle"]
 ---
 
 After weeks of hard work, I am glad to announce the release of Waffle version 2.0, with a dozen new functionalities.

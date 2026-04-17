@@ -6,6 +6,7 @@ Part 1: The K ecosystem
 Part 2: Proving the correctness of a token
 Part…"
 heroImage: "https://cdn-images-1.medium.com/max/800/1*cKTz2GyNJ2I3ereGFcpR0Q.jpeg"
+tags: ["Ethereum", "Formal Verification", "Solidity", "Evm", "Act"]
 ---
 
 This is the third post of a series Formal Verification for n00bs:  

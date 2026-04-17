@@ -2,6 +2,7 @@
 title: "Pair Programming demystified!"
 date: "2016-01-10"
 description: "A managers view on Pair Programming"
+tags: ["Programming", "Software Development", "Pair Programming"]
 ---
 
 As I work with a lot of very decent teams, the kind of teams that keep delivering commitment at the end of each sprint, the kind of teams who care about quality of code, often teams that are into software craftsmanship, I can see recurring problems of those teams:

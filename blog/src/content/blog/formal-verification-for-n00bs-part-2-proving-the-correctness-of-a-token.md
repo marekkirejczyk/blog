@@ -3,6 +3,7 @@ title: "Formal Verification for n00bs -Part 2: proving the correctness of a toke
 date: "2019-02-02"
 description: "An example of a high-level semantics of a single function of an Ethereum smart contract and a step-by-step guide for executing the proof."
 heroImage: "https://cdn-images-1.medium.com/max/800/1*SCqqcStV-C1RNfeWh__YgA.png"
+tags: ["Ethereum", "Klab", "Formal Verification", "Solidity", "Evm"]
 ---
 
 This is the second post of a series Formal Verification for n00bs:  

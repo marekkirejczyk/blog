@@ -3,6 +3,7 @@ title: "Running a dev shop — part 4: Attracting customers"
 date: "2023-02-09"
 description: "This is the fourth part of a series on running a dev shop. See the overview of the posts below."
 heroImage: "https://cdn-images-1.medium.com/max/800/1*2Ry6AhOu6aDx2zGmyDirSA@2x.jpeg"
+tags: ["Software House", "Marketing", "Lead Generation", "Leads", "Marketing Strategies"]
 ---
 
 This is the fourth part of a series on running a dev shop. See the overview of the posts below.

@@ -4,6 +4,7 @@ date: "2022-03-31"
 description: "This is the first in a series of blog posts about the process for rapid dapp development on blockchain:
 Part 1: Security — Preventing…"
 heroImage: "https://cdn-images-1.medium.com/max/800/1*3US2VvpS0PrTmJso7z6vhg.jpeg"
+tags: ["Security", "Hacks", "Blockchain", "Rect"]
 ---
 
 This is the first in a **series** of blog posts about the process for rapid dapp development on blockchain:**

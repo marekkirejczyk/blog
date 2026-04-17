@@ -2,6 +2,7 @@
 title: "How to prioritize development projects with Kanban"
 date: "2014-01-24"
 heroImage: "https://cdn-images-1.medium.com/max/1200/1*zYf3cQ6rHJf3h6L9XvdiMA.jpeg"
+tags: ["Kanban", "Agile", "Agile Development"]
 ---
 
 Did you ever had a problem resolving too many tasks being prioritized? Do you see team members confused over what to do next? Maybe you find yourself micromanaging the team?

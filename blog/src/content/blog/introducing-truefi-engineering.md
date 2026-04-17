@@ -3,6 +3,7 @@ title: "Introducing TrueFi Engineering"
 date: "2022-02-07"
 description: "Hi Builders!"
 heroImage: "https://cdn-images-1.medium.com/max/800/1*qYt9NkpyENmAyyyqf_cUFw.png"
+tags: ["Waffle", "Usedapp", "Engineering", "Blockchain", "Truefi"]
 ---
 
 Hi Builders!

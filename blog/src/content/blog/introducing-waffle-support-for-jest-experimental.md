@@ -3,6 +3,7 @@ title: "Introducing Waffle support for Jest (experimental)"
 date: "2020-09-08"
 description: "Adding experimental support for Jest."
 heroImage: "https://cdn-images-1.medium.com/max/800/1*fS06HBYQWm5dTJeofv9cZg.png"
+tags: ["Waffle", "Solidity", "Smart Contracts", "Ethereum", "Blockchain"]
 ---
 
 ### Waffle is on fire 🔥🔥🔥

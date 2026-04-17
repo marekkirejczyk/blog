@@ -2,6 +2,7 @@
 title: "Five reasons why I change my focus to cryptography"
 date: "2023-05-27"
 description: "With some extra time on my hands, I decided to invest it into switching my professional focus from blockchain to cryptography. In this…"
+tags: ["Zero Knowledge Proofs", "Cryptography", "Quantum Computing"]
 ---
 
 With some extra time on my hands, I decided to invest it into switching my professional focus from blockchain to cryptography. In this post, I’d like to share my understanding of the space, which makes me excited.

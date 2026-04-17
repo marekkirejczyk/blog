@@ -3,6 +3,7 @@ title: "Formal Verification for n00bs: Part 1"
 date: "2019-01-25"
 description: "This is first in a series of blog posts on Formal Verification (FV)."
 heroImage: "https://cdn-images-1.medium.com/max/800/1*9Uarzq7Zanzzz60tHyh_-A.png"
+tags: ["Ethereum", "Kvm", "Formal Verification", "Solidity", "Smart Contracts"]
 ---
 
 This is first in a series of blog posts on Formal Verification:  

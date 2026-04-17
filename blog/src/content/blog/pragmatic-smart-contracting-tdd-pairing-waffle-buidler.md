@@ -3,6 +3,7 @@ title: "Pragmatic smart contracting (TDD, Pairing, Waffle &amp; Buidler)"
 date: "2020-10-13"
 description: "With major security incidents popping up at least several times a year, an obvious question might arise: What would be a pragmatic…"
 heroImage: "https://cdn-images-1.medium.com/max/1200/1*x0Of4Ru0WyUfx-gDcYCnIg.png"
+tags: ["Solidity", "Smart Contracts", "Test Driven Development", "Pair Programming", "Ethereum"]
 ---
 
 With major security incidents popping up at least several times a year, an obvious question might arise: What would be a pragmatic approach to create high-quality, security-sensitive software like smart contracts?

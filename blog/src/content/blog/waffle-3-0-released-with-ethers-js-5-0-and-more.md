@@ -3,6 +3,7 @@ title: "🧇 Waffle 3.0 released! With ethers.js 5.0 and more!"
 date: "2020-06-13"
 description: "We‘re glad to announce that we’ve just released Waffle 3.0 with support for ethers.js 5.0 and much more."
 heroImage: "https://cdn-images-1.medium.com/max/800/1*wn8o0ts9U8Tydi9dnCUCXg.jpeg"
+tags: ["Waffle", "Testing", "Solidity", "Ethereum"]
 ---
 
 We‘re glad to announce that we’ve just released Waffle 3.0 with support for ethers.js 5.0 and much more.

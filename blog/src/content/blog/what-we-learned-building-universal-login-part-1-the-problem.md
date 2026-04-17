@@ -3,6 +3,7 @@ title: "What We Learned Building Universal Login — Part 1: The Problem"
 date: "2020-01-20"
 description: "Defining the problem you want to solve often sounds simple, but in fact it’s often the most complicated part of trying to solve it."
 heroImage: "https://cdn-images-1.medium.com/max/2560/1*PwU7-ZauqAk1_KJPuWndsw.png"
+tags: ["Ethereum", "Universal Login", "Onboarding", "User Experience", "Dapps"]
 ---
 
 Ethereum conferences are the heartbeat of the ecosystem: Universal Login started as an idea at EDCON Toronto, found a team at Dappcon, was launched as a company at Devcon, **so we’ll be proud to be at this years** [**ETHDenver**](https://medium.com/u/79079ae79889)**, talking about the lessons we learned and the next steps on the project.**

@@ -3,6 +3,7 @@ title: "Hype Driven Development — part 2: The Phenomenon"
 date: "2017-01-18"
 description: "My last post “Hype Driven Development” (read here) was surprisingly well received with 54K reads and 2K+ recommends."
 heroImage: "https://cdn-images-1.medium.com/max/1200/1*mSv7CGdvDnk-BMyx-dAwHg.jpeg"
+tags: ["Tech", "Twitter", "Programming", "Reddit", "Software Development"]
 ---
 
 My last post “[Hype Driven Development](https://blog.daftcode.pl/hype-driven-development-3469fc2e9b22#.9xp5ymm7j)” (read [**here**](https://blog.daftcode.pl/hype-driven-development-3469fc2e9b22#.9xp5ymm7j)) was surprisingly well received with 54K reads and 2K+ recommends. Thank you for your interest! It seems that I was able to diagnose and name the phenomenon that is recognised by many other programmers, but till now didn't have a popular name.

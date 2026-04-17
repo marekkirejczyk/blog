@@ -3,6 +3,7 @@ title: "Bubble burst shenanigans"
 date: "2021-02-07"
 description: "People’s memory is short-term and to me it seems many are doing irrational things with their crypto as the bubble progresses."
 heroImage: "https://cdn-images-1.medium.com/max/800/0*vwVFlgZoa8ToyBoc"
+tags: ["Bitcoin", "Ethereum", "Bubble", "Investing", "Speculation"]
 ---
 
 > **Disclaimer:**  

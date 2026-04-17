@@ -3,6 +3,7 @@ title: "Your Clutch Award is lame, but you’re gonna share it anyway."
 date: "2020-12-03"
 description: "Yeah it is this time of the year. With recently reopened malls, we can now do our shopping accompanied by good old, worn out “Last…"
 heroImage: "https://cdn-images-1.medium.com/max/1200/1*i130EKCIHNgEQ-u6vJb2gA.png"
+tags: ["Clutch", "Awards", "Blockchain", "Ethereum"]
 ---
 
 Yeah, it is this time of the year. With recently reopened malls, we can now do our shopping accompanied by good old, worn out “Last Christmas”.

@@ -3,6 +3,7 @@ title: "Mocking Solidity smart contracts with Waffle"
 date: "2020-05-22"
 description: "Testing smart contracts written in Solidity is still somewhat cumbersome. One subtle reason is that we keep writing our unit tests as if…"
 heroImage: "https://cdn-images-1.medium.com/max/800/1*vt0XUm3uRBXZmxsE0SByhg.png"
+tags: ["Solidity", "Smart Contracts", "Ethereum", "Mock", "Mocking"]
 ---
 
 Testing smart contracts written in Solidity is still somewhat cumbersome. One subtle reason is that we keep writing our _unit tests_ as if they were _integration_ _tests_ and not how we would write _unit tests_.

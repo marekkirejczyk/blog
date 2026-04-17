@@ -3,6 +3,7 @@ title: "What you missed about continues delivery"
 date: "2023-03-26"
 description: "The focus of this blog post is on the crucial element of modern software delivery — continuous delivery (CD). In my experience, the larger…"
 heroImage: "https://cdn-images-1.medium.com/max/800/1*xU-ktnRiwc-RvW1SnnpNFg.png"
+tags: ["Agile", "DevOps", "Continuous Delivery", "Continuous Integration"]
 ---
 
 The focus of this blog post is on the crucial element of modern software delivery — continuous delivery (CD). In my experience, the larger perspective of CD can be easily overlooked amidst scrum ceremonies and docker containers. This is particularly prevalent among smaller enterprises and startups.
