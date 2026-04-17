@@ -10,20 +10,23 @@ const { slug, apiBase = defaultApiBase } = Astro.props;
 ---
 
 <section class="comments-section" data-slug={slug} data-api-base={apiBase}>
-  <h2>Comments</h2>
+  <h2 class="comments-heading">Comments</h2>
 
   <div id="auth-bar" class="auth-bar">
     <span class="status">Checking login…</span>
   </div>
 
   <div id="compose" class="compose" style="display: none;">
-    <div id="reply-info" style="display: none;">
+    <div id="reply-info" class="reply-info" style="display: none;">
       Replying to <span id="reply-parent-name"></span>
-      — <a id="cancel-reply">cancel</a>
+      <span class="sep">·</span>
+      <a id="cancel-reply">cancel</a>
     </div>
     <textarea id="comment-body" placeholder="Write a comment…"></textarea>
-    <button id="post-btn">Post Comment</button>
+    <button id="post-btn" class="btn-post">Post Comment</button>
   </div>
+
+  <div class="comments-divider"></div>
 
   <div id="comments-list">
     <p class="status">Loading comments…</p>
@@ -65,14 +68,16 @@ const { slug, apiBase = defaultApiBase } = Astro.props;
       if (user) {
         currentUser = user;
         authBar.innerHTML =
-          '<span class="user-info">' +
-          (currentUser.avatar_url
-            ? '<img src="' + esc(currentUser.avatar_url) + '" class="avatar" alt="" />'
-            : '') +
-          '<span>' + esc(currentUser.name) + '</span>' +
-          (currentUser.is_admin ? '<span class="admin-badge">admin</span>' : '') +
-          '</span>' +
-          '<a id="logout-btn" class="auth-link">Logout</a>';
+          '<div class="user-row">' +
+            '<span class="user-info">' +
+              (currentUser.avatar_url
+                ? '<img src="' + esc(currentUser.avatar_url) + '" class="avatar" alt="" />'
+                : '<span class="avatar-placeholder">' + esc((currentUser.name || '?').charAt(0).toUpperCase()) + '</span>') +
+              '<span class="user-name">' + esc(currentUser.name) + '</span>' +
+              (currentUser.is_admin ? '<span class="admin-badge">admin</span>' : '') +
+            '</span>' +
+            '<a id="logout-btn" class="auth-link">Logout</a>' +
+          '</div>';
         document.getElementById('logout-btn')!.addEventListener('click', handleLogout);
         compose.style.display = 'block';
       } else {
@@ -99,8 +104,15 @@ const { slug, apiBase = defaultApiBase } = Astro.props;
           const label = p.charAt(0).toUpperCase() + p.slice(1);
           const icon = providerIcons[p] || '';
           return '<a href="' + apiBase + '/auth/' + p + '?redirect=' + encodeURIComponent(currentPage) + '" class="login-btn login-' + p + '">' + icon + label + '</a>';
-        }).join(' ');
-        authBar.innerHTML = '<span>Sign in with </span>' + buttons + '<span class="privacy-note">By signing in, you agree to our <a href="/privacy/">Privacy Policy</a>.</span>';
+        }).join('');
+        authBar.innerHTML =
+          '<div class="login-card">' +
+            '<h3 class="login-title">Join the conversation</h3>' +
+            '<p class="login-blurb">Sign in to post a comment. We never spam, and your email stays private.</p>' +
+            '<p class="login-label">Sign in with:</p>' +
+            '<div class="login-buttons">' + buttons + '</div>' +
+            '<p class="privacy-note">By signing in, you agree to our <a href="/privacy/">Privacy Policy</a>.</p>' +
+          '</div>';
       } else {
         authBar.innerHTML = '<span class="status">Comments require login (no providers configured)</span>';
       }
@@ -187,199 +199,280 @@ const { slug, apiBase = defaultApiBase } = Astro.props;
 </script>
 
 <style>
-  /* Section */
   .comments-section {
-    border-top: 1px solid #e6e6e6;
-    margin-top: 3rem;
-    padding-top: 2rem;
+    max-width: var(--content-max);
+    margin: 40px auto 48px;
+    padding: 0 0;
+    font-family: var(--font-sans);
   }
 
-  .comments-section h2 {
-    font-size: 1.3rem;
-    margin-bottom: 1.25rem;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  .comments-heading {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 26px;
+    letter-spacing: -0.26px;
+    color: var(--color-text);
+    margin-bottom: 24px;
   }
 
-  /* Auth bar */
+  /* Auth bar — generic container */
   .auth-bar {
-    font-size: 0.9rem;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-    margin-bottom: 1.5rem;
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    margin-bottom: 24px;
+  }
+
+  /* Logged-in user row */
+  #auth-bar :global(.user-row) {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    flex-wrap: wrap;
+    gap: 10px;
   }
 
   #auth-bar :global(.user-info) {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 10px;
+    flex: 1 0 0;
+  }
+
+  #auth-bar :global(.user-name) {
+    font-weight: 500;
+    color: var(--color-text);
+    font-size: 14px;
   }
 
   #auth-bar :global(.avatar) {
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  #auth-bar :global(.avatar-placeholder) {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--color-surface-muted);
+    color: var(--color-text-secondary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    flex-shrink: 0;
   }
 
   #auth-bar :global(.auth-link) {
-    color: #757575;
+    color: var(--color-text-muted);
+    font-size: 13px;
     cursor: pointer;
-    font-size: 0.85rem;
-    text-decoration: underline;
-    text-decoration-color: #bbb;
-    text-underline-offset: 2px;
   }
 
   #auth-bar :global(.auth-link:hover) {
-    text-decoration-color: #1a1a1a;
-    color: #1a1a1a;
+    color: var(--color-text);
   }
 
   #auth-bar :global(.admin-badge) {
-    font-size: 0.7rem;
+    font-size: 11px;
     color: #856404;
     background: #fff3cd;
-    padding: 0.1rem 0.4rem;
+    padding: 1px 6px;
     border-radius: 3px;
-    margin-left: 0.25rem;
+    margin-left: 4px;
+  }
+
+  /* Logged-out card */
+  #auth-bar :global(.login-card) {
+    background: var(--color-surface-muted);
+    border-radius: 12px;
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    text-align: center;
+  }
+
+  #auth-bar :global(.login-title) {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  #auth-bar :global(.login-blurb) {
+    font-size: 14px;
+    color: var(--color-text-muted);
+    margin: 0;
+    max-width: 420px;
+  }
+
+  #auth-bar :global(.login-label) {
+    font-size: 13px;
+    color: var(--color-text-muted);
+    margin: 6px 0 0;
+  }
+
+  #auth-bar :global(.login-buttons) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
   }
 
   #auth-bar :global(.login-btn) {
-    display: inline-block;
-    padding: 0.35rem 0.85rem;
-    border: 1px solid #ddd;
-    border-radius: 20px;
-    color: #1a1a1a;
-    text-decoration: none;
-    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    color: var(--color-text);
+    font-size: 14px;
+    font-weight: 500;
     transition: border-color 0.15s, background 0.15s;
   }
 
   #auth-bar :global(.login-btn svg) {
-    width: 16px;
-    height: 16px;
-    vertical-align: middle;
-    margin-right: 0.3rem;
-    position: relative;
-    top: -1px;
+    width: 14px;
+    height: 14px;
+    color: var(--color-accent);
   }
 
   #auth-bar :global(.login-btn:hover) {
-    border-color: #1a1a1a;
-    background: #fafafa;
+    border-color: var(--color-text);
   }
 
   #auth-bar :global(.privacy-note) {
-    display: block;
-    width: 100%;
-    font-size: 0.78rem;
-    color: #999;
-    margin-top: 0.25rem;
+    font-size: 12px;
+    color: var(--color-text-faint);
+    margin: 6px 0 0;
   }
 
   #auth-bar :global(.privacy-note a) {
-    color: #999;
+    color: var(--color-text-muted);
     text-decoration: underline;
-    text-decoration-color: #ccc;
+    text-decoration-color: var(--color-text-faint);
     text-underline-offset: 2px;
   }
 
   #auth-bar :global(.privacy-note a:hover) {
-    color: #666;
-    text-decoration-color: #666;
+    color: var(--color-text);
   }
 
   /* Compose */
   .compose {
-    margin-bottom: 1.75rem;
+    margin-bottom: 8px;
   }
 
-  #reply-info {
-    font-size: 0.85rem;
-    color: #757575;
-    margin-bottom: 0.5rem;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  .reply-info {
+    font-size: 13px;
+    color: var(--color-text-muted);
+    margin-bottom: 8px;
+  }
+
+  .reply-info :global(#reply-parent-name) {
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .reply-info .sep {
+    color: var(--color-text-faint);
+    margin: 0 6px;
   }
 
   #cancel-reply {
-    color: #757575;
+    color: var(--color-text-muted);
     cursor: pointer;
     text-decoration: underline;
-    text-decoration-color: #bbb;
+    text-decoration-color: var(--color-text-faint);
     text-underline-offset: 2px;
   }
 
   #cancel-reply:hover {
-    text-decoration-color: #1a1a1a;
-    color: #1a1a1a;
+    color: var(--color-text);
+    text-decoration-color: var(--color-text);
   }
 
   textarea {
+    display: block;
     width: 100%;
-    min-height: 100px;
-    padding: 0.75rem;
-    border: 1px solid #e0e0e0;
-    border-radius: 6px;
-    font-family: Georgia, 'Times New Roman', serif;
-    font-size: 0.95rem;
+    min-height: 110px;
+    padding: 14px 16px;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--color-text);
+    background: var(--color-surface);
     resize: vertical;
-    margin-bottom: 0.5rem;
-    line-height: 1.6;
+    margin-bottom: 14px;
     transition: border-color 0.15s;
+  }
+
+  textarea::placeholder {
+    color: var(--color-text-faint);
   }
 
   textarea:focus {
     outline: none;
-    border-color: #999;
+    border-color: var(--color-text);
   }
 
-  button {
-    background: #1a1a1a;
+  .btn-post {
+    background: var(--color-accent);
     color: #fff;
     border: none;
-    padding: 0.5rem 1.25rem;
-    border-radius: 20px;
+    padding: 12px 20px;
+    border-radius: var(--radius-pill);
     cursor: pointer;
-    font-size: 0.9rem;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 500;
     transition: background 0.15s;
   }
 
-  button:hover {
-    background: #333;
+  .btn-post:hover {
+    background: var(--color-accent-hover);
+  }
+
+  .comments-divider {
+    height: 1px;
+    background: var(--color-border);
+    margin: 24px 0;
   }
 
   .status {
-    color: #999;
-    font-style: italic;
-    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    font-size: 14px;
   }
 
-  /* Comment — use :global() since these are JS-generated */
+  /* Comment items — JS-generated, so :global() scopes */
   #comments-list :global(.comment) {
-    padding: 1.25rem 0;
-    border-bottom: 1px solid #f0f0f0;
+    padding: 16px 0;
   }
 
-  #comments-list :global(.comment:last-child) {
-    border-bottom: none;
+  #comments-list :global(.comment + .comment) {
+    border-top: 1px solid var(--color-border);
   }
 
   #comments-list :global(.comment-meta) {
-    font-size: 0.85rem;
-    color: #757575;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-    margin-bottom: 0.5rem;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--color-text-muted);
+    margin-bottom: 8px;
   }
 
   #comments-list :global(.comment-meta strong) {
-    color: #1a1a1a;
+    color: var(--color-text);
     font-weight: 600;
+    font-size: 14px;
   }
 
   #comments-list :global(.comment-author) {
@@ -392,10 +485,9 @@ const { slug, apiBase = defaultApiBase } = Astro.props;
   }
 
   #comments-list :global(.comment-time) {
-    color: #999;
+    color: var(--color-text-muted);
   }
 
-  /* Avatar */
   #comments-list :global(.avatar) {
     width: 28px;
     height: 28px;
@@ -407,25 +499,26 @@ const { slug, apiBase = defaultApiBase } = Astro.props;
     width: 28px;
     height: 28px;
     border-radius: 50%;
-    background: #e0e0e0;
-    color: #757575;
+    background: var(--color-surface-muted);
+    color: var(--color-text-secondary);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.75rem;
+    font-size: 12px;
     font-weight: 600;
     flex-shrink: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
   }
 
-  /* Comment body */
   #comments-list :global(.comment-body) {
-    margin: 0.25rem 0 0.5rem;
+    font-family: var(--font-serif);
+    font-size: 16px;
     line-height: 1.6;
+    color: var(--color-text-secondary);
+    margin: 4px 0 10px;
   }
 
   #comments-list :global(.comment-body p) {
-    margin: 0 0 0.5em;
+    margin: 0 0 0.6em;
   }
 
   #comments-list :global(.comment-body p:last-child) {
@@ -433,42 +526,45 @@ const { slug, apiBase = defaultApiBase } = Astro.props;
   }
 
   #comments-list :global(.comment-body a) {
-    color: #1a73e8;
+    color: var(--color-text);
     text-decoration: underline;
-    text-decoration-color: #a8c7fa;
+    text-decoration-color: var(--color-text-faint);
     text-underline-offset: 2px;
     transition: text-decoration-color 0.15s;
   }
 
   #comments-list :global(.comment-body a:hover) {
-    text-decoration-color: #1a73e8;
+    text-decoration-color: var(--color-text);
   }
 
   #comments-list :global(.comment-body code) {
-    background: #f5f5f5;
+    background: var(--color-surface-muted);
     padding: 0.1em 0.3em;
     border-radius: 3px;
     font-size: 0.9em;
   }
 
   #comments-list :global(.comment-body pre) {
-    background: #f5f5f5;
-    padding: 0.75em 1em;
-    border-radius: 4px;
+    background: var(--color-code-bg);
+    color: var(--color-code-text);
+    padding: 14px 16px;
+    border-radius: 6px;
     overflow-x: auto;
     margin: 0.5em 0;
+    font-size: 13px;
   }
 
   #comments-list :global(.comment-body pre code) {
     background: none;
     padding: 0;
+    color: inherit;
   }
 
   #comments-list :global(.comment-body blockquote) {
-    border-left: 3px solid #e0e0e0;
+    border-left: 3px solid var(--color-border);
     margin: 0.5em 0;
-    padding: 0.25em 0 0.25em 1em;
-    color: #555;
+    padding: 0.25em 0 0.25em 14px;
+    color: var(--color-text-muted);
   }
 
   #comments-list :global(.comment-body ul),
@@ -477,40 +573,54 @@ const { slug, apiBase = defaultApiBase } = Astro.props;
     padding-left: 1.5em;
   }
 
-  /* Actions */
   #comments-list :global(.comment-actions) {
-    font-size: 0.8rem;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 13px;
   }
 
   #comments-list :global(.comment-actions a) {
-    color: #757575;
+    color: var(--color-text-muted);
     cursor: pointer;
-    margin-right: 1rem;
-    text-decoration: underline;
-    text-decoration-color: #ccc;
-    text-underline-offset: 2px;
-    transition: text-decoration-color 0.15s;
+    transition: color 0.15s;
   }
 
   #comments-list :global(.comment-actions a:hover) {
-    text-decoration-color: #1a1a1a;
-    color: #1a1a1a;
+    color: var(--color-text);
   }
 
-  /* Replies */
   #comments-list :global(.replies) {
-    margin-left: 2rem;
-    border-left: 2px solid #f0f0f0;
-    padding-left: 1rem;
+    margin-left: 38px;
+    margin-top: 8px;
+    padding-left: 14px;
+    border-left: 1px solid var(--color-border);
   }
 
   #comments-list :global(.replies .comment) {
-    border-bottom: none;
-    padding: 1rem 0 0;
+    padding: 10px 0;
   }
 
-  #comments-list :global(.replies .comment:last-child) {
-    padding-bottom: 0;
+  #comments-list :global(.replies .comment + .comment) {
+    border-top: 1px solid var(--color-border);
+  }
+
+  @media (max-width: 640px) {
+    .comments-heading {
+      font-size: 22px;
+    }
+
+    #auth-bar :global(.login-card) {
+      padding: 22px 18px;
+    }
+
+    #auth-bar :global(.login-title) {
+      font-size: 20px;
+    }
+
+    #comments-list :global(.replies) {
+      margin-left: 16px;
+      padding-left: 12px;
+    }
   }
 </style>

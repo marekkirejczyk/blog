@@ -4,7 +4,7 @@ export default defineConfig({
   site: 'https://zkmarek.com',
   markdown: {
     shikiConfig: {
-      theme: 'github-light',
+      theme: 'github-dark-dimmed',
     },
   },
 });
