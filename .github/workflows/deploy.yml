@@ -10,6 +10,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            comments:
+              - 'comments/**'
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -36,6 +43,7 @@ jobs:
             blog/src/content/blog/ deploy@arbiter.zkmarek.com:/var/www/blog-content/
 
       - name: Deploy comments service
+        if: steps.changes.outputs.comments == 'true'
         run: |
           rsync -avz --delete --exclude='data/' --exclude='.env' --exclude='node_modules/' \
             -e 'ssh -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes' \
