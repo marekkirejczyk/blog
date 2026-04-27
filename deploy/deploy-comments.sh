@@ -5,6 +5,10 @@ SERVER="deploy@arbiter.zkmarek.com"
 SSH="ssh -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes"
 
 rsync -avz --delete \
+  -e "$SSH" \
+  blog/src/content/blog/ "$SERVER:/var/www/blog-content/"
+
+rsync -avz --delete \
   --exclude='data/' \
   --exclude='.env' \
   --exclude='.env.backup' \

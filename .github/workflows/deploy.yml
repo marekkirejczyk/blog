@@ -30,6 +30,11 @@ jobs:
           rsync -avz --delete -e 'ssh -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes' \
             blog/dist/ deploy@arbiter.zkmarek.com:/var/www/static/
 
+      - name: Deploy blog content
+        run: |
+          rsync -avz --delete -e 'ssh -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes' \
+            blog/src/content/blog/ deploy@arbiter.zkmarek.com:/var/www/blog-content/
+
       - name: Deploy comments service
         run: |
           rsync -avz --delete --exclude='data/' --exclude='.env' --exclude='node_modules/' \
