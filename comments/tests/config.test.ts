@@ -7,7 +7,7 @@ describe("loadConfig", () => {
     expect(config).toEqual(expect.objectContaining({
       port: 3001,
       databasePath: "./data/comments.db",
-      corsOrigin: "http://localhost:4321",
+      corsOrigin: ["http://localhost:4321", "http://localhost:4322"],
       blogUrl: "http://localhost:4321",
       oauthCallbackBase: "http://localhost:3001",
       secureCookies: false,
@@ -56,6 +56,13 @@ describe("loadConfig", () => {
     expect(config.facebookClientId).toBeUndefined();
     expect(config.linkedinClientId).toBeUndefined();
     expect(config.xClientId).toBeUndefined();
+  });
+
+  it("sets nodeEnv based on env.NODE_ENV", () => {
+    expect(loadConfig({}).nodeEnv).toBe("development");
+    expect(loadConfig({ NODE_ENV: "production" }).nodeEnv).toBe("production");
+    expect(loadConfig({ NODE_ENV: "test" }).nodeEnv).toBe("test");
+    expect(loadConfig({ NODE_ENV: "staging" }).nodeEnv).toBe("development");
   });
 
   it("env overrides take precedence over production defaults", () => {

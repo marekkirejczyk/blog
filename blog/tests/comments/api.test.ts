@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import type { Hono } from "hono";
 import type { MiddlewareHandler } from "hono";
 import type Database from "better-sqlite3";
-import { createTestApp } from "../../../comments/src/app.js";
+import { TestApp } from "../../../comments/src/app.js";
 import { initDb, upsertUser, type User } from "../../../comments/src/db/index.js";
 import { loadConfig } from "../../../comments/src/config.js";
 import type { AppEnv } from "../../../comments/src/types.js";
@@ -68,7 +68,7 @@ beforeEach(() => {
   db = initDb(":memory:");
   testUser = upsertUser(db, "github", "1", "Alice", "alice@test.com", "https://avatar.test/alice.png");
 
-  const app = createTestApp(db, testConfig, { authMiddleware: mockAuth(testUser) });
+  const app = new TestApp(db, testConfig, undefined, undefined, mockAuth(testUser)).app;
   globalThis.fetch = createTestFetch(app) as typeof globalThis.fetch;
 });
 
@@ -88,7 +88,7 @@ describe("fetchCurrentUser", () => {
   });
 
   it("returns null when not authenticated", async () => {
-    const app = createTestApp(db, testConfig);
+    const app = new TestApp(db, testConfig).app;
     globalThis.fetch = createTestFetch(app) as typeof globalThis.fetch;
 
     const user = await fetchCurrentUser(API_BASE);
@@ -147,7 +147,7 @@ describe("postComment", () => {
   });
 
   it("throws when not authenticated", async () => {
-    const app = createTestApp(db, testConfig);
+    const app = new TestApp(db, testConfig).app;
     globalThis.fetch = createTestFetch(app) as typeof globalThis.fetch;
 
     await expect(postComment(API_BASE, "my-post", "Hello")).rejects.toThrow();
@@ -177,7 +177,7 @@ describe("logout", () => {
     const { createSession } = await import("../../../comments/src/db/sessions.js");
     const session = createSession(db, testUser.id, 30);
 
-    const app = createTestApp(db, testConfig);
+    const app = new TestApp(db, testConfig).app;
     const testFetch = createTestFetch(app);
     testFetch.cookies["session_id"] = session.id;
     globalThis.fetch = testFetch as typeof globalThis.fetch;

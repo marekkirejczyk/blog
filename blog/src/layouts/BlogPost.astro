@@ -1,6 +1,8 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import Comments from '../components/Comments.astro';
+import AdminNotify from '../components/AdminNotify.astro';
+import { shortDate } from '../lib/date.js';
 
 interface Props {
   title: string;
@@ -14,12 +16,7 @@ interface Props {
 
 const { title, date, slug, description, heroImage, tags, readMinutes } = Astro.props;
 
-const currentYear = new Date().getFullYear();
-const formattedDate = date.toLocaleDateString('en-US', {
-  month: 'short',
-  day: 'numeric',
-  year: date.getFullYear() !== currentYear ? 'numeric' : undefined,
-});
+const formattedDate = shortDate(date);
 ---
 <BaseLayout title={title} description={description}>
   <article class="post">
@@ -58,8 +55,8 @@ const formattedDate = date.toLocaleDateString('en-US', {
     </div>
     */}
   </article>
-
   <Comments slug={slug} />
+  <AdminNotify slug={slug} />
 
   <script>
     document.querySelectorAll('.post-content a').forEach((a) => {

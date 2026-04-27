@@ -1,0 +1,155 @@
+---
+interface Props {
+  slug: string;
+  apiBase?: string;
+}
+
+const defaultApiBase = import.meta.env.PUBLIC_COMMENTS_API;
+const { slug, apiBase = defaultApiBase } = Astro.props;
+---
+
+<section class="admin-notify-section" data-slug={slug} data-api-base={apiBase}>
+  <div id="admin-notify" class="admin-notify" style="display: none;">
+    <div class="admin-notify-header">
+      <span class="admin-badge">admin</span>
+      <strong>Notifications</strong>
+    </div>
+    <div id="notify-history" class="notify-history"></div>
+    <button id="notify-btn" class="notify-btn">Send notification</button>
+    <p id="notify-status" class="status" style="display: none;"></p>
+  </div>
+</section>
+
+<script>
+  import { fetchNotificationStatus, sendNotification } from '../lib/subscribe/api';
+  import { renderNotificationHistory, renderSendResult } from '../lib/subscribe/ui';
+  import { fetchCurrentUser } from '../lib/comments/api';
+
+  const section = document.querySelector('.admin-notify-section')!;
+  const slug = section.getAttribute('data-slug')!;
+  const apiBase = section.getAttribute('data-api-base')!;
+
+  const panel = document.getElementById('admin-notify')!;
+  const historyEl = document.getElementById('notify-history')!;
+  const notifyBtn = document.getElementById('notify-btn')! as HTMLButtonElement;
+  const notifyStatus = document.getElementById('notify-status')!;
+
+  async function loadHistory() {
+    try {
+      const { history } = await fetchNotificationStatus(apiBase, slug);
+      historyEl.innerHTML = renderNotificationHistory(history);
+    } catch {
+      historyEl.innerHTML = '<p class="status">Could not load history.</p>';
+    }
+  }
+
+  async function handleNotify() {
+    notifyBtn.disabled = true;
+    notifyStatus.style.display = 'block';
+    notifyStatus.textContent = 'Sending notifications...';
+    notifyStatus.className = 'status';
+
+    try {
+      const { sent } = await sendNotification(apiBase, slug);
+      notifyStatus.textContent = renderSendResult(sent);
+      notifyStatus.classList.add('success');
+      await loadHistory();
+    } catch (e) {
+      notifyStatus.textContent = e instanceof Error ? e.message : 'Failed to send.';
+      notifyStatus.classList.add('error');
+    } finally {
+      notifyBtn.disabled = false;
+    }
+  }
+
+  // Show the panel only for admin users.
+  fetchCurrentUser(apiBase)
+    .then(async (user) => {
+      if (!user?.is_admin) return;
+      panel.style.display = 'block';
+      await loadHistory();
+      notifyBtn.addEventListener('click', handleNotify);
+    })
+    .catch(() => {});
+</script>
+
+<style>
+  .admin-notify-section {
+    max-width: var(--content-max);
+    margin: 3rem auto 0;
+  }
+
+  .admin-notify {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background: #fafafa;
+  }
+
+  .admin-notify-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    font-size: 0.9rem;
+  }
+
+  .admin-notify-header :global(.admin-badge) {
+    font-size: 0.7rem;
+    color: #856404;
+    background: #fff3cd;
+    padding: 0.1rem 0.4rem;
+    border-radius: 3px;
+  }
+
+  .notify-history {
+    margin-bottom: 0.75rem;
+  }
+
+  .notify-history :global(.history-entry) {
+    font-size: 0.85rem;
+    color: #555;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    margin-bottom: 0.25rem;
+  }
+
+  .notify-btn {
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    padding: 0.45rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    transition: background 0.15s;
+  }
+
+  .notify-btn:hover {
+    background: #333;
+  }
+
+  .notify-btn:disabled {
+    background: #999;
+    cursor: not-allowed;
+  }
+
+  .status {
+    font-size: 0.9rem;
+    font-style: italic;
+    color: #999;
+    margin-top: 0.5rem;
+  }
+
+  .status.success {
+    color: #2d7d46;
+    font-style: normal;
+  }
+
+  .status.error {
+    color: #c0392b;
+    font-style: normal;
+  }
+</style>

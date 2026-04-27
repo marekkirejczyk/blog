@@ -16,11 +16,11 @@ Test page at http://localhost:3001/test
 
 ## App Modes
 
-Three app factory functions in `src/app.ts`, selected by `NODE_ENV`:
+App assembly lives in `src/app.ts` as a class hierarchy rooted at `BaseApp` — which owns `db`, `config`, `providers`, `emailClient?` and exposes `run()` (calls `serve()`). `createApp(config)` is the factory: it builds the dependencies and picks a subclass by `NODE_ENV`.
 
-- **Production** (`createApp`) — OAuth providers only, secure cookies, used when `NODE_ENV=production`
-- **Development** (`createDevApp`) — adds a dev login provider (any name/email), insecure cookies, default mode
-- **Test** (`createTestApp`) — accepts mock auth middleware and providers, used in tests
+- **Production** (`ProdApp`) — OAuth providers only, secure cookies, no email client unless `RESEND_API_KEY` is set
+- **Development** (`DevApp`) — adds a dev login provider (any name/email), insecure cookies, falls back to `ConsoleEmailClient` when no Resend key, exposes `/dev/emails/*` template previews
+- **Test** (`TestApp`) — constructed directly in tests with `new TestApp({ db, config, providers?, emailClient?, authMiddleware? }).create()`
 
 ## Configuration
 

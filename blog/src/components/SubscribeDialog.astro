@@ -1,0 +1,336 @@
+---
+const apiBase = import.meta.env.PUBLIC_COMMENTS_API;
+---
+
+<dialog id="subscribe-dialog" data-api-base={apiBase}>
+  <button id="subscribe-dialog-close" class="dialog-close" aria-label="Close">&times;</button>
+
+  <div class="dialog-view" data-view="form">
+    <div class="dialog-icon dialog-icon--info" aria-hidden="true">
+      <svg viewBox="0 0 28 28" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3.5" y="6" width="21" height="16" rx="2" />
+        <path d="M3.5 8.5 14 16l10.5-7.5" />
+      </svg>
+    </div>
+    <h2 class="dialog-title">Subscribe to zkMarek</h2>
+    <p class="dialog-subtitle">Get notified when I publish a new post.</p>
+    <p class="dialog-body">New essays on AI, cryptography, software engineering, entrepreneurship, and management — delivered only when there's something worth reading.</p>
+    <form id="subscribe-form" class="dialog-form">
+      <input type="email" id="subscribe-email" placeholder="your@email.com" required />
+      <button type="submit" class="btn btn--primary btn--tall">Subscribe</button>
+    </form>
+    <p id="subscribe-error" class="dialog-error" style="display: none;"></p>
+  </div>
+
+  <div class="dialog-view" data-view="sent" hidden>
+    <div class="dialog-icon dialog-icon--info" aria-hidden="true">
+      <svg viewBox="0 0 28 28" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3.5" y="6" width="21" height="16" rx="2" />
+        <path d="M3.5 8.5 14 16l10.5-7.5" />
+      </svg>
+    </div>
+    <h2 class="dialog-title">Check your inbox</h2>
+    <p class="dialog-subtitle">One more click and you're in.</p>
+    <p class="dialog-body">We just sent a confirmation link to your email. Open it to start receiving new essays from zkMarek. The link is valid for 24 hours.</p>
+    <div class="dialog-actions">
+      <button type="button" id="subscribe-resend" class="btn btn--primary btn--tall">Resend email</button>
+      <button type="button" class="dialog-link" data-close>Back to the blog</button>
+    </div>
+    <p id="subscribe-resend-status" class="dialog-hint" style="display: none;"></p>
+  </div>
+
+  <div class="dialog-view" data-view="already" hidden>
+    <div class="dialog-icon dialog-icon--success" aria-hidden="true">
+      <svg viewBox="0 0 28 28" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="5,14.5 11,20 23,8" />
+      </svg>
+    </div>
+    <h2 class="dialog-title">You're already on the list</h2>
+    <p class="dialog-subtitle">No need to sign up twice.</p>
+    <p class="dialog-body">This email is already subscribed and getting new posts from zkMarek. Thanks for being here — hope you're enjoying the essays.</p>
+    <div class="dialog-actions">
+      <button type="button" class="btn btn--primary btn--tall" data-close>Back to the blog</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  import { subscribe } from '../lib/subscribe/api';
+
+  const dialog = document.getElementById('subscribe-dialog')! as HTMLDialogElement;
+  const apiBase = dialog.getAttribute('data-api-base')!;
+  const form = document.getElementById('subscribe-form')! as HTMLFormElement;
+  const emailInput = document.getElementById('subscribe-email')! as HTMLInputElement;
+  const errorEl = document.getElementById('subscribe-error')!;
+  const formView = dialog.querySelector<HTMLElement>('[data-view="form"]')!;
+  const sentView = dialog.querySelector<HTMLElement>('[data-view="sent"]')!;
+  const alreadyView = dialog.querySelector<HTMLElement>('[data-view="already"]')!;
+  const resendBtn = document.getElementById('subscribe-resend')! as HTMLButtonElement;
+  const resendStatus = document.getElementById('subscribe-resend-status')!;
+  const closeBtn = document.getElementById('subscribe-dialog-close')!;
+
+  let lastEmail = '';
+
+  function showView(view: 'form' | 'sent' | 'already') {
+    formView.hidden = view !== 'form';
+    sentView.hidden = view !== 'sent';
+    alreadyView.hidden = view !== 'already';
+  }
+
+  function resetForm() {
+    emailInput.value = '';
+    errorEl.style.display = 'none';
+    errorEl.textContent = '';
+    resendStatus.style.display = 'none';
+    resendStatus.textContent = '';
+    resendStatus.className = 'dialog-hint';
+    const btn = form.querySelector('button')! as HTMLButtonElement;
+    btn.disabled = false;
+    resendBtn.disabled = false;
+    showView('form');
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-subscribe-trigger]').forEach((el) => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      resetForm();
+      dialog.showModal();
+    });
+  });
+
+  // Auto-open from unsubscribe email's "Resubscribe" link
+  if (new URLSearchParams(window.location.search).get('resubscribe') === 'true') {
+    history.replaceState(null, '', window.location.pathname);
+    resetForm();
+    dialog.showModal();
+  }
+
+  closeBtn.addEventListener('click', () => dialog.close());
+  dialog.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    if (target === dialog) dialog.close();
+    if (target.hasAttribute('data-close')) dialog.close();
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = emailInput.value.trim();
+    if (!email) return;
+
+    const btn = form.querySelector('button')! as HTMLButtonElement;
+    btn.disabled = true;
+    errorEl.style.display = 'none';
+
+    try {
+      const data = await subscribe(apiBase, email);
+      lastEmail = email;
+      showView(data.alreadySubscribed ? 'already' : 'sent');
+    } catch (err) {
+      errorEl.textContent = err instanceof Error ? err.message : 'Something went wrong.';
+      errorEl.style.display = 'block';
+      btn.disabled = false;
+    }
+  });
+
+  resendBtn.addEventListener('click', async () => {
+    if (!lastEmail) return;
+    resendBtn.disabled = true;
+    resendStatus.textContent = 'Sending...';
+    resendStatus.style.display = 'block';
+    resendStatus.className = 'dialog-hint';
+
+    try {
+      await subscribe(apiBase, lastEmail);
+      resendStatus.textContent = 'Sent. Check your inbox again.';
+      resendStatus.classList.add('dialog-hint--success');
+    } catch (err) {
+      resendStatus.textContent = err instanceof Error ? err.message : 'Could not resend.';
+      resendStatus.classList.add('dialog-hint--error');
+      resendBtn.disabled = false;
+    }
+  });
+</script>
+
+<style>
+  dialog {
+    border: 1px solid #ebedf0;
+    border-radius: 16px;
+    padding: 48px 40px 40px;
+    max-width: 480px;
+    width: calc(100% - 32px);
+    box-shadow: 0 8px 24px rgba(20, 23, 26, 0.06);
+    font-family: var(--font-sans);
+    background: #ffffff;
+    margin: auto;
+    inset: 0;
+    position: relative;
+  }
+
+  dialog::backdrop {
+    background: rgba(20, 23, 26, 0.4);
+  }
+
+  .dialog-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    line-height: 1;
+    color: #737880;
+    cursor: pointer;
+    padding: 4px 8px;
+  }
+
+  .dialog-close:hover {
+    color: #14171a;
+  }
+
+  .dialog-view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .dialog-view[hidden] {
+    display: none;
+  }
+
+  .dialog-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .dialog-icon--info {
+    background: #e0edff;
+    color: #1f59d1;
+  }
+
+  .dialog-icon--success {
+    background: #def2e0;
+    color: #218040;
+  }
+
+  .dialog-title {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 1.2;
+    color: #14171a;
+    text-align: center;
+    margin: 0;
+  }
+
+  .dialog-subtitle {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 1.4;
+    color: #14171a;
+    text-align: center;
+    margin: 0;
+  }
+
+  .dialog-body {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    line-height: 1.7;
+    color: #40454d;
+    text-align: center;
+    margin: 0;
+  }
+
+  .dialog-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 320px;
+    padding-top: 8px;
+  }
+
+  .dialog-form input[type="email"] {
+    padding: 12px 18px;
+    border: 1px solid #ebedf0;
+    border-radius: 999px;
+    font-family: var(--font-sans);
+    font-size: 15px;
+    transition: border-color 0.15s;
+  }
+
+  .dialog-form input[type="email"]:focus {
+    outline: none;
+    border-color: #142447;
+  }
+
+  .dialog-form .btn {
+    width: 100%;
+  }
+
+  .dialog-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    padding-top: 8px;
+  }
+
+  .dialog-link {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 14px;
+    color: #737880;
+    background: none;
+    border: none;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 4px 0;
+  }
+
+  .dialog-link:hover {
+    color: #14171a;
+  }
+
+  .dialog-error {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: #c0392b;
+    text-align: center;
+    margin: 0;
+  }
+
+  .dialog-hint {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: #737880;
+    text-align: center;
+    margin: 0;
+  }
+
+  .dialog-hint--success {
+    color: #218040;
+  }
+
+  .dialog-hint--error {
+    color: #c0392b;
+  }
+
+  @media (max-width: 520px) {
+    dialog {
+      padding: 40px 24px 32px;
+    }
+
+    .dialog-title {
+      font-size: 24px;
+    }
+  }
+</style>

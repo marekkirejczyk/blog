@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import type Database from "better-sqlite3";
 import { initDb } from "../../src/db/init.js";
-import { createTestApp } from "../../src/app.js";
+import { TestApp } from "../../src/app.js";
 import { loadConfig } from "../../src/config.js";
 import type { ProviderName, ProviderInstance } from "../../src/auth/providers.js";
 
@@ -41,7 +41,7 @@ beforeEach(() => {
 const testConfig = loadConfig({});
 
 function app() {
-  return createTestApp(db, testConfig, { providers });
+  return new TestApp(db, testConfig, providers).app;
 }
 
 describe("GET /auth/providers", () => {

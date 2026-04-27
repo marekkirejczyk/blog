@@ -3,7 +3,7 @@ import type Database from "better-sqlite3";
 import { initDb } from "../../src/db/init.js";
 import { upsertUser } from "../../src/db/users.js";
 import { createSession } from "../../src/db/sessions.js";
-import { createTestApp } from "../../src/app.js";
+import { TestApp } from "../../src/app.js";
 import { loadConfig } from "../../src/config.js";
 
 const testConfig = loadConfig({});
@@ -23,7 +23,7 @@ beforeEach(() => {
 function app() {
   // No authMiddleware = uses session middleware by default
   // Pass empty providers map so auth routes (including /auth/me) are mounted
-  return createTestApp(db, testConfig);
+  return new TestApp(db, testConfig).app;
 }
 
 describe("session middleware", () => {

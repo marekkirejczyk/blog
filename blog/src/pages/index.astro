@@ -1,18 +1,11 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { shortDate } from '../lib/date.js';
 
 const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
-
-const currentYear = new Date().getFullYear();
-const shortDate = (d: Date) =>
-  d.toLocaleDateString('en-US', {
-    month: 'short',
-    day: 'numeric',
-    year: d.getFullYear() !== currentYear ? 'numeric' : undefined,
-  });
 
 const readMinutes = (body: string | undefined) => {
   const words = body?.trim().split(/\s+/).length ?? 0;

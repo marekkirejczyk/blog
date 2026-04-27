@@ -161,7 +161,7 @@ Tokens are generated via `crypto.randomUUID()`. On duplicate email insert, the c
 
 Factory function `subscribeRoutes(options)` returns a Hono router. Options include `emailClient`, `blogUrl`, `callbackBase`, and `contentDir`. Admin endpoints check `ctx.get("user")?.is_admin`.
 
-### Email Client (`comments/src/email/resend.ts`)
+### Email Client (`comments/src/email/emailClient.ts`)
 
 `EmailClient` interface with a single method:
 ```ts
@@ -169,8 +169,8 @@ sendEmail(to: string, subject: string, html: string): Promise<Result<{ id: strin
 ```
 
 Two implementations:
-- `createResendClient(apiKey, fromEmail)` — production, wraps the Resend API
-- `createConsoleEmailClient()` — development, logs emails to stdout with extracted links
+- `ResendEmailClient` — production, wraps the Resend API (`new ResendEmailClient(apiKey, fromEmail)`)
+- `ConsoleEmailClient` — development, logs emails to stdout with extracted links (`new ConsoleEmailClient()`)
 
 ### Email Templates (`comments/src/email/templates.ts`)
 
@@ -179,7 +179,7 @@ Two implementations:
 
 ### Excerpt Extraction (`comments/src/email/excerpt.ts`)
 
-`extractExcerpt(contentDir, slug, wordLimit?)` reads the markdown file at `{contentDir}/{slug}.md`, extracts the YAML frontmatter `title`, takes the first 200 words of the body, and renders to HTML via `marked`. Returns `{ title, excerptHtml }` or `null` if the file doesn't exist.
+`extractExcerpt(content, slug, wordLimit?)` parses YAML frontmatter from a markdown string, takes the first 200 words of the body, renders to HTML via `marked`, and returns `{ title, excerptHtml, heroImage?, tags?, date?, readMinutes? }` — or `null` if frontmatter is missing. `extractExcerptFromPost(contentDir, slug, wordLimit?)` is the I/O wrapper that reads `{contentDir}/{slug}.md` and delegates; returns `null` if the file doesn't exist.
 
 ### Data Access (`comments/src/db/subscribers.ts`)
 
@@ -192,7 +192,7 @@ Two implementations:
 
 ### App Wiring (`comments/src/app.ts`)
 
-Subscribe routes are mounted conditionally: only when an `emailClient` is available. In production, the client is created from `RESEND_API_KEY`. In development, `createConsoleEmailClient()` is used as a fallback. In tests, an optional `emailClient` can be passed via `TestAppOptions`.
+Subscribe routes are mounted conditionally: only when an `emailClient` is available. In production, the client is constructed from `RESEND_API_KEY` (`new ResendEmailClient(...)`). In development, `new ConsoleEmailClient()` is used as a fallback. In tests, an optional `emailClient` can be passed via `TestAppOptions`.
 
 ## Blog Integration
 

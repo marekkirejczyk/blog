@@ -20,6 +20,22 @@ export function validateSlug(slug: unknown): Result<string, ValidationError> {
   return ok(slug);
 }
 
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+export function validateEmail(email: unknown): Result<string, ValidationError> {
+  if (typeof email !== "string") {
+    return err({ message: "Email must be a string", status: 400 });
+  }
+  const trimmed = email.trim().toLowerCase();
+  if (!EMAIL_PATTERN.test(trimmed)) {
+    return err({ message: "Invalid email address", status: 400 });
+  }
+  if (trimmed.length > 254) {
+    return err({ message: "Email address too long", status: 400 });
+  }
+  return ok(trimmed);
+}
+
 export function validateCommentBody(body: unknown): Result<string, ValidationError> {
   if (typeof body !== "string") {
     return err({ message: "Comment body must be a string", status: 400 });

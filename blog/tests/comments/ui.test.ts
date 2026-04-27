@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { esc, timeAgo, renderComment } from "../../src/lib/comments/ui.js";
+import { esc, renderComment, renderUserInfo, renderLoginButtons } from "../../src/lib/comments/ui.js";
 import type { Comment, User } from "../../src/lib/comments/ui.js";
 
 describe("esc", () => {
@@ -19,35 +19,6 @@ describe("esc", () => {
 
   it("leaves plain text unchanged", () => {
     expect(esc("hello world")).toBe("hello world");
-  });
-});
-
-describe("timeAgo", () => {
-  it("returns 'just now' for recent dates", () => {
-    const now = new Date().toISOString();
-    expect(timeAgo(now)).toBe("just now");
-  });
-
-  it("returns minutes ago", () => {
-    const fiveMinAgo = new Date(Date.now() - 5 * 60 * 1000).toISOString();
-    expect(timeAgo(fiveMinAgo)).toBe("5m ago");
-  });
-
-  it("returns hours ago", () => {
-    const threeHoursAgo = new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString();
-    expect(timeAgo(threeHoursAgo)).toBe("3h ago");
-  });
-
-  it("returns days ago", () => {
-    const twoDaysAgo = new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString();
-    expect(timeAgo(twoDaysAgo)).toBe("2d ago");
-  });
-
-  it("returns formatted date for old dates", () => {
-    const old = new Date("2020-01-15").toISOString();
-    const result = timeAgo(old);
-    expect(result).not.toContain("d ago");
-    expect(result).not.toBe("just now");
   });
 });
 
@@ -196,5 +167,70 @@ describe("renderComment", () => {
         '<div class="comment-actions"></div>' +
       "</div>"
     );
+  });
+});
+
+describe("renderUserInfo", () => {
+  it("renders user with avatar", () => {
+    const user: User = { id: 1, name: "Alice", avatar_url: "https://example.com/a.png", is_admin: false };
+    const html = renderUserInfo(user);
+    expect(html).toContain('class="user-info"');
+    expect(html).toContain('src="https://example.com/a.png"');
+    expect(html).toContain("Alice");
+    expect(html).toContain('id="logout-btn"');
+    expect(html).not.toContain("admin-badge");
+  });
+
+  it("renders admin badge", () => {
+    const user: User = { id: 1, name: "Admin", avatar_url: null, is_admin: true };
+    const html = renderUserInfo(user);
+    expect(html).toContain("admin-badge");
+    expect(html).toContain("admin");
+  });
+
+  it("omits avatar img when avatar_url is null", () => {
+    const user: User = { id: 1, name: "Bob", avatar_url: null, is_admin: false };
+    const html = renderUserInfo(user);
+    expect(html).not.toContain("<img");
+    expect(html).toContain("Bob");
+  });
+
+  it("escapes user name", () => {
+    const user: User = { id: 1, name: "<script>xss</script>", avatar_url: null, is_admin: false };
+    const html = renderUserInfo(user);
+    expect(html).toContain("&lt;script&gt;");
+    expect(html).not.toContain("<script>");
+  });
+});
+
+describe("renderLoginButtons", () => {
+  it("renders message when no providers", () => {
+    const html = renderLoginButtons([], "http://api", "http://blog");
+    expect(html).toContain("no providers configured");
+  });
+
+  it("renders a single provider button", () => {
+    const html = renderLoginButtons(["github"], "http://api", "http://blog/post");
+    expect(html).toContain("Sign in with");
+    expect(html).toContain('href="http://api/auth/github?redirect=');
+    expect(html).toContain("Github");
+    expect(html).toContain("login-github");
+  });
+
+  it("renders multiple provider buttons", () => {
+    const html = renderLoginButtons(["github", "google"], "http://api", "http://blog");
+    expect(html).toContain("login-github");
+    expect(html).toContain("login-google");
+  });
+
+  it("encodes redirect URL", () => {
+    const html = renderLoginButtons(["github"], "http://api", "http://blog/post?a=1&b=2");
+    expect(html).toContain(encodeURIComponent("http://blog/post?a=1&b=2"));
+  });
+
+  it("includes privacy note", () => {
+    const html = renderLoginButtons(["github"], "http://api", "http://blog");
+    expect(html).toContain("Privacy Policy");
+    expect(html).toContain("/privacy/");
   });
 });

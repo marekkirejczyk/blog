@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { initDb, upsertUser, type User } from "../src/db/index.js";
-import { createTestApp } from "../src/app.js";
+import { TestApp } from "../src/app.js";
 import { loadConfig } from "../src/config.js";
 import type Database from "better-sqlite3";
 import type { MiddlewareHandler } from "hono";
@@ -24,9 +24,13 @@ function mockAuth(user: User): MiddlewareHandler {
 }
 
 function authedApp(user?: User) {
-  return createTestApp(db, testConfig, {
-    authMiddleware: user ? mockAuth(user) : undefined,
-  });
+  return new TestApp(
+    db,
+    testConfig,
+    undefined,
+    undefined,
+    user ? mockAuth(user) : undefined
+  );
 }
 
 beforeEach(() => {
@@ -37,7 +41,7 @@ beforeEach(() => {
 
 describe("GET /comments", () => {
   it("returns empty list for slug with no comments", async () => {
-    const app = authedApp(testUser);
+    const {app} = authedApp(testUser);
     const res = await app.request("/comments?slug=test-post");
     expect(res.status).toBe(200);
     const data = await res.json();
@@ -45,13 +49,13 @@ describe("GET /comments", () => {
   });
 
   it("returns 400 when slug is missing", async () => {
-    const app = authedApp(testUser);
+    const {app} = authedApp(testUser);
     const res = await app.request("/comments");
     expect(res.status).toBe(400);
   });
 
   it("returns 400 when slug is invalid", async () => {
-    const app = authedApp(testUser);
+    const {app} = authedApp(testUser);
     const res = await app.request("/comments?slug=INVALID SLUG!");
     expect(res.status).toBe(400);
   });
@@ -59,7 +63,7 @@ describe("GET /comments", () => {
 
 describe("POST /comments", () => {
   it("creates a comment when logged in", async () => {
-    const app = authedApp(testUser);
+    const {app} = authedApp(testUser);
     const res = await app.request("/comments", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -74,7 +78,7 @@ describe("POST /comments", () => {
   });
 
   it("returns 401 when not logged in", async () => {
-    const app = authedApp(); // no user
+    const {app} = authedApp(); // no user
     const res = await app.request("/comments", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -84,7 +88,7 @@ describe("POST /comments", () => {
   });
 
   it("returns 400 for empty body", async () => {
-    const app = authedApp(testUser);
+    const {app} = authedApp(testUser);
     const res = await app.request("/comments", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -94,7 +98,7 @@ describe("POST /comments", () => {
   });
 
   it("returns 400 for body exceeding 2000 chars", async () => {
-    const app = authedApp(testUser);
+    const {app} = authedApp(testUser);
     const res = await app.request("/comments", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -104,7 +108,7 @@ describe("POST /comments", () => {
   });
 
   it("returns 400 for invalid slug", async () => {
-    const app = authedApp(testUser);
+    const {app} = authedApp(testUser);
     const res = await app.request("/comments", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -116,7 +120,7 @@ describe("POST /comments", () => {
 
 describe("POST /comments with parent_id", () => {
   it("creates a reply when logged in", async () => {
-    const app = authedApp(testUser);
+    const {app} = authedApp(testUser);
 
     // Create parent comment
     const parentRes = await app.request("/comments", {
@@ -150,7 +154,7 @@ describe("POST /comments with parent_id", () => {
 
   it("returns 401 when not logged in", async () => {
     // First create a parent with an authed app
-    const authed = authedApp(testUser);
+    const {app: authed} = authedApp(testUser);
     const parentRes = await authed.request("/comments", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -159,7 +163,7 @@ describe("POST /comments with parent_id", () => {
     const parent = await parentRes.json();
 
     // Try to reply without auth
-    const unauthed = authedApp(); // no user
+    const {app: unauthed} = authedApp(); // no user
     const res = await unauthed.request("/comments", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -175,7 +179,7 @@ describe("POST /comments with parent_id", () => {
 
 describe("GET /comments with data", () => {
   it("returns created comments", async () => {
-    const app = authedApp(testUser);
+    const {app} = authedApp(testUser);
 
     await app.request("/comments", {
       method: "POST",
@@ -198,7 +202,7 @@ describe("GET /comments with data", () => {
 
 describe("DELETE /comments/:id", () => {
   it("soft deletes own comment", async () => {
-    const app = authedApp(testUser);
+    const {app} = authedApp(testUser);
 
     const createRes = await app.request("/comments", {
       method: "POST",
@@ -220,7 +224,7 @@ describe("DELETE /comments/:id", () => {
 
   it("returns 403 when deleting another user's comment", async () => {
     // Alice creates a comment
-    const aliceApp = authedApp(testUser);
+    const {app: aliceApp} = authedApp(testUser);
     const createRes = await aliceApp.request("/comments", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -229,7 +233,7 @@ describe("DELETE /comments/:id", () => {
     const comment = await createRes.json();
 
     // Bob tries to delete it
-    const bobApp = authedApp(otherUser);
+    const {app: bobApp} = authedApp(otherUser);
     const delRes = await bobApp.request(`/comments/${comment.id}`, {
       method: "DELETE",
     });
@@ -237,7 +241,7 @@ describe("DELETE /comments/:id", () => {
   });
 
   it("returns 404 for non-existent comment", async () => {
-    const app = authedApp(testUser);
+    const {app} = authedApp(testUser);
     const res = await app.request("/comments/99999", { method: "DELETE" });
     expect(res.status).toBe(404);
   });

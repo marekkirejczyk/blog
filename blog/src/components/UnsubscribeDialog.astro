@@ -1,0 +1,217 @@
+---
+const apiBase = import.meta.env.PUBLIC_COMMENTS_API;
+---
+
+<dialog id="unsubscribe-dialog" data-api-base={apiBase}>
+  <button id="unsubscribe-close" class="dialog-close" aria-label="Close">&times;</button>
+
+  <div class="dialog-view" data-view="loading">
+    <div class="dialog-icon dialog-icon--notice" aria-hidden="true">
+      <svg viewBox="0 0 28 28" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10 16V6.5a1.5 1.5 0 0 1 3 0V14" />
+        <path d="M13 13.5V5a1.5 1.5 0 0 1 3 0v9" />
+        <path d="M16 14V6.5a1.5 1.5 0 0 1 3 0V16" />
+        <path d="M19 11a1.5 1.5 0 0 1 3 0v7c0 3.5-2.5 6.5-6 6.5s-6-2-7-4.5l-2.5-5.5a1.6 1.6 0 0 1 2.8-1.5L11 16" />
+      </svg>
+    </div>
+    <h2 class="dialog-title">Unsubscribing…</h2>
+    <p class="dialog-body">One moment please.</p>
+  </div>
+
+  <div class="dialog-view" data-view="success" hidden>
+    <div class="dialog-icon dialog-icon--notice" aria-hidden="true">
+      <svg viewBox="0 0 28 28" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10 16V6.5a1.5 1.5 0 0 1 3 0V14" />
+        <path d="M13 13.5V5a1.5 1.5 0 0 1 3 0v9" />
+        <path d="M16 14V6.5a1.5 1.5 0 0 1 3 0V16" />
+        <path d="M19 11a1.5 1.5 0 0 1 3 0v7c0 3.5-2.5 6.5-6 6.5s-6-2-7-4.5l-2.5-5.5a1.6 1.6 0 0 1 2.8-1.5L11 16" />
+      </svg>
+    </div>
+    <h2 class="dialog-title">You've been unsubscribed</h2>
+    <p class="dialog-subtitle">Thanks for reading.</p>
+    <p class="dialog-body">You'll no longer receive emails from zkMarek. If you change your mind, you can resubscribe anytime — no hard feelings.</p>
+    <div class="dialog-actions">
+      <button type="button" class="btn btn--primary btn--tall" data-subscribe-trigger data-close>Resubscribe</button>
+      <button type="button" class="dialog-link" data-close>Back to the blog</button>
+    </div>
+  </div>
+
+  <div class="dialog-view" data-view="error" hidden>
+    <div class="dialog-icon dialog-icon--notice" aria-hidden="true">
+      <svg viewBox="0 0 28 28" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10 16V6.5a1.5 1.5 0 0 1 3 0V14" />
+        <path d="M13 13.5V5a1.5 1.5 0 0 1 3 0v9" />
+        <path d="M16 14V6.5a1.5 1.5 0 0 1 3 0V16" />
+        <path d="M19 11a1.5 1.5 0 0 1 3 0v7c0 3.5-2.5 6.5-6 6.5s-6-2-7-4.5l-2.5-5.5a1.6 1.6 0 0 1 2.8-1.5L11 16" />
+      </svg>
+    </div>
+    <h2 class="dialog-title">Something went wrong</h2>
+    <p class="dialog-body">Could not unsubscribe. The link may be invalid or expired.</p>
+    <div class="dialog-actions">
+      <button type="button" class="btn btn--primary btn--tall" data-close>Back to the blog</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  import { unsubscribeByToken } from '../lib/subscribe/api';
+
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get('unsubscribe');
+
+  if (token) {
+    const dialog = document.getElementById('unsubscribe-dialog')! as HTMLDialogElement;
+    const apiBase = dialog.getAttribute('data-api-base')!;
+    const loadingView = dialog.querySelector<HTMLElement>('[data-view="loading"]')!;
+    const successView = dialog.querySelector<HTMLElement>('[data-view="success"]')!;
+    const errorView = dialog.querySelector<HTMLElement>('[data-view="error"]')!;
+
+    function showView(view: HTMLElement) {
+      loadingView.hidden = view !== loadingView;
+      successView.hidden = view !== successView;
+      errorView.hidden = view !== errorView;
+    }
+
+    dialog.showModal();
+    history.replaceState(null, '', window.location.pathname);
+
+    unsubscribeByToken(apiBase, token)
+      .then(() => showView(successView))
+      .catch(() => showView(errorView));
+
+    document.getElementById('unsubscribe-close')!.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      if (target === dialog) dialog.close();
+      if (target.hasAttribute('data-close')) dialog.close();
+    });
+  }
+</script>
+
+<style>
+  dialog {
+    border: 1px solid #ebedf0;
+    border-radius: 16px;
+    padding: 48px 40px 40px;
+    max-width: 480px;
+    width: calc(100% - 32px);
+    box-shadow: 0 8px 24px rgba(20, 23, 26, 0.06);
+    font-family: var(--font-sans);
+    background: #ffffff;
+    margin: auto;
+    inset: 0;
+    position: relative;
+  }
+
+  dialog::backdrop {
+    background: rgba(20, 23, 26, 0.4);
+  }
+
+  .dialog-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    line-height: 1;
+    color: #737880;
+    cursor: pointer;
+    padding: 4px 8px;
+  }
+
+  .dialog-close:hover {
+    color: #14171a;
+  }
+
+  .dialog-view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .dialog-view[hidden] {
+    display: none;
+  }
+
+  .dialog-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .dialog-icon--notice {
+    background: #faebde;
+    color: #8c4d1f;
+  }
+
+  .dialog-title {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 1.2;
+    color: #14171a;
+    text-align: center;
+    margin: 0;
+  }
+
+  .dialog-subtitle {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 1.4;
+    color: #14171a;
+    text-align: center;
+    margin: 0;
+  }
+
+  .dialog-body {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    line-height: 1.7;
+    color: #40454d;
+    text-align: center;
+    margin: 0;
+  }
+
+  .dialog-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    padding-top: 8px;
+  }
+
+  .dialog-link {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 14px;
+    color: #737880;
+    background: none;
+    border: none;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 4px 0;
+  }
+
+  .dialog-link:hover {
+    color: #14171a;
+  }
+
+  @media (max-width: 520px) {
+    dialog {
+      padding: 40px 24px 32px;
+    }
+
+    .dialog-title {
+      font-size: 24px;
+    }
+  }
+</style>

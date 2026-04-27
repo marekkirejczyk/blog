@@ -1,5 +1,8 @@
 ---
 import '../styles/global.css';
+import UnsubscribeDialog from '../components/UnsubscribeDialog.astro';
+import SubscribeDialog from '../components/SubscribeDialog.astro';
+import SubscribeConfirmedDialog from '../components/SubscribeConfirmedDialog.astro';
 
 interface Props {
   title: string;
@@ -67,7 +70,7 @@ const linkedInPath =
               />
             </svg>
           </a>
-          {/* <a href="#subscribe" class="btn btn--primary btn--compact">Subscribe</a> */}
+          <button type="button" class="btn btn--primary btn--compact" data-subscribe-trigger>Subscribe</button>
         </nav>
 
         <button
@@ -130,7 +133,7 @@ const linkedInPath =
               />
             </svg>
           </a>
-          {/* <a href="#subscribe" class="btn btn--primary mobile-menu__subscribe">Subscribe</a> */}
+          <button type="button" class="btn btn--primary mobile-menu__subscribe" data-subscribe-trigger>Subscribe</button>
         </div>
         <div class="mobile-menu__links">
           <a href="/privacy/">Privacy Policy</a>
@@ -143,27 +146,9 @@ const linkedInPath =
       <slot />
     </main>
 
-    {/*
-    <section class="subscribe" id="subscribe">
-      <div class="subscribe__inner">
-        <h2 class="subscribe__title">Never miss a post.</h2>
-        <p class="subscribe__blurb">
-          Essays on AI, cryptography, software engineering, entrepreneurship, and management
-          — delivered only when there's something worth reading.
-        </p>
-        <form class="subscribe__form" onsubmit="event.preventDefault();">
-          <input
-            type="email"
-            class="subscribe__input"
-            placeholder="you@domain.com"
-            aria-label="Email address"
-          />
-          <button type="submit" class="btn btn--primary btn--tall">Subscribe</button>
-        </form>
-      </div>
-    </section>
-    */}
-
+    <SubscribeDialog />
+    <SubscribeConfirmedDialog />
+    <UnsubscribeDialog />
     <footer class="site-footer">
       <div class="site-footer__inner">
         <p class="site-footer__copy">&copy; {year} zkmarek</p>

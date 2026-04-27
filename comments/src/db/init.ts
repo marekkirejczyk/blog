@@ -35,6 +35,28 @@ CREATE TABLE IF NOT EXISTS sessions (
 );
 
 CREATE INDEX IF NOT EXISTS idx_sessions_user ON sessions(user_id);
+
+CREATE TABLE IF NOT EXISTS subscribers (
+  id                INTEGER PRIMARY KEY AUTOINCREMENT,
+  email             TEXT NOT NULL UNIQUE,
+  confirmed         INTEGER DEFAULT 0,
+  confirm_token     TEXT NOT NULL,
+  unsubscribe_token TEXT NOT NULL,
+  created_at        TEXT DEFAULT (datetime('now')),
+  confirmed_at      TEXT
+);
+
+CREATE INDEX IF NOT EXISTS idx_subscribers_confirm ON subscribers(confirm_token);
+CREATE INDEX IF NOT EXISTS idx_subscribers_unsub ON subscribers(unsubscribe_token);
+
+CREATE TABLE IF NOT EXISTS notifications_sent (
+  id            INTEGER PRIMARY KEY AUTOINCREMENT,
+  slug          TEXT NOT NULL,
+  subscriber_id INTEGER NOT NULL REFERENCES subscribers(id),
+  sent_at       TEXT DEFAULT (datetime('now'))
+);
+
+CREATE INDEX IF NOT EXISTS idx_notifications_slug ON notifications_sent(slug, subscriber_id);
 `;
 
 export function initDb(path: string = ":memory:"): Database.Database {

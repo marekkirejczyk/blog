@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { validateSlug, validateCommentBody, MAX_BODY_LENGTH } from "../src/validation.js";
+import { validateSlug, validateCommentBody, validateEmail, MAX_BODY_LENGTH } from "../src/validation.js";
 
 describe("validateSlug", () => {
   it("accepts lowercase alphanumeric with dashes", () => {
@@ -65,5 +65,57 @@ describe("validateCommentBody", () => {
   it("rejects body exceeding max length with length error", () => {
     const result = validateCommentBody("x".repeat(MAX_BODY_LENGTH + 1));
     expect(result).toEqual({ ok: false, error: { message: `Comment body must be ${MAX_BODY_LENGTH} characters or less`, status: 400 } });
+  });
+});
+
+describe("validateEmail", () => {
+  it("accepts standard email and lowercases it", () => {
+    expect(validateEmail("user@example.com")).toEqual({ ok: true, value: "user@example.com" });
+    expect(validateEmail("User@Example.COM")).toEqual({ ok: true, value: "user@example.com" });
+  });
+
+  it("trims surrounding whitespace", () => {
+    expect(validateEmail("  user@example.com  ")).toEqual({ ok: true, value: "user@example.com" });
+    expect(validateEmail("\tuser@example.com\n")).toEqual({ ok: true, value: "user@example.com" });
+  });
+
+  it("accepts emails with plus addressing and subdomains", () => {
+    expect(validateEmail("user+tag@mail.example.co.uk")).toEqual({
+      ok: true,
+      value: "user+tag@mail.example.co.uk",
+    });
+  });
+
+  it("rejects non-string types with type error", () => {
+    expect(validateEmail(null)).toEqual({
+      ok: false,
+      error: { message: "Email must be a string", status: 400 },
+    });
+    expect(validateEmail(undefined).ok).toBe(false);
+    expect(validateEmail(42).ok).toBe(false);
+    expect(validateEmail({}).ok).toBe(false);
+  });
+
+  it("rejects malformed addresses with format error", () => {
+    const result = validateEmail("not-an-email");
+    expect(result).toEqual({
+      ok: false,
+      error: { message: "Invalid email address", status: 400 },
+    });
+    expect(validateEmail("missing@tld").ok).toBe(false);
+    expect(validateEmail("@example.com").ok).toBe(false);
+    expect(validateEmail("user@").ok).toBe(false);
+    expect(validateEmail("user @example.com").ok).toBe(false);
+    expect(validateEmail("user@exa mple.com").ok).toBe(false);
+    expect(validateEmail("").ok).toBe(false);
+  });
+
+  it("rejects emails longer than 254 characters", () => {
+    const longLocal = "x".repeat(250);
+    const result = validateEmail(`${longLocal}@example.com`);
+    expect(result).toEqual({
+      ok: false,
+      error: { message: "Email address too long", status: 400 },
+    });
   });
 });

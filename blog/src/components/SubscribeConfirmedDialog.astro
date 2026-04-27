@@ -1,0 +1,142 @@
+---
+---
+
+<dialog id="subscribe-confirmed-dialog">
+  <button id="subscribe-confirmed-close" class="dialog-close" aria-label="Close">&times;</button>
+  <div class="dialog-view">
+    <div class="dialog-icon dialog-icon--success" aria-hidden="true">
+      <svg viewBox="0 0 28 28" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="5,14.5 11,20 23,8" />
+      </svg>
+    </div>
+    <h2 class="dialog-title">You're subscribed</h2>
+    <p class="dialog-subtitle">Welcome aboard.</p>
+    <p class="dialog-body">New essays on AI, cryptography, software engineering, entrepreneurship, and management — delivered only when there's something worth reading.</p>
+    <div class="dialog-actions">
+      <button type="button" class="btn btn--primary btn--tall" data-close>Back to the blog</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('subscribed') === 'true') {
+    const dialog = document.getElementById('subscribe-confirmed-dialog')! as HTMLDialogElement;
+    history.replaceState(null, '', window.location.pathname);
+    dialog.showModal();
+    document.getElementById('subscribe-confirmed-close')!.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      if (target === dialog) dialog.close();
+      if (target.hasAttribute('data-close')) dialog.close();
+    });
+  }
+</script>
+
+<style>
+  dialog {
+    border: 1px solid #ebedf0;
+    border-radius: 16px;
+    padding: 48px 40px 40px;
+    max-width: 480px;
+    width: calc(100% - 32px);
+    box-shadow: 0 8px 24px rgba(20, 23, 26, 0.06);
+    font-family: var(--font-sans);
+    background: #ffffff;
+    margin: auto;
+    inset: 0;
+    position: relative;
+  }
+
+  dialog::backdrop {
+    background: rgba(20, 23, 26, 0.4);
+  }
+
+  .dialog-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    line-height: 1;
+    color: #737880;
+    cursor: pointer;
+    padding: 4px 8px;
+  }
+
+  .dialog-close:hover {
+    color: #14171a;
+  }
+
+  .dialog-view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .dialog-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .dialog-icon--success {
+    background: #def2e0;
+    color: #218040;
+  }
+
+  .dialog-title {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 1.2;
+    color: #14171a;
+    text-align: center;
+    margin: 0;
+  }
+
+  .dialog-subtitle {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 1.4;
+    color: #14171a;
+    text-align: center;
+    margin: 0;
+  }
+
+  .dialog-body {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    line-height: 1.7;
+    color: #40454d;
+    text-align: center;
+    margin: 0;
+  }
+
+  .dialog-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    padding-top: 8px;
+  }
+
+  @media (max-width: 520px) {
+    dialog {
+      padding: 40px 24px 32px;
+    }
+
+    .dialog-title {
+      font-size: 24px;
+    }
+  }
+</style>
