@@ -28,46 +28,8 @@ General conventions for the zkmarek.com monorepo. For comments system specificat
 
 ## Testing
 
-- Vitest, in-memory SQLite via `initDb(":memory:")`, mock auth middleware, `beforeEach` reset
+General testing rules live in the `testing` skill (`.claude/skills/testing/SKILL.md`).
+
+- In-memory SQLite via `initDb(":memory:")`, mock auth middleware, `beforeEach` reset
 - Custom matchers: `toBeAround(expected, withinMs?)` for date assertions, `toBeProperUUID()` — registered via `vitest.config.ts` → `tests/matchers.ts`
 - Test type-checking: `tsconfig.test.json` extends main config, includes both `src/` and `tests/`
-- Prefer full-output matches over asserting individual fields — one deep-equality assertion documents the whole shape and catches unexpected changes. Use `toEqual` for deep equality; reserve `toBe` for primitives and reference identity. For non-deterministic fields (IDs, timestamps, tokens), use asymmetric matchers inside `toEqual` instead of splitting into per-field `expect`s.
-
-  BAD:
-  ```ts
-  it("creates a pending subscriber and returns a confirmation token", async () => {
-    const result = await subscribe(API_BASE, "alice@example.com");
-    expect(result.message).toBe("Check your email to confirm your subscription.");
-    expect(typeof result.confirmationToken).toBe("string");
-    expect(typeof result.subscriber.id).toBe("number");
-    expect(result.subscriber.email).toMatch(/@/);
-  });
-  ```
-
-  GOOD:
-  ```ts
-  it("creates a pending subscriber and returns a confirmation token", async () => {
-    const result = await subscribe(API_BASE, "alice@example.com");
-    expect(result).toEqual({
-      message: "Check your email to confirm your subscription.",
-      confirmationToken: expect.any(String),
-      subscriber: expect.objectContaining({
-        id: expect.any(Number),
-        email: expect.stringMatching(/@/),
-      }),
-    });
-  });
-  ```
-- Keep pure logic decoupled from I/O so tests can exercise it with plain inputs. If a function reads a file (or makes a network/DB call) *and* transforms the result, split it: the core takes the already-loaded value, and a thin wrapper does the I/O and delegates. Tests target the core with in-memory fixtures (no `mkdtempSync`, no HTTP mocks) and cover the wrapper with one or two I/O-path cases. Example: `extractExcerpt(content, slug, wordLimit?)` parses markdown; `extractExcerptFromPost(contentDir, slug, wordLimit?)` reads the file and calls it.
-- Never use `toThrow()` / `rejects.toThrow()` (or `toThrowError`) bare — always pin the thrown message or matcher. A bare assertion only proves *something* threw, so the error copy the user sees can silently rot.
-
-  BAD:
-  ```ts
-  await expect(subscribe(API_BASE, "not-an-email")).rejects.toThrow();
-  ```
-
-  GOOD:
-  ```ts
-  await expect(subscribe(API_BASE, "not-an-email"))
-    .rejects.toThrow("Invalid email address");
-  ```

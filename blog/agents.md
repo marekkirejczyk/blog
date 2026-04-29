@@ -24,49 +24,10 @@ Conventions for the Astro blog at zkmarek.com. For feature specs see `docs/comme
 
 ## Testing
 
-- Split JS into small, focused functions in `src/lib/` so they can be tested
-- **Unit tests** for pure logic functions (rendering, formatting, escaping) — no network, no DOM
-- **Integration tests** for data access functions (fetch wrappers in `api.ts`) — test against the real comments server by instantiating `TestApp` (from `comments/src/app.ts`) with in-memory SQLite, not mocked fetch
+General testing rules live in the `testing` skill (`.claude/skills/testing/SKILL.md`).
+
+- Integration tests for `api.ts` fetch wrappers run against the real comments server by instantiating `TestApp` (from `comments/src/app.ts`) with in-memory SQLite, not mocked fetch
 - See `tests/comments/ui.test.ts` (unit) and `tests/comments/api.test.ts` (integration) for examples
-- Prefer full-output matches over asserting individual fields — one deep-equality assertion documents the whole shape and catches unexpected changes. Use `toEqual` for deep equality; reserve `toBe` for primitives and reference identity. For non-deterministic fields (IDs, timestamps, tokens), use asymmetric matchers inside `toEqual` instead of splitting into per-field `expect`s.
-
-  BAD:
-  ```ts
-  it("creates a pending subscriber and returns a confirmation token", async () => {
-    const result = await subscribe(API_BASE, "alice@example.com");
-    expect(result.message).toBe("Check your email to confirm your subscription.");
-    expect(typeof result.confirmationToken).toBe("string");
-    expect(typeof result.subscriber.id).toBe("number");
-    expect(result.subscriber.email).toMatch(/@/);
-  });
-  ```
-
-  GOOD:
-  ```ts
-  it("creates a pending subscriber and returns a confirmation token", async () => {
-    const result = await subscribe(API_BASE, "alice@example.com");
-    expect(result).toEqual({
-      message: "Check your email to confirm your subscription.",
-      confirmationToken: expect.any(String),
-      subscriber: expect.objectContaining({
-        id: expect.any(Number),
-        email: expect.stringMatching(/@/),
-      }),
-    });
-  });
-  ```
-- Never use `toThrow()` / `rejects.toThrow()` (or `toThrowError`) bare — always pin the thrown message or matcher. A bare assertion only proves *something* threw, so the error copy the user sees can silently rot.
-
-  BAD:
-  ```ts
-  await expect(subscribe(API_BASE, "not-an-email")).rejects.toThrow();
-  ```
-
-  GOOD:
-  ```ts
-  await expect(subscribe(API_BASE, "not-an-email"))
-    .rejects.toThrow("Invalid email address");
-  ```
 
 ## Dialogs
 
